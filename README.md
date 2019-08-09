@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # aswxmall
 
 又一个小商场系统。
@@ -237,3 +238,7 @@ V 3.0.0 完成以下目标：
 
 [MIT](https://github.com/linlinjava/aswxmall/blob/master/LICENSE)
 Copyright (c) 2018-present linlinjava
+=======
+# aswx
+AS
+>>>>>>> b8166e78b08d36987e7e7df7a847f298a09057f1
