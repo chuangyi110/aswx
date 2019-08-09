@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active: db, core, admin
+  messages:
+    encoding: UTF-8
+
+server:
+  port: 8083
+logging:
+  level:
+    root:  ERROR
+    org.springframework:  ERROR
+    org.mybatis:  ERROR
+    com.lzdn.aswxmall.admin:  DEBUG
+    com.lzdn.aswxmall:  ERROR
