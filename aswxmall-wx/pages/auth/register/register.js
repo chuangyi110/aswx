@@ -7,6 +7,7 @@ Page({
     username: '',
     password: '',
     confirmPassword: '',
+    referrerMobile:'',
     mobile: '',
     code: ''
   },
@@ -186,6 +187,11 @@ Page({
       confirmPassword: e.detail.value
     });
   },
+  bindReferrerMobileInput:function(e){
+      this.setData({
+        referrerMobile:e.detail.referrerMobile
+      })
+  },
   bindMobileInput: function(e) {
 
     this.setData({
@@ -218,6 +224,11 @@ Page({
       case 'clear-mobile':
         this.setData({
           mobile: ''
+        });
+        break;
+      case 'clear-referrerMobile':
+        this.setData({
+          referrerMobile: ''
         });
         break;
       case 'clear-code':
