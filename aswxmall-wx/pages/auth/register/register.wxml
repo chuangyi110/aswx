@@ -18,7 +18,9 @@
 
     <view class="form-item">
       <input class="mobile" value="{{referrerMobile}}" bindinput="bindReferrerMobileInput" placeholder="推荐人手机号（选填）" />
-      <image wx:if="{{ referrerMobile.length > 0 }}" id="clear-referrerMobile" class="clear" src="/static/images/clear_input.png" catchtap="clearInput"></image>
+      <image wx:if="{{ referrerMobile.length > 0 }}" id="clear-referrerMobile" 
+      class="chickPhone" src="{{referrerMobileCheckImg}}" catchtap="chickPhone"></image>
+      
     </view>
 
     <view class="form-item">

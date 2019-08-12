@@ -7,7 +7,9 @@ Page({
     username: '',
     password: '',
     confirmPassword: '',
-    referrerMobile:'',
+    referrerMobile: '',
+    referrerMobileCheck: false,
+    referrerMobileCheckImg:'/static/images/check-circle.svg',
     mobile: '',
     code: ''
   },
@@ -136,6 +138,24 @@ Page({
       });
       return false;
     }
+    if (this.data.referrerMobile!='') {
+      if (!check.isValidPhone(this.data.referrerMobile)){
+        wx.showModal({
+          title: '错误信息',
+          content: '推荐人手机号码输入不正确',
+          showCancel: false
+        })
+        return false;
+      }
+      if(!this.data.referrerMobileCheck){
+        wx.showModal({
+          title: '错误信息',
+          content: '推荐人手机未确认',
+          showCancel:false
+        })
+        return false;
+      }
+    }
 
     if (this.data.mobile.length == 0 || this.data.code.length == 0) {
       wx.showModal({
@@ -145,7 +165,7 @@ Page({
       });
       return false;
     }
-
+    
     if (!check.isValidPhone(this.data.mobile)) {
       wx.showModal({
         title: '错误信息',
@@ -189,8 +209,10 @@ Page({
   },
   bindReferrerMobileInput:function(e){
       this.setData({
-        referrerMobile:e.detail.referrerMobile
-      })
+        referrerMobile: e.detail.value,
+        referrerMobileCheck: false,
+        referrerMobileCheckImg: '/static/images/check-circle.svg'
+      });
   },
   bindMobileInput: function(e) {
 
@@ -203,6 +225,39 @@ Page({
     this.setData({
       code: e.detail.value
     });
+  },
+
+  chickPhone:function(e){
+    //TODO 模拟信息
+    if(this.data.referrerMobile==='13079296327'){
+      let that = this
+      wx.showModal({
+        title: '确认信息',
+        content: '注册人XXX',
+        showCancel: true,
+        success: function (res) {
+          if (res.cancel) {
+            //点击取消,默认隐藏弹框
+          } else {
+            //点击确定
+            that.setData({
+              referrerMobileCheck:true,
+              referrerMobileCheckImg:'/static/images/check-circle-green.svg'
+            })
+            
+          }
+        },
+      })
+    }else{
+      wx.showModal({
+        title: '错误信息',
+        content: '推荐人信息不正确',
+        showCancel: false
+      })
+    }
+    // wx.request({
+    //   url: '',
+    // })
   },
   clearInput: function(e) {
     switch (e.currentTarget.id) {
