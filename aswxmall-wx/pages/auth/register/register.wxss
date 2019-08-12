@@ -55,7 +55,8 @@
   display: block;
   background: #fff;
   height: 55rpx;
-  width: 55rpx;}
+  width: 55rpx; 
+}
 .form-item .chickPhone {
   position: absolute;
   top: 20rpx;
