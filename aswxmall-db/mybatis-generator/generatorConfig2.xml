@@ -56,126 +56,130 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.lzdn.aswxmall.db.dao"
                              targetProject="src/main/java"/>
         <!--表名-->
-        <table tableName="aswxmall_ad">
+        <!-- 2019 8 13 添加aswxmall_user_referrer 用户推荐关系表-->
+        <table tableName = "aswxmall_user_referrer">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
-        <table tableName="aswxmall_address">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="aswxmall_admin">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <columnOverride column="role_ids" javaType="java.lang.Integer[]"
-                            typeHandler="com.lzdn.aswxmall.db.mybatis.JsonIntegerArrayTypeHandler"/>
-        </table>
-        <table tableName="aswxmall_brand">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="aswxmall_cart">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <columnOverride column="specifications" javaType="java.lang.String[]"
-                            typeHandler="com.lzdn.aswxmall.db.mybatis.JsonStringArrayTypeHandler"/>
-        </table>
-        <table tableName="aswxmall_category">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="aswxmall_collect">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="aswxmall_comment">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <columnOverride column="pic_urls" javaType="java.lang.String[]"
-                            typeHandler="com.lzdn.aswxmall.db.mybatis.JsonStringArrayTypeHandler"/>
-        </table>
+        <!--<table tableName="aswxmall_ad">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_address">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_admin">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<columnOverride column="role_ids" javaType="java.lang.Integer[]"-->
+                            <!--typeHandler="com.lzdn.aswxmall.db.mybatis.JsonIntegerArrayTypeHandler"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_brand">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_cart">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<columnOverride column="specifications" javaType="java.lang.String[]"-->
+                            <!--typeHandler="com.lzdn.aswxmall.db.mybatis.JsonStringArrayTypeHandler"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_category">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_collect">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_comment">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<columnOverride column="pic_urls" javaType="java.lang.String[]"-->
+                            <!--typeHandler="com.lzdn.aswxmall.db.mybatis.JsonStringArrayTypeHandler"/>-->
+        <!--</table>-->
 
-        <table tableName="aswxmall_feedback">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <columnOverride column="pic_urls" javaType="java.lang.String[]"
-                            typeHandler="com.lzdn.aswxmall.db.mybatis.JsonStringArrayTypeHandler"/>
-        </table>
+        <!--<table tableName="aswxmall_feedback">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<columnOverride column="pic_urls" javaType="java.lang.String[]"-->
+                            <!--typeHandler="com.lzdn.aswxmall.db.mybatis.JsonStringArrayTypeHandler"/>-->
+        <!--</table>-->
 
-        <table tableName="aswxmall_footprint">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="aswxmall_goods">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <columnOverride column="gallery" javaType="java.lang.String[]"
-                            typeHandler="com.lzdn.aswxmall.db.mybatis.JsonStringArrayTypeHandler"/>
-        </table>
-        <table tableName="aswxmall_goods_attribute">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="aswxmall_goods_specification">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="aswxmall_goods_product">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <columnOverride column="specifications" javaType="java.lang.String[]"
-                            typeHandler="com.lzdn.aswxmall.db.mybatis.JsonStringArrayTypeHandler"/>
-        </table>
-        <table tableName="aswxmall_issue">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="aswxmall_keyword">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="aswxmall_order">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="aswxmall_order_goods">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <columnOverride column="specifications" javaType="java.lang.String[]"
-                            typeHandler="com.lzdn.aswxmall.db.mybatis.JsonStringArrayTypeHandler"/>
-            <columnOverride column="comments" javaType="java.lang.Integer[]"
-                            typeHandler="com.lzdn.aswxmall.db.mybatis.JsonIntegerArrayTypeHandler"/>
+        <!--<table tableName="aswxmall_footprint">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_goods">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<columnOverride column="gallery" javaType="java.lang.String[]"-->
+                            <!--typeHandler="com.lzdn.aswxmall.db.mybatis.JsonStringArrayTypeHandler"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_goods_attribute">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_goods_specification">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_goods_product">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<columnOverride column="specifications" javaType="java.lang.String[]"-->
+                            <!--typeHandler="com.lzdn.aswxmall.db.mybatis.JsonStringArrayTypeHandler"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_issue">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_keyword">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_order">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_order_goods">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<columnOverride column="specifications" javaType="java.lang.String[]"-->
+                            <!--typeHandler="com.lzdn.aswxmall.db.mybatis.JsonStringArrayTypeHandler"/>-->
+            <!--<columnOverride column="comments" javaType="java.lang.Integer[]"-->
+                            <!--typeHandler="com.lzdn.aswxmall.db.mybatis.JsonIntegerArrayTypeHandler"/>-->
 
-        </table>
-        <table tableName="aswxmall_region">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="aswxmall_search_history">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="aswxmall_storage">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="aswxmall_topic">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <columnOverride column="goods" javaType="java.lang.Integer[]"
-                            typeHandler="com.lzdn.aswxmall.db.mybatis.JsonIntegerArrayTypeHandler"/>
-        </table>
-        <table tableName="aswxmall_user">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="aswxmall_system">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
+        <!--</table>-->
+        <!--<table tableName="aswxmall_region">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_search_history">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_storage">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_topic">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<columnOverride column="goods" javaType="java.lang.Integer[]"-->
+                            <!--typeHandler="com.lzdn.aswxmall.db.mybatis.JsonIntegerArrayTypeHandler"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_user">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_system">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
 
-        <table tableName="aswxmall_user_formid">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
+        <!--<table tableName="aswxmall_user_formid">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
 
-        <table tableName="aswxmall_groupon_rules">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="aswxmall_groupon">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="aswxmall_coupon">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <columnOverride column="goods_value" javaType="java.lang.Integer[]"
-                            typeHandler="com.lzdn.aswxmall.db.mybatis.JsonIntegerArrayTypeHandler"/>
-        </table>
-        <table tableName="aswxmall_coupon_user">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="aswxmall_role">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="aswxmall_permission">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="aswxmall_log">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
+        <!--<table tableName="aswxmall_groupon_rules">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_groupon">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_coupon">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<columnOverride column="goods_value" javaType="java.lang.Integer[]"-->
+                            <!--typeHandler="com.lzdn.aswxmall.db.mybatis.JsonIntegerArrayTypeHandler"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_coupon_user">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_role">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_permission">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="aswxmall_log">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
     </context>
 </generatorConfiguration>
