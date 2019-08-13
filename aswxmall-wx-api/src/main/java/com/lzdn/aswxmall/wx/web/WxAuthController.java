@@ -3,7 +3,10 @@ package com.lzdn.aswxmall.wx.web;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.lzdn.aswxmall.db.domain.AswxmallUser;
+import com.lzdn.aswxmall.db.domain.AswxmallUserReferrer;
+import com.lzdn.aswxmall.db.service.AswxmallUserReferrerService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import com.lzdn.aswxmall.core.notify.NotifyService;
@@ -55,6 +58,9 @@ public class WxAuthController {
     @Autowired
     private CouponAssignService couponAssignService;
 
+    @Autowired
+    private AswxmallUserReferrerService aswxmallUserReferrerService;
+
     /**
      * 账号登录
      *
@@ -94,7 +100,7 @@ public class WxAuthController {
 
         // userInfo
         UserInfo userInfo = new UserInfo();
-        userInfo.setNickName(username);
+        userInfo.setNickName(user.getNickname());
         userInfo.setAvatarUrl(user.getAvatar());
 
         // token
@@ -155,6 +161,8 @@ public class WxAuthController {
             // 新用户发送注册优惠券
             couponAssignService.assignForRegister(user.getId());
         } else {
+            user.setAvatar(userInfo.getAvatarUrl());
+            user.setNickname(userInfo.getNickName());
             user.setLastLoginTime(LocalDateTime.now());
             user.setLastLoginIp(IpUtil.getIpAddr(request));
             user.setSessionKey(sessionKey);
@@ -191,7 +199,10 @@ public class WxAuthController {
         if (!RegexUtil.isMobileExact(phoneNumber)) {
             return ResponseUtil.badArgumentValue();
         }
-
+        List userList = userService.queryByMobile(phoneNumber);
+        if (userList.size() > 0) {
+            return ResponseUtil.fail(AUTH_MOBILE_REGISTERED, "手机号已注册");
+        }
         if (!notifyService.isSmsEnable()) {
             return ResponseUtil.fail(AUTH_CAPTCHA_UNSUPPORT, "小程序后台验证码服务不支持");
         }
@@ -239,9 +250,11 @@ public class WxAuthController {
         String mobile = JacksonUtil.parseString(body, "mobile");
         String code = JacksonUtil.parseString(body, "code");
         String wxCode = JacksonUtil.parseString(body, "wxCode");
-
+        String referrerMobile = JacksonUtil.parseString(body,"referrerMobile");
+        String sync = JacksonUtil.parseString(body,"sync");//同步账号设置（0不进行同步，1进行同步）
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password) || StringUtils.isEmpty(mobile)
-                || StringUtils.isEmpty(wxCode) || StringUtils.isEmpty(code)) {
+                || StringUtils.isEmpty(wxCode) //|| StringUtils.isEmpty(code)
+                ) {
             return ResponseUtil.badArgument();
         }
 
@@ -257,13 +270,21 @@ public class WxAuthController {
         if (!RegexUtil.isMobileExact(mobile)) {
             return ResponseUtil.fail(AUTH_INVALID_MOBILE, "手机号格式不正确");
         }
-        //判断验证码是否正确
-        String cacheCode = CaptchaCodeManager.getCachedCaptcha(mobile);
-        if (cacheCode == null || cacheCode.isEmpty() || !cacheCode.equals(code)) {
-            return ResponseUtil.fail(AUTH_CAPTCHA_UNMATCH, "验证码错误");
+        List<AswxmallUser> referrerUserList = userService.queryByMobile(referrerMobile);
+        if (referrerUserList.size() > 1) {
+            return ResponseUtil.fail(AUTH_MOBILE_REGISTERED, "推荐人信息异常，请联系客服人员。");
         }
+        if(referrerMobile.equals(mobile)){
+            return ResponseUtil.fail(AUTH_INVALID_MOBILE, "推荐人不能是自己");
+        }
+        //判断验证码是否正确
+//        String cacheCode = CaptchaCodeManager.getCachedCaptcha(mobile);
+//        if (cacheCode == null || cacheCode.isEmpty() || !cacheCode.equals(code)) {
+//            return ResponseUtil.fail(AUTH_CAPTCHA_UNMATCH, "验证码错误");
+//        }
 
         String openId = null;
+
         try {
             WxMaJscode2SessionResult result = this.wxService.getUserService().getSessionInfo(wxCode);
             openId = result.getOpenid();
@@ -275,35 +296,59 @@ public class WxAuthController {
         if (userList.size() > 1) {
             return ResponseUtil.serious();
         }
+        AswxmallUser user = null;
         if (userList.size() == 1) {
             AswxmallUser checkUser = userList.get(0);
             String checkUsername = checkUser.getUsername();
             String checkPassword = checkUser.getPassword();
-            if (!checkUsername.equals(openId) || !checkPassword.equals(openId)) {
-                return ResponseUtil.fail(AUTH_OPENID_BINDED, "openid已绑定账号");
+            String checkMobile = checkUser.getMobile();
+            if(!checkUsername.equals(openId)||!checkPassword.equals(openId)){
+                return ResponseUtil.fail(AUTH_OPENID_BINDED, "该微信已绑定账号，请确认信息后重试");
             }
+            //sync为0时,不绑定用户信息
+            if(sync.equals("0")){
+                return ResponseUtil.fail(AUTH_OPENID_BINDED,
+                        "该微信已注册，请直接使用微信登陆,点击确定将同步账号密码等信息，同步后即可账号密码登陆");
+            }
+            user = checkUser;
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            user.setUsername(username);
+            user.setPassword(encoder.encode(password));
+            if(checkMobile.trim().isEmpty()){
+                user.setMobile(mobile);
+            }else if(checkMobile.equals(mobile)){
+                return ResponseUtil.fail(AUTH_OPENID_BINDED_AND_SYNC, "该微信已绑定账号，请确认信息后重试");
+            }
+            userService.updateById(user);
+        }else{
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String encodedPassword = encoder.encode(password);
+            user = new AswxmallUser();
+            user.setUsername(username);
+            user.setPassword(encodedPassword);
+            user.setMobile(mobile);
+            user.setWeixinOpenid(openId);
+            user.setAvatar("https://yanxuan.nosdn.127.net/80841d741d7fa3073e0ae27bf487339f.jpg?imageView&quality=90&thumbnail=64x64");
+            user.setNickname(username);
+            user.setGender((byte) 0);
+            user.setUserLevel((byte) 0);
+            user.setStatus((byte) 0);
+            user.setLastLoginTime(LocalDateTime.now());
+            user.setLastLoginIp(IpUtil.getIpAddr(request));
+            userService.add(user);
+            // 给新用户发送注册优惠券
+            couponAssignService.assignForRegister(user.getId());
         }
 
-        AswxmallUser user = null;
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encodedPassword = encoder.encode(password);
-        user = new AswxmallUser();
-        user.setUsername(username);
-        user.setPassword(encodedPassword);
-        user.setMobile(mobile);
-        user.setWeixinOpenid(openId);
-        user.setAvatar("https://yanxuan.nosdn.127.net/80841d741d7fa3073e0ae27bf487339f.jpg?imageView&quality=90&thumbnail=64x64");
-        user.setNickname(username);
-        user.setGender((byte) 0);
-        user.setUserLevel((byte) 0);
-        user.setStatus((byte) 0);
-        user.setLastLoginTime(LocalDateTime.now());
-        user.setLastLoginIp(IpUtil.getIpAddr(request));
-        userService.add(user);
-
-        // 给新用户发送注册优惠券
-        couponAssignService.assignForRegister(user.getId());
-
+        if(referrerMobile!=null&&!referrerMobile.trim().isEmpty()){
+            if(referrerMobile.equals(user.getMobile())){
+                return ResponseUtil.fail(AUTH_MOBILE_REGISTERED, "账号注册成功，推荐人信息填充失败，请重新登陆后尝试");
+            }
+            AswxmallUserReferrer userReferrer = new AswxmallUserReferrer();
+            userReferrer.setUserId(user.getId());
+            userReferrer.setReferrerUserId(referrerUserList.get(0).getId());
+            aswxmallUserReferrerService.add(userReferrer);
+        }
         // userInfo
         UserInfo userInfo = new UserInfo();
         userInfo.setNickName(username);
@@ -311,7 +356,7 @@ public class WxAuthController {
 
         // token
         String token = UserTokenManager.generateToken(user.getId());
-        
+
         Map<Object, Object> result = new HashMap<Object, Object>();
         result.put("token", token);
         result.put("userInfo", userInfo);
@@ -512,7 +557,7 @@ public class WxAuthController {
     /**
      * 微信手机号码绑定
      *
-     * @param userId
+     * @param userId close-circle.svg
      * @param body
      * @return
      */
@@ -556,4 +601,23 @@ public class WxAuthController {
 
         return ResponseUtil.ok(data);
     }
+    @PostMapping("referrerMobileCheck")
+    public Object referrerMobileCheck(@RequestBody String body, HttpServletRequest request){
+        String referrerMobile = JacksonUtil.parseString(body, "referrerMobile");
+        if(referrerMobile == null||referrerMobile.trim().isEmpty()){
+            return ResponseUtil.badArgument();
+        }
+        List<AswxmallUser> userList = userService.queryByMobile(referrerMobile);
+        if(userList.size()<=0){
+            return ResponseUtil.fail(AUTH_MOBILE_UNREGISTERED, "无该手机注册信息");
+        }else if(userList.size()>1){
+            return ResponseUtil.fail(AUTH_MOBILE_REGISTERED, "该手机被重复注册，无法正常加入推荐关系");
+        }
+        AswxmallUser aswxmallUser = userList.get(0);
+        Map<Object,Object> data = new HashMap <Object, Object>();
+        data.put("nickName",aswxmallUser.getNickname());
+        data.put("moblie",aswxmallUser.getMobile());
+        return ResponseUtil.ok(data);
+    }
+
 }

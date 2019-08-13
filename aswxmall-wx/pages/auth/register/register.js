@@ -80,7 +80,8 @@ Page({
       }
     });
   },
-  requestRegister: function(wxCode) {
+  //sync 判断是否需要同步账号信息，0不同步 1同步
+  requestRegister: function(wxCode,sync) {
     let that = this;
     wx.request({
       url: api.AuthRegister,
@@ -88,8 +89,10 @@ Page({
         username: that.data.username,
         password: that.data.password,
         mobile: that.data.mobile,
+        referrerMobile :that.data.referrerMobile,
         code: that.data.code,
-        wxCode: wxCode
+        wxCode: wxCode,
+        sync :sync
       },
       method: 'POST',
       header: {
@@ -108,12 +111,38 @@ Page({
               });
             }
           });
-        } else {
+        } else if(res.data.errno == 709){
           wx.showModal({
             title: '错误信息',
             content: res.data.errmsg,
-            showCancel: false
+            showCancel: true,
+            success: function (res) {
+              if (res.cancel) {
+                //点击取消,默认隐藏弹框
+              } else {
+                //点击确定
+                wx.login({
+                  success: function (res) {
+                    if (!res.code) {
+                      wx.showModal({
+                        title: '错误信息',
+                        content: '注册失败',
+                        showCancel: false
+                      });
+                    }
+
+                    that.requestRegister(res.code, 1);
+                  }
+                });
+              }
+            },
           });
+        }else{
+          wx.showModal({
+            title: '错误信息',
+            content: res.data.errmsg,
+            showCancel: true
+          })
         }
       }
     });
@@ -150,14 +179,15 @@ Page({
       if(!this.data.referrerMobileCheck){
         wx.showModal({
           title: '错误信息',
-          content: '推荐人手机未确认',
+          content: '推荐人手机未确认,请点击对号按钮确认推荐人信息',
           showCancel:false
         })
         return false;
       }
     }
 
-    if (this.data.mobile.length == 0 || this.data.code.length == 0) {
+    if (this.data.mobile.length == 0 //|| this.data.code.length == 0
+    ) {
       wx.showModal({
         title: '错误信息',
         content: '手机号和验证码不能为空',
@@ -184,8 +214,8 @@ Page({
             showCancel: false
           });
         }
-
-        that.requestRegister(res.code);
+        console.log(res)
+        that.requestRegister(res.code,0);
       }
     });
   },
@@ -228,39 +258,51 @@ Page({
   },
 
   chickPhone:function(e){
-    //TODO 模拟信息
-    if(this.data.referrerMobile==='13079296327'){
-      if(this.data.referrerMobileCheck){
-        return;
-      }
-      let that = this
-      wx.showModal({
-        title: '确认信息',
-        content: '注册人XXX',
-        showCancel: true,
-        success: function (res) {
-          if (res.cancel) {
-            //点击取消,默认隐藏弹框
-          } else {
-            //点击确定
-            that.setData({
-              referrerMobileCheck:true,
-              referrerMobileCheckImg:'/static/images/check-circle-green.svg'
-            })
-            
-          }
-        },
-      })
-    }else{
-      wx.showModal({
-        title: '错误信息',
-        content: '推荐人信息不正确',
-        showCancel: false
-      })
+    let that = this
+
+    //确认信息后不再重复确认
+    if (this.data.referrerMobileCheck) {
+      return;
     }
-    // wx.request({
-    //   url: '',
-    // })
+
+    wx.request({
+      url: api.AuthReferrerMobileCheck,
+      data: {
+        referrerMobile: that.data.referrerMobile,
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        if (res.data.errno == 0) {
+          let nickName = res.data.data.nickName
+          wx.showModal({
+            title: '确认信息',
+            content: '持有人'+nickName,
+            showCancel: true,
+            success: function (res) {
+              if (res.cancel) {
+                //点击取消,默认隐藏弹框
+              } else {
+                //点击确定
+                that.setData({
+                  referrerMobileCheck: true,
+                  referrerMobileCheckImg: '/static/images/check-circle-green.svg'
+                })
+
+              }
+            },
+          })
+        } else {
+          wx.showModal({
+            title: '错误信息',
+            content: res.data.errmsg,
+            showCancel: false
+          })
+        }
+      }
+    })
   },
   clearInput: function(e) {
     switch (e.currentTarget.id) {

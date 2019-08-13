@@ -1,5 +1,7 @@
 package com.lzdn.aswxmall.wx.util;
 
+import io.swagger.models.auth.In;
+
 public class WxResponseCode {
     public static final Integer AUTH_INVALID_ACCOUNT = 700;
     public static final Integer AUTH_CAPTCHA_UNSUPPORT = 701;
@@ -11,6 +13,7 @@ public class WxResponseCode {
     public static final Integer AUTH_INVALID_MOBILE = 707;
     public static final Integer AUTH_OPENID_UNACCESS = 708;
     public static final Integer AUTH_OPENID_BINDED = 709;
+    public static final Integer AUTH_OPENID_BINDED_AND_SYNC = 7091;//openid已绑定账号信息
 
     public static final Integer GOODS_UNSHELVE = 710;
     public static final Integer GOODS_NO_STOCK = 711;
