@@ -57,9 +57,9 @@
                              targetProject="src/main/java"/>
         <!--表名-->
         <!-- 2019 8 13 添加aswxmall_user_referrer 用户推荐关系表-->
-        <table tableName = "aswxmall_user_referrer">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
+        <!--<table tableName = "aswxmall_user_referrer">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
         <!--<table tableName="aswxmall_ad">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
@@ -122,9 +122,9 @@
         <!--<table tableName="aswxmall_keyword">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
-        <!--<table tableName="aswxmall_order">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
+        <table tableName="aswxmall_order">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
         <!--<table tableName="aswxmall_order_goods">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
             <!--<columnOverride column="specifications" javaType="java.lang.String[]"-->

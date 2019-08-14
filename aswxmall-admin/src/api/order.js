@@ -43,3 +43,11 @@ export function replyComment(data) {
     data
   })
 }
+
+export function reviseOrder(data) {
+  return request({
+    url: '/order/revise',
+    method: 'post',
+    data
+  })
+}

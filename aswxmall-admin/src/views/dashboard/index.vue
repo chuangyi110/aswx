@@ -77,11 +77,21 @@ export default {
   methods: {
     handleSetLineChartData(type) {
       this.$emit('handleSetLineChartData', type)
-      if(type ==='newVisitis'){this.$router.push({path:'/user/user'})};
-      if(type ==='messages'){this.$router.push({path:'goods/list'})};
-      if(type ==='purchases'){this.$router.push({path:''})};
-      if(type ==='shoppings'){this.$router.push({path:'/mall/order'})};
-
+      switch (type) {
+        case 'newVisitis':
+          this.$router.push({ path : '/user/user' })
+          break;
+        case 'messages':
+          this.$router.push({ path : '/goods/list' })
+          break;
+        case 'purchases':
+          this.$router.push({ path : '' })
+          break;
+        case 'shoppings':
+          this.$router.push({ path : '/mall/order' })
+          break;
+        default:
+      }
     }
   }
 }

@@ -38,6 +38,7 @@
       <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button v-permission="['GET /admin/order/detail']" type="primary" size="mini" @click="handleDetail(scope.row)">详情</el-button>
+          <el-button v-permission="['POST /admin/order/revise']" v-if="scope.row.orderStatus===101" type="primary" size="mini" @click="handleRevisedPrice(scope.row)">改价</el-button>
           <el-button v-permission="['POST /admin/order/ship']" v-if="scope.row.orderStatus==201" type="primary" size="mini" @click="handleShip(scope.row)">发货</el-button>
           <el-button v-permission="['POST /admin/order/refund']" v-if="scope.row.orderStatus==202" type="primary" size="mini" @click="handleRefund(scope.row)">退款</el-button>
         </template>
@@ -87,8 +88,11 @@
             (商品总价){{ orderDetail.order.goodsPrice }}元 +
             (快递费用){{ orderDetail.order.freightPrice }}元 -
             (优惠减免){{ orderDetail.order.couponPrice }}元 -
-            (积分减免){{ orderDetail.order.integralPrice }}元
+            (积分减免){{ orderDetail.order.integralPrice }}元 -
+            (管理员减免){{orderDetail.order.revisePrice}}元 -
+            (管理员快递减免){{orderDetail.order.reviseFreightPrice}}元
           </span>
+
         </el-form-item>
         <el-form-item label="支付信息">
           <span>（支付渠道）微信支付</span>
@@ -104,7 +108,46 @@
         </el-form-item>
       </el-form>
     </el-dialog>
-
+    <!--价格修改对话框-->
+    <el-dialog :visible.sync="revisePriceDialogVisible" title="改价">
+      <el-form ref="revisePriceForm" :model="shipForm" :inline="true" status-icon label-position="left" label-width="200px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="订单价(含邮费)">
+          {{revisePriceForm.orderPrice}}
+        </el-form-item>
+        <br/>
+        <el-form-item label="已减免" v-if="!revised">
+          {{revisePriceForm.revisePrice}}
+        </el-form-item>
+        <el-form-item label="实际支付价(含邮费)" v-if="!revised">
+          {{revisePriceForm.actualPrice}}
+        </el-form-item>
+        <el-form-item label="减价(含邮费)" prop="revisePrice" v-if="revised">
+          <el-input-number v-model="revisePriceForm.revisePrice" :min = "0" :max = "revisePriceForm.orderPrice/10" clearable />
+        </el-form-item>
+        <el-form-item label="现价(含邮费)" v-if="revised">
+          {{revisePriceForm.orderPrice-revisePriceForm.revisePrice}}
+        </el-form-item>
+        <br/>
+        <el-form-item label="原邮费" >
+          {{revisePriceForm.freightPrice}}
+        </el-form-item>
+        <br/>
+        <el-form-item label="已减免邮费" v-if="!revised">
+          {{revisePriceForm.reviseFreightPrice}}
+        </el-form-item>
+        <br/>
+        <el-form-item label="减免邮费" prop="reviseFreightPrice" v-if="revised" >
+          <el-input-number v-model="revisePriceForm.reviseFreightPrice" :min = "0" :max = "revisePriceForm.freightPrice" clearable/>
+        </el-form-item>
+        <el-form-item label="实际支付邮费">
+          {{revisePriceForm.freightPrice-revisePriceForm.reviseFreightPrice}}
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="revisePriceDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="confirmRevisedPrice">确定</el-button>
+      </div>
+    </el-dialog>
     <!-- 发货对话框 -->
     <el-dialog :visible.sync="shipDialogVisible" title="发货">
       <el-form ref="shipForm" :model="shipForm" status-icon label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
@@ -136,9 +179,8 @@
 
   </div>
 </template>
-
 <script>
-import { listOrder, shipOrder, refundOrder, detailOrder } from '@/api/order'
+import { listOrder, shipOrder, refundOrder, detailOrder,reviseOrder } from '@/api/order'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import checkPermission from '@/utils/permission' // 权限判断函数
 
@@ -183,6 +225,16 @@ export default {
         user: {},
         orderGoods: []
       },
+      revisePriceDialogVisible: false,
+      revised:false,
+      revisePriceForm:{
+        orderId: undefined,
+        orderPrice:undefined,
+        actualPrice:undefined,
+        freightPrice:undefined,
+        revisePrice: undefined,
+        reviseFreightPrice:undefined,
+      },
       shipForm: {
         orderId: undefined,
         shipChannel: undefined,
@@ -223,6 +275,45 @@ export default {
         this.orderDetail = response.data.data
       })
       this.orderDialogVisible = true
+    },
+    handleRevisedPrice(row){
+      this.revisePriceDialogVisible = true
+      this.revisePriceForm.orderId = row.id
+      this.revisePriceForm.actualPrice = row.actualPrice
+      this.revisePriceForm.orderPrice = row.orderPrice
+      this.revisePriceForm.freightPrice = row.freightPrice
+      this.revisePriceForm.revisePrice = row.revisePrice
+      this.revisePriceForm.reviseFreightPrice = row.reviseFreightPrice
+      if(this.revisePriceForm.revisePrice==0){
+        this.revised = true
+      }
+    },
+    confirmRevisedPrice(){
+      if(!this.revised){
+        this.$notify.error({
+          title: '警告',
+          message: '已改价一次，禁止重复修改'
+        })
+        return
+      }
+      this.$refs['revisePriceForm'].validate((valid)=>{
+        if(valid){
+          reviseOrder(this.revisePriceForm).then(response =>{
+            this.revisePriceDialogVisible =false
+            console.log(response)
+            let data = response.data
+            if(data.errno==0){
+              this.$notify.success({
+                title: '成功',
+                message: '修改价格成功'
+              })
+              this.revised = false
+              this.getList()
+            }
+          })
+        }
+      })
+
     },
     handleShip(row) {
       this.shipForm.orderId = row.id

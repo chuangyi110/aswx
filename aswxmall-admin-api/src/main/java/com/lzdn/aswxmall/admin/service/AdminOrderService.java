@@ -4,9 +4,7 @@ import com.github.binarywang.wxpay.bean.request.WxPayRefundRequest;
 import com.github.binarywang.wxpay.bean.result.WxPayRefundResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
-import com.lzdn.aswxmall.db.domain.AswxmallComment;
-import com.lzdn.aswxmall.db.domain.AswxmallOrder;
-import com.lzdn.aswxmall.db.domain.AswxmallOrderGoods;
+import com.lzdn.aswxmall.db.domain.*;
 import com.lzdn.aswxmall.db.service.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,8 +12,9 @@ import com.lzdn.aswxmall.core.notify.NotifyService;
 import com.lzdn.aswxmall.core.notify.NotifyType;
 import com.lzdn.aswxmall.core.util.JacksonUtil;
 import com.lzdn.aswxmall.core.util.ResponseUtil;
-import com.lzdn.aswxmall.db.domain.UserVo;
 import com.lzdn.aswxmall.db.util.OrderUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -243,4 +242,34 @@ public class AdminOrderService {
         return ResponseUtil.ok();
     }
 
+    /**
+     * 修改价格
+     * @param body
+     * @return
+     */
+    public Object revise(String body) {
+
+        Integer adminId = ((AswxmallAdmin)SecurityUtils.getSubject().getPrincipal()).getId();
+        Integer id = JacksonUtil.parseInteger(body,"orderId");
+        BigDecimal actualPrice = new BigDecimal(JacksonUtil.parseShort(body,"actualPrice"));
+        //TODO short精度丢失 少了1毛钱
+        BigDecimal freightPrice = new BigDecimal(JacksonUtil.parseShort(body,"freightPrice"));
+        BigDecimal revisePrice = new BigDecimal(JacksonUtil.parseShort(body,"revisePrice"));
+        BigDecimal reviseFreightPrice = new BigDecimal(JacksonUtil.parseShort(body,"reviseFreightPrice"));
+        BigDecimal orderPrice = new BigDecimal(JacksonUtil.parseShort(body,"orderPrice"));
+        if(!orderPrice.equals(actualPrice)){
+            //TODO 未添加错误信息 2019 8 14
+            return ResponseUtil.fail();
+        }
+        actualPrice = actualPrice.subtract(revisePrice).subtract(reviseFreightPrice);
+        AswxmallOrder order = new AswxmallOrder();
+        order.setId(id);
+        order.setReviseFreightPrice(reviseFreightPrice);
+        order.setRevisePrice(revisePrice);
+        order.setActualPrice(actualPrice);
+        order.setFreightPrice(freightPrice);
+        order.setRevisePriceAdminId(adminId);
+        int num = orderService.revisePriceById(order);
+        return num>0?ResponseUtil.ok():ResponseUtil.fail();
+    }
 }
