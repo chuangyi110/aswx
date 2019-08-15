@@ -252,14 +252,13 @@ public class AdminOrderService {
         Integer adminId = ((AswxmallAdmin)SecurityUtils.getSubject().getPrincipal()).getId();
         Integer id = JacksonUtil.parseInteger(body,"orderId");
         BigDecimal actualPrice = new BigDecimal(JacksonUtil.parseString(body,"actualPrice"));
-        //TODO short精度丢失 少了1毛钱
         BigDecimal freightPrice = new BigDecimal(JacksonUtil.parseString(body,"freightPrice"));
         BigDecimal revisePrice = new BigDecimal(JacksonUtil.parseString(body,"revisePrice"));
         System.out.println(revisePrice);
         BigDecimal reviseFreightPrice = new BigDecimal(JacksonUtil.parseString(body,"reviseFreightPrice"));
         BigDecimal orderPrice = new BigDecimal(JacksonUtil.parseString(body,"orderPrice"));
         if(!orderPrice.equals(actualPrice)){
-            //TODO 未添加错误信息 2019 8 14
+            //TODO 前台禁止重复扣费后台无控制
             return ResponseUtil.fail();
         }
         actualPrice = actualPrice.subtract(revisePrice).subtract(reviseFreightPrice);
