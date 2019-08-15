@@ -66,7 +66,6 @@ public class AdminOrderController {
     @RequiresPermissionsDesc(menu = {"商场管理", "订单管理"}, button = "改价")
     @PostMapping("/revise")
     public Object revise(@RequestBody String body){
-
         return adminOrderService.revise(body);
     }
 
