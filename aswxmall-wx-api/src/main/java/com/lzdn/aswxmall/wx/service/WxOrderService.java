@@ -316,11 +316,14 @@ public class WxOrderService {
 
         // 可以使用的其他钱，例如用户积分
         BigDecimal integralPrice = new BigDecimal(0.00);
-
-        // 订单费用
+        //生成订单后总价议价,此处只做初始化
+        BigDecimal revisePrice = new BigDecimal(0.00);
+        //生成订单后快递费议价，此处只做初始化
+        BigDecimal reviseFreightPrice = new BigDecimal(0.00);
+        // 订单费用， = goods_price + freight_price - coupon_price
         BigDecimal orderTotalPrice = checkedGoodsPrice.add(freightPrice).subtract(couponPrice).max(new BigDecimal(0.00));
-        // 最终支付费用
-        BigDecimal actualPrice = orderTotalPrice.subtract(integralPrice);
+        // 最终支付费用 = order_price - integral_price - revise_price - revise_freight_price
+        BigDecimal actualPrice = orderTotalPrice.subtract(integralPrice).subtract(revisePrice).subtract(reviseFreightPrice);
 
         Integer orderId = null;
         AswxmallOrder order = null;
@@ -338,6 +341,8 @@ public class WxOrderService {
         order.setFreightPrice(freightPrice);
         order.setCouponPrice(couponPrice);
         order.setIntegralPrice(integralPrice);
+        order.setRevisePrice(revisePrice);
+        order.setReviseFreightPrice(reviseFreightPrice);
         order.setOrderPrice(orderTotalPrice);
         order.setActualPrice(actualPrice);
 

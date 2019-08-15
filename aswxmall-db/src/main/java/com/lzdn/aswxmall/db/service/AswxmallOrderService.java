@@ -38,6 +38,7 @@ public class AswxmallOrderService {
     }
 
     public AswxmallOrder findById(Integer orderId) {
+
         return aswxmallOrderMapper.selectByPrimaryKey(orderId);
     }
 
@@ -185,5 +186,9 @@ public class AswxmallOrderService {
         AswxmallOrderExample example = new AswxmallOrderExample();
         example.or().andCommentsGreaterThan((short) 0).andConfirmTimeLessThan(expired).andDeletedEqualTo(false);
         return aswxmallOrderMapper.selectByExample(example);
+    }
+
+    public int revisePriceById(AswxmallOrder order) {
+        return aswxmallOrderMapper.updateByPrimaryKeySelective(order);
     }
 }
