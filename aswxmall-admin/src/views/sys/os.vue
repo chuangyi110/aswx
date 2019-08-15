@@ -41,7 +41,7 @@
 
     <!-- 添加对话框 -->
     <el-dialog :visible.sync="createDialogVisible" title="上传对象">
-      <el-upload ref="upload" :show-file-list="false" :limit="1" :http-request="handleUpload" action="#" list-type="picture">
+      <el-upload ref="upload" :show-file-list="false" :limit="1" :http-request="handleUpload" :before-upload="checkFileSize" action="#" list-type="picture">
         <el-button type="primary">点击上传</el-button>
       </el-upload>
     </el-dialog>
@@ -109,6 +109,13 @@ export default {
         this.total = 0
         this.listLoading = false
       })
+    },
+    checkFileSize: function(file) {
+      if (file.size > 1048576) {
+        this.$message.error(`${file.name}文件大于1024KB，请选择小于1024KB大小的图片`)
+        return false
+      }
+      return true
     },
     handleFilter() {
       this.listQuery.page = 1

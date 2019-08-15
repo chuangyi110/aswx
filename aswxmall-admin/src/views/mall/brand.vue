@@ -52,6 +52,7 @@
             :action="uploadPath"
             :show-file-list="false"
             :on-success="uploadPicUrl"
+            :before-upload="checkFileSize"
             class="avatar-uploader"
             accept=".jpg,.jpeg,.png,.gif">
             <img v-if="dataForm.picUrl" :src="dataForm.picUrl" class="avatar">
@@ -170,6 +171,13 @@ export default {
     handleFilter() {
       this.listQuery.page = 1
       this.getList()
+    },
+    checkFileSize: function(file) {
+      if (file.size > 1048576) {
+        this.$message.error(`${file.name}文件大于1024KB，请选择小于1024KB大小的图片`)
+        return false
+      }
+      return true
     },
     resetForm() {
       this.dataForm = {

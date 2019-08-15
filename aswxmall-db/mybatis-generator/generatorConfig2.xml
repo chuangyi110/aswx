@@ -100,11 +100,11 @@
         <!--<table tableName="aswxmall_footprint">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
-        <!--<table tableName="aswxmall_goods">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-            <!--<columnOverride column="gallery" javaType="java.lang.String[]"-->
-                            <!--typeHandler="com.lzdn.aswxmall.db.mybatis.JsonStringArrayTypeHandler"/>-->
-        <!--</table>-->
+        <table tableName="aswxmall_goods">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="gallery" javaType="java.lang.String[]"
+                            typeHandler="com.lzdn.aswxmall.db.mybatis.JsonStringArrayTypeHandler"/>
+        </table>
         <!--<table tableName="aswxmall_goods_attribute">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
@@ -122,9 +122,10 @@
         <!--<table tableName="aswxmall_keyword">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
-        <table tableName="aswxmall_order">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
+        <!--订单添加议价功能 2019 8 14-->
+        <!--<table tableName="aswxmall_order">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
         <!--<table tableName="aswxmall_order_goods">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
             <!--<columnOverride column="specifications" javaType="java.lang.String[]"-->

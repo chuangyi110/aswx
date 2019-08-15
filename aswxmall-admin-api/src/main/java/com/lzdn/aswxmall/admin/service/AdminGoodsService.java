@@ -205,6 +205,7 @@ public class AdminGoodsService {
         }
 
         AswxmallGoods goods = goodsAllinone.getGoods();
+        System.out.println(goods);
         AswxmallGoodsAttribute[] attributes = goodsAllinone.getAttributes();
         AswxmallGoodsSpecification[] specifications = goodsAllinone.getSpecifications();
         AswxmallGoodsProduct[] products = goodsAllinone.getProducts();
