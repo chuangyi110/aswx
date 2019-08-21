@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -100,4 +101,5 @@ public class AswxmallUserService {
     public void deleteById(Integer id) {
         userMapper.logicalDeleteByPrimaryKey(id);
     }
+
 }

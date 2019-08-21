@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50721
 File Encoding         : 65001
 
-Date: 2019-08-15 16:39:08
+Date: 2019-08-21 17:23:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -114,7 +114,7 @@ CREATE TABLE `aswxmall_cart` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COMMENT='购物车商品表';
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COMMENT='购物车商品表';
 
 -- ----------------------------
 -- Table structure for aswxmall_category
@@ -152,7 +152,7 @@ CREATE TABLE `aswxmall_collect` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `goods_id` (`value_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='收藏表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='收藏表';
 
 -- ----------------------------
 -- Table structure for aswxmall_comment
@@ -219,7 +219,7 @@ CREATE TABLE `aswxmall_coupon_user` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='优惠券用户使用表';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COMMENT='优惠券用户使用表';
 
 -- ----------------------------
 -- Table structure for aswxmall_feedback
@@ -254,7 +254,7 @@ CREATE TABLE `aswxmall_footprint` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COMMENT='用户浏览足迹表';
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COMMENT='用户浏览足迹表';
 
 -- ----------------------------
 -- Table structure for aswxmall_goods
@@ -304,7 +304,7 @@ CREATE TABLE `aswxmall_goods_attribute` (
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=947 DEFAULT CHARSET=utf8mb4 COMMENT='商品参数表';
+) ENGINE=InnoDB AUTO_INCREMENT=976 DEFAULT CHARSET=utf8mb4 COMMENT='商品参数表';
 
 -- ----------------------------
 -- Table structure for aswxmall_goods_product
@@ -321,7 +321,7 @@ CREATE TABLE `aswxmall_goods_product` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=276 DEFAULT CHARSET=utf8mb4 COMMENT='商品货品表';
+) ENGINE=InnoDB AUTO_INCREMENT=292 DEFAULT CHARSET=utf8mb4 COMMENT='商品货品表';
 
 -- ----------------------------
 -- Table structure for aswxmall_goods_specification
@@ -338,7 +338,7 @@ CREATE TABLE `aswxmall_goods_specification` (
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=277 DEFAULT CHARSET=utf8mb4 COMMENT='商品规格表';
+) ENGINE=InnoDB AUTO_INCREMENT=293 DEFAULT CHARSET=utf8mb4 COMMENT='商品规格表';
 
 -- ----------------------------
 -- Table structure for aswxmall_groupon
@@ -425,7 +425,7 @@ CREATE TABLE `aswxmall_log` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='操作日志表';
+) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='操作日志表';
 
 -- ----------------------------
 -- Table structure for aswxmall_order
@@ -462,7 +462,7 @@ CREATE TABLE `aswxmall_order` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COMMENT='订单表';
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COMMENT='订单表';
 
 -- ----------------------------
 -- Table structure for aswxmall_order_goods
@@ -486,7 +486,7 @@ CREATE TABLE `aswxmall_order_goods` (
   PRIMARY KEY (`id`),
   KEY `order_id` (`order_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COMMENT='订单商品表';
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COMMENT='订单商品表';
 
 -- ----------------------------
 -- Table structure for aswxmall_permission
@@ -501,6 +501,56 @@ CREATE TABLE `aswxmall_permission` (
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=246 DEFAULT CHARSET=utf8mb4 COMMENT='权限表';
+
+-- ----------------------------
+-- Table structure for aswxmall_rebates
+-- ----------------------------
+DROP TABLE IF EXISTS `aswxmall_rebates`;
+CREATE TABLE `aswxmall_rebates` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT NULL COMMENT '总额',
+  `balance` decimal(10,2) DEFAULT NULL COMMENT '余额',
+  `widthdraw` decimal(10,2) DEFAULT NULL COMMENT '已提现额',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='返点总计表';
+
+-- ----------------------------
+-- Table structure for aswxmall_rebates_create_order
+-- ----------------------------
+DROP TABLE IF EXISTS `aswxmall_rebates_create_order`;
+CREATE TABLE `aswxmall_rebates_create_order` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `order_id` int(11) DEFAULT NULL COMMENT '订单id',
+  `order_user_id` int(11) DEFAULT NULL,
+  `order_actual_price` decimal(10,2) DEFAULT NULL,
+  `before_amounts` decimal(10,2) DEFAULT NULL COMMENT '添加前余额',
+  `rebates` decimal(10,2) DEFAULT NULL COMMENT '返点金额',
+  `balance` decimal(10,2) DEFAULT NULL COMMENT '余额',
+  `type` tinyint(4) DEFAULT NULL COMMENT '返点类型（预留订单退货类型）',
+  `create_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='订单完成后生成返点订单';
+
+-- ----------------------------
+-- Table structure for aswxmall_rebates_withdrawal_order
+-- ----------------------------
+DROP TABLE IF EXISTS `aswxmall_rebates_withdrawal_order`;
+CREATE TABLE `aswxmall_rebates_withdrawal_order` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `before_amount` decimal(10,2) DEFAULT NULL COMMENT '提现前总额',
+  `withdraw_money` decimal(10,2) DEFAULT NULL COMMENT '提现金额',
+  `balance` decimal(10,2) DEFAULT NULL COMMENT '提现后余额',
+  `withdraw_time` datetime DEFAULT NULL COMMENT '提现时间',
+  `action_ip` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '操作ip',
+  `action_client` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '操作端',
+  `status` smallint(6) DEFAULT NULL COMMENT '订单状态',
+  `admin_id` int(11) DEFAULT NULL COMMENT '审核管理员',
+  `approve_time` datetime DEFAULT NULL COMMENT '批准时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='返点提现订单';
 
 -- ----------------------------
 -- Table structure for aswxmall_region

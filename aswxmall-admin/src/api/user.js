@@ -7,7 +7,13 @@ export function fetchList(query) {
     params: query
   })
 }
-
+export function fetchRebatesList(query) {
+  return request({
+    url:'/rebates/list',
+    method:'get',
+    params:query
+  })
+}
 export function listAddress(query) {
   return request({
     url: '/address/list',

@@ -10,7 +10,23 @@
     </div>
 
     <!-- 查询结果 -->
-    <el-table v-loading="listLoading" :data="list" element-loading-text="正在查询中。。。" border fit highlight-current-row>
+    <el-table v-loading="listLoading" :data="list"
+              element-loading-text="正在查询中。。。" border fit highlight-current-row
+              @expand-change="expandSelect"
+              ref="refTable"
+              @selection-change="handleSelectionChange"
+              >
+      <el-table-column type="expand">
+        返点总额：{{rebates.amount}}&#12288;&#12288;
+        返点余额：{{rebates.balance}}&#12288;&#12288;
+        已提现：{{rebates.widthdraw}}
+        <el-table v-loading="rebatesListLoading" :data="rebatesList" element-loading-text="正在查询中。。。" border fit highlight-current-row>
+          <el-table-column align = "center" label="发展客户ID" prop="orderUserId"/>
+          <el-table-column align = "center" label="消费单数" prop="orderCount"/>
+          <el-table-column align = "center" label="消费金额" prop="totalOrderActualPrice"/>
+          <el-table-column align = "center" label="返点金额" prop="totalRebates"/>
+        </el-table>
+      </el-table-column>
       <el-table-column align="center" width="100px" label="用户ID" prop="id" sortable/>
 
       <el-table-column align="center" label="用户名" prop="username"/>
@@ -45,7 +61,7 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/user'
+import { fetchList,fetchRebatesList } from '@/api/user'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
@@ -67,7 +83,23 @@ export default {
       downloadLoading: false,
       genderDic: ['未知', '男', '女'],
       levelDic: ['普通用户', 'VIP用户', '高级VIP用户'],
-      statusDic: ['可用', '禁用', '注销']
+      statusDic: ['可用', '禁用', '注销'],
+      expands:[],
+      rebatesListLoading: true,
+      rebatesList:null,
+      rebatesTotal:0,
+      rebatesListQuery:{
+        page:1,
+        limit:20,
+        uid:undefined,
+        sort:'id',
+        order:'desc'
+      },
+      rebates:{
+        amount:0,
+        balance:0,
+        widthdraw:0,
+      }
     }
   },
   created() {
@@ -98,6 +130,39 @@ export default {
         excel.export_json_to_excel2(tHeader, this.list, filterVal, '用户信息')
         this.downloadLoading = false
       })
+    },
+    expandSelect:function (row, expandedRows) {
+      var that = this
+      if (expandedRows.length>1) {
+        that.expands = []
+        if (row) {
+          that.expands.push(row);
+        }
+        this.$refs.refTable.toggleRowExpansion(expandedRows[0]);
+      } else {
+        that.expands = [];
+      }
+      this.rebatesListQuery.uid = row.id
+      fetchRebatesList(this.rebatesListQuery).then(response=>{
+        let data = response.data.data;
+        console.log(response)
+        this.rebatesList = data.rebatesCountList
+        this.rebatesTotal = data.rebatesCountList.total
+        this.rebates.amount = data.amount
+        this.rebates.balance = data.balance
+        this.rebates.widthdraw = data.widthdraw
+        this.rebatesListLoading = false
+      }).catch(() => {
+        this.rebatesList = []
+        this.rebatesTotal = 0
+        this.rebates.amount = 0
+        this.rebates.balance = 0
+        this.rebates.widthdraw = 0
+        this.rebatesListLoading = false
+      })
+    },
+    handleSelectionChange:function (val) {
+      console.log(val)
     }
   }
 }
