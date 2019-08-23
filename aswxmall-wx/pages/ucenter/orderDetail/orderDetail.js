@@ -58,32 +58,36 @@ Page({
   // “去付款”按钮点击效果
   payOrder: function() {
     let that = this;
-    util.request(api.OrderPrepay, {
-      orderId: that.data.orderId
-    }, 'POST').then(function(res) {
-      if (res.errno === 0) {
-        const payParam = res.data;
-        console.log("支付过程开始");
-        wx.requestPayment({
-          'timeStamp': payParam.timeStamp,
-          'nonceStr': payParam.nonceStr,
-          'package': payParam.packageValue,
-          'signType': payParam.signType,
-          'paySign': payParam.paySign,
-          'success': function(res) {
-            console.log("支付过程成功");
-            util.redirect('/pages/ucenter/order/order');
-          },
-          'fail': function(res) {
-            console.log("支付过程失败");
-            util.showErrorToast('支付失败');
-          },
-          'complete': function(res) {
-            console.log("支付过程结束")
-          }
-        });
-      }
+    //2019 8 21 下单后直接跳转到中转页面，不再进行直接支付
+    wx.redirectTo({
+      url: '/pages/paySetout/paySetout?status=0'
     });
+    // util.request(api.OrderPrepay, {
+    //   orderId: that.data.orderId
+    // }, 'POST').then(function(res) {
+    //   if (res.errno === 0) {
+    //     const payParam = res.data;
+    //     console.log("支付过程开始");
+    //     wx.requestPayment({
+    //       'timeStamp': payParam.timeStamp,
+    //       'nonceStr': payParam.nonceStr,
+    //       'package': payParam.packageValue,
+    //       'signType': payParam.signType,
+    //       'paySign': payParam.paySign,
+    //       'success': function(res) {
+    //         console.log("支付过程成功");
+    //         util.redirect('/pages/ucenter/order/order');
+    //       },
+    //       'fail': function(res) {
+    //         console.log("支付过程失败");
+    //         util.showErrorToast('支付失败');
+    //       },
+    //       'complete': function(res) {
+    //         console.log("支付过程结束")
+    //       }
+    //     });
+    //   }
+    // });
 
   },
   // “取消订单”点击效果

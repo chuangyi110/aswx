@@ -42,7 +42,7 @@ class SystemInistService {
         DEFAULT_CONFIGS.put(SystemConfig.ASWXMALL_WX_INDEX_CATLOG_GOODS, "4");
         DEFAULT_CONFIGS.put(SystemConfig.ASWXMALL_WX_SHARE, "false");
         // 运费相关配置默认值
-        DEFAULT_CONFIGS.put(SystemConfig.ASWXMALL_EXPRESS_FREIGHT_VALUE, "8");
+        DEFAULT_CONFIGS.put(SystemConfig.ASWXMALL_EXPRESS_FREIGHT_VALUE, "10");
         DEFAULT_CONFIGS.put(SystemConfig.ASWXMALL_EXPRESS_FREIGHT_MIN, "88");
         // 订单相关配置默认值
         DEFAULT_CONFIGS.put(SystemConfig.ASWXMALL_ORDER_UNPAID, "30");

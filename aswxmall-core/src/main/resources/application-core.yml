@@ -53,9 +53,9 @@ aswxmall:
 
   # 快鸟物流查询配置
   express:
-    enable: false
-    appId: "XXXXXXXXX"
-    appKey: "XXXXXXXXXXXXXXXXXXXXXXXXX"
+    enable: true
+    appId: "1570550"
+    appKey: "f839f834-bb17-405e-bdc7-a833bc434941"
     vendors:
     - code: "ZTO"
       name: "中通快递"
