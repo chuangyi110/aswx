@@ -51,3 +51,11 @@ export function reviseOrder(data) {
     data
   })
 }
+
+export  function confirmPayment(data) {
+  return request({
+    url: '/order/confirmPayment',
+    method: 'post',
+    data
+  })
+}

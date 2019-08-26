@@ -35,6 +35,9 @@
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
+    <result column="pay_type" jdbcType="SMALLINT" property="payType" />
+    <result column="confirm_payment_admin_id" jdbcType="INTEGER" property="confirmPaymentAdminId" />
+    <result column="transfer_pic" jdbcType="VARCHAR" property="transferPic" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -111,7 +114,7 @@
     freight_price, revise_freight_price, coupon_price, integral_price, groupon_price, 
     revise_price, order_price, actual_price, revise_price_admin_id, pay_id, pay_time, 
     ship_sn, ship_channel, ship_time, confirm_time, comments, end_time, add_time, update_time, 
-    deleted
+    deleted, pay_type, confirm_payment_admin_id, transfer_pic
   </sql>
   <select id="selectByExample" parameterType="com.lzdn.aswxmall.db.domain.AswxmallOrderExample" resultMap="BaseResultMap">
     <!--
@@ -241,7 +244,8 @@
       pay_time, ship_sn, ship_channel, 
       ship_time, confirm_time, comments, 
       end_time, add_time, update_time, 
-      deleted)
+      deleted, pay_type, confirm_payment_admin_id, 
+      transfer_pic)
     values (#{userId,jdbcType=INTEGER}, #{orderSn,jdbcType=VARCHAR}, #{orderStatus,jdbcType=SMALLINT}, 
       #{consignee,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{message,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, #{freightPrice,jdbcType=DECIMAL}, 
@@ -251,7 +255,8 @@
       #{payTime,jdbcType=TIMESTAMP}, #{shipSn,jdbcType=VARCHAR}, #{shipChannel,jdbcType=VARCHAR}, 
       #{shipTime,jdbcType=TIMESTAMP}, #{confirmTime,jdbcType=TIMESTAMP}, #{comments,jdbcType=SMALLINT}, 
       #{endTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{deleted,jdbcType=BIT})
+      #{deleted,jdbcType=BIT}, #{payType,jdbcType=SMALLINT}, #{confirmPaymentAdminId,jdbcType=INTEGER}, 
+      #{transferPic,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.lzdn.aswxmall.db.domain.AswxmallOrder">
     <!--
@@ -347,6 +352,15 @@
       <if test="deleted != null">
         deleted,
       </if>
+      <if test="payType != null">
+        pay_type,
+      </if>
+      <if test="confirmPaymentAdminId != null">
+        confirm_payment_admin_id,
+      </if>
+      <if test="transferPic != null">
+        transfer_pic,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -432,6 +446,15 @@
       </if>
       <if test="deleted != null">
         #{deleted,jdbcType=BIT},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=SMALLINT},
+      </if>
+      <if test="confirmPaymentAdminId != null">
+        #{confirmPaymentAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="transferPic != null">
+        #{transferPic,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -539,6 +562,15 @@
       <if test="record.deleted != null">
         deleted = #{record.deleted,jdbcType=BIT},
       </if>
+      <if test="record.payType != null">
+        pay_type = #{record.payType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.confirmPaymentAdminId != null">
+        confirm_payment_admin_id = #{record.confirmPaymentAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="record.transferPic != null">
+        transfer_pic = #{record.transferPic,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -578,7 +610,10 @@
       end_time = #{record.endTime,jdbcType=TIMESTAMP},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      deleted = #{record.deleted,jdbcType=BIT}
+      deleted = #{record.deleted,jdbcType=BIT},
+      pay_type = #{record.payType,jdbcType=SMALLINT},
+      confirm_payment_admin_id = #{record.confirmPaymentAdminId,jdbcType=INTEGER},
+      transfer_pic = #{record.transferPic,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -674,6 +709,15 @@
       <if test="deleted != null">
         deleted = #{deleted,jdbcType=BIT},
       </if>
+      <if test="payType != null">
+        pay_type = #{payType,jdbcType=SMALLINT},
+      </if>
+      <if test="confirmPaymentAdminId != null">
+        confirm_payment_admin_id = #{confirmPaymentAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="transferPic != null">
+        transfer_pic = #{transferPic,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -710,7 +754,10 @@
       end_time = #{endTime,jdbcType=TIMESTAMP},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      deleted = #{deleted,jdbcType=BIT}
+      deleted = #{deleted,jdbcType=BIT},
+      pay_type = #{payType,jdbcType=SMALLINT},
+      confirm_payment_admin_id = #{confirmPaymentAdminId,jdbcType=INTEGER},
+      transfer_pic = #{transferPic,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectOneByExample" parameterType="com.lzdn.aswxmall.db.domain.AswxmallOrderExample" resultMap="BaseResultMap">

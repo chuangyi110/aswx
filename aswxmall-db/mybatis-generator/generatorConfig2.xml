@@ -56,16 +56,18 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.lzdn.aswxmall.db.dao"
                              targetProject="src/main/java"/>
         <!--表名-->
-        <!--2019 8 21 返点功能相关表-->
-        <table tableName = "aswxmall_rebates">
-            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
-        </table>
-        <table tableName = "aswxmall_rebates_create_order">
-            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
-        </table>
-        <table tableName = "aswxmall_rebates_withdrawal_order">
-            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
-        </table>
+        <!--2019 8 21 返点功能相关表 statrt-->
+        <!--<table tableName = "aswxmall_rebates">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName = "aswxmall_rebates_create_order">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName = "aswxmall_rebates_withdrawal_order">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <!--2019 8 21 返点功能相关表 end-->
+
         <!-- 2019 8 13 添加aswxmall_user_referrer 用户推荐关系表-->
         <!--<table tableName = "aswxmall_user_referrer">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
@@ -133,10 +135,10 @@
         <!--<table tableName="aswxmall_keyword">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
-        <!--订单添加议价功能 2019 8 14-->
-        <!--<table tableName="aswxmall_order">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
+        <!--订单添加议价功能 2019 8 14,,,,,,2019.8 .26添加微信好友转账（确认支付信息功能）-->
+        <table tableName="aswxmall_order">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
         <!--<table tableName="aswxmall_order_goods">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
             <!--<columnOverride column="specifications" javaType="java.lang.String[]"-->
