@@ -353,26 +353,26 @@ export const asyncRouterMap = [
         },
         hidden: true
       },
-      {
-        path: 'groupon-rule',
-        component: () => import('@/views/promotion/grouponRule'),
-        name: 'grouponRule',
-        meta: {
-          perms: ['GET /admin/groupon/list', 'POST /admin/groupon/create', 'POST /admin/groupon/update', 'POST /admin/groupon/delete'],
-          title: '团购规则',
-          noCache: true
-        }
-      },
-      {
-        path: 'groupon-activity',
-        component: () => import('@/views/promotion/grouponActivity'),
-        name: 'grouponActivity',
-        meta: {
-          perms: ['GET /admin/groupon/listRecord'],
-          title: '团购活动',
-          noCache: true
-        }
-      }
+      // {
+      //   path: 'groupon-rule',
+      //   component: () => import('@/views/promotion/grouponRule'),
+      //   name: 'grouponRule',
+      //   meta: {
+      //     perms: ['GET /admin/groupon/list', 'POST /admin/groupon/create', 'POST /admin/groupon/update', 'POST /admin/groupon/delete'],
+      //     title: '团购规则',
+      //     noCache: true
+      //   }
+      // },
+      // {
+      //   path: 'groupon-activity',
+      //   component: () => import('@/views/promotion/grouponActivity'),
+      //   name: 'grouponActivity',
+      //   meta: {
+      //     perms: ['GET /admin/groupon/listRecord'],
+      //     title: '团购活动',
+      //     noCache: true
+      //   }
+      // }
     ]
   },
 

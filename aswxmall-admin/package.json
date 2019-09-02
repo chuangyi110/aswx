@@ -2,7 +2,7 @@
   "name": "aswxmall-admin",
   "version": "0.1.0",
   "description": "aswxmall-admin basing on vue-element-admin 3.9.3",
-  "author": "linlinjava <linlinjava@163.com>",
+  "author": "lzdn",
   "license": "MIT",
   "private": true,
   "scripts": {

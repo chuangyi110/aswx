@@ -6,6 +6,7 @@ import com.lzdn.aswxmall.db.dao.OrderMapper;
 import com.lzdn.aswxmall.db.domain.AswxmallOrder;
 import com.lzdn.aswxmall.db.domain.AswxmallOrderExample;
 import com.lzdn.aswxmall.db.util.OrderUtil;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -190,5 +191,18 @@ public class AswxmallOrderService {
 
     public int revisePriceById(AswxmallOrder order) {
         return aswxmallOrderMapper.updateByPrimaryKeySelective(order);
+    }
+
+    public int confirmPayment(String orderSn, Integer adminId, String picUrl, String transferOrderId, Short wxTransfer) {
+        AswxmallOrderExample aswxmallOrderExample = new AswxmallOrderExample();
+        aswxmallOrderExample.createCriteria().andOrderSnEqualTo(orderSn);
+        AswxmallOrder aswxmallOrder = new AswxmallOrder();
+        aswxmallOrder.setPayType(wxTransfer);
+        aswxmallOrder.setPayId(transferOrderId);
+        aswxmallOrder.setConfirmPaymentAdminId(adminId);
+        aswxmallOrder.setTransferPic(picUrl);
+        aswxmallOrder.setPayTime(LocalDateTime.now());
+        aswxmallOrder.setOrderStatus(OrderUtil.STATUS_PAY);
+        return aswxmallOrderMapper.updateByExampleSelective(aswxmallOrder,aswxmallOrderExample);
     }
 }

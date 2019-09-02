@@ -1,6 +1,7 @@
 package com.lzdn.aswxmall.admin.web;
 
 import com.lzdn.aswxmall.admin.annotation.RequiresPermissionsDesc;
+import com.lzdn.aswxmall.admin.vo.RebatesVo;
 import com.lzdn.aswxmall.db.domain.AswxmallUser;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -38,4 +39,5 @@ public class AdminUserController {
         List<AswxmallUser> userList = userService.querySelective(username, mobile, page, limit, sort, order);
         return ResponseUtil.okList(userList);
     }
+
 }

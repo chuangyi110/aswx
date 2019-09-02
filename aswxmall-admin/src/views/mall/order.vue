@@ -94,9 +94,13 @@
           </span>
 
         </el-form-item>
-        <el-form-item label="支付信息">
-          <span>（支付渠道）微信支付</span>
+        <el-form-item label="支付信息"  >
+          <span v-if="orderDetail.order.payType==102">（支付渠道）微信支付</span>
+          <span v-if="orderDetail.order.payType==101">（支付渠道）微信转账支付</span>
           <span>（支付时间）{{ orderDetail.order.payTime }}</span>
+        </el-form-item>
+        <el-form-item v-if="orderDetail.order.payType==101">
+          <img :class="{'active':isChoose}" :src="orderDetail.order.transferPic" width="80" @click="imgScc"/>
         </el-form-item>
         <el-form-item label="快递信息">
           <span>（快递公司）{{ orderDetail.order.shipChannel }}</span>
@@ -107,10 +111,32 @@
           <span>（确认收货时间）{{ orderDetail.order.confirmTime }}</span>
         </el-form-item>
       </el-form>
+      <el-form ref="confirmPaymentForm" :model="confirmPaymentForm"  v-if="orderDetail.order.orderStatus===101">
+        <el-form-item label="转账单号" prop="revisePrice">
+          <el-input v-model="confirmPaymentForm.transferAccountsOrderId" clearable />
+        </el-form-item>
+        <el-form-item label="规格图片" prop="picUrl" >
+          <el-upload
+            :headers="headers"
+            :action="uploadPath"
+            :show-file-list="false"
+            :on-success="uploadtransferAccountsOrderPicUrl"
+            :before-upload="checkFileSize"
+            class="avatar-uploader"
+            accept=".jpg,.jpeg,.png,.gif">
+            <img v-if="confirmPaymentForm.picUrl" :src="confirmPaymentForm.picUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"/>
+          </el-upload>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer" v-if="orderDetail.order.orderStatus===101">
+        <el-button @click="orderDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="confirmPayment( orderDetail.order.orderSn )">确认收款</el-button>
+      </div>
     </el-dialog>
     <!--价格修改对话框-->
     <el-dialog :visible.sync="revisePriceDialogVisible" title="改价">
-      <el-form ref="revisePriceForm" :model="shipForm" :inline="true" status-icon label-position="left" label-width="200px" style="width: 400px; margin-left:50px;">
+      <el-form ref="revisePriceForm" :model="revisePriceForm" :inline="true" status-icon label-position="left" label-width="200px" style="width: 400px; margin-left:50px;">
         <el-form-item label="订单价(含邮费)">
           {{revisePriceForm.orderPrice}}
         </el-form-item>
@@ -143,7 +169,7 @@
           {{revisePriceForm.freightPrice-revisePriceForm.reviseFreightPrice}}
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer" >
         <el-button @click="revisePriceDialogVisible = false">取消</el-button>
         <el-button type="primary" @click="confirmRevisedPrice">确定</el-button>
       </div>
@@ -179,11 +205,51 @@
 
   </div>
 </template>
+<style>
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #20a0ff;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 120px;
+    height: 120px;
+    line-height: 120px;
+    text-align: center;
+  }
+  .avatar {
+    width: 145px;
+    height: 145px;
+    display: block;
+  }
+  img {
+    transform: scale(1);          /*图片原始大小1倍*/
+    transition: all ease 0.5s; }  /*图片放大所用时间*/
+
+
+  img.active {
+    transform: scale(5);          /*图片需要放大3倍*/
+    display: block;
+    position: absolute;/*是相对于前面的容器定位的，此处要放大的图片，不能使用position：relative；以及float，否则会导致z-index无效*/
+    left: 0;
+    right: 0;
+    margin: auto;
+    top:-300px;
+    z-index: 100; }
+</style>
 <script>
-import { listOrder, shipOrder, refundOrder, detailOrder,reviseOrder } from '@/api/order'
+import { listOrder, shipOrder, refundOrder, detailOrder,reviseOrder,confirmPayment } from '@/api/order'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import checkPermission from '@/utils/permission' // 权限判断函数
-
+import { getToken } from '@/utils/auth'
+import { createStorage, uploadPath } from '@/api/storage'
 const statusMap = {
   101: '未付款',
   102: '用户取消',
@@ -206,6 +272,7 @@ export default {
   },
   data() {
     return {
+      uploadPath,
       list: [],
       total: 0,
       listLoading: true,
@@ -246,7 +313,20 @@ export default {
         refundMoney: undefined
       },
       refundDialogVisible: false,
-      downloadLoading: false
+      downloadLoading: false,
+      confirmPaymentForm:{
+        transferAccountsOrderId:'',
+        picUrl:'',
+        orderSn:'',
+      },
+      isChoose:false,
+    }
+  },
+  computed: {
+    headers() {
+      return {
+        'X-Aswxmall-Admin-Token': getToken()
+      }
     }
   },
   created() {
@@ -315,6 +395,26 @@ export default {
       })
 
     },
+    confirmPayment(sn){
+      this.confirmPaymentForm.orderSn = sn;
+      this.$refs['confirmPaymentForm'].validate((valid)=>{
+        if(valid){
+          confirmPayment(this.confirmPaymentForm).then(response => {
+            this.$notify.success({
+              title: '成功',
+              message: '确认支付成功'
+            })
+            this.getList()
+            this.orderDialogVisible= false
+          }).catch(() => {
+            this.$notify.error({
+              title: '失败',
+              message: response.data.errmsg
+            })
+          })
+        }
+      })
+    },
     handleShip(row) {
       this.shipForm.orderId = row.id
       this.shipForm.shipChannel = row.shipChannel
@@ -380,6 +480,20 @@ export default {
         excel.export_json_to_excel2(tHeader, this.list, filterVal, '订单信息')
         this.downloadLoading = false
       })
+    },
+    checkFileSize: function(file) {
+      if (file.size > 1048576) {
+        this.$message.error(`${file.name}文件大于1024KB，请选择小于1024KB大小的图片`)
+        return false
+      }
+      return true
+    },
+    uploadtransferAccountsOrderPicUrl: function(response) {
+      this.confirmPaymentForm.picUrl = response.data.url
+    },
+    imgScc:function () {
+      this.isChoose = !this.isChoose
+
     }
   }
 }

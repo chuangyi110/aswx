@@ -678,9 +678,15 @@ Page({
       url: '/pages/cart/cart'
     });
   },
+  popCustomIcon: function () {
+    console.log(123)
+    wx.switchTab({
+      url: '../ucenter/index/index',
+    })
+  },
   onReady: function() {
     // 页面渲染完成
 
-  }
+  },
 
 })

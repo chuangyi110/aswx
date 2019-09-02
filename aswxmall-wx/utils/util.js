@@ -84,10 +84,23 @@ function showErrorToast(msg) {
     image: '/static/images/icon_error.png'
   })
 }
-
+/**
+  *  图片预览方法
+  *  此处注意的一点就是，调用 "wx.previewImage"时，第二个参数要求为数组形式哦
+  *  当然，做过图片上传功能的应该会注意到，如果涉及到多张图片预览，图片链接数组集合即为参数 urls！
+  */
+function previewImage(e) {
+  var current = e.target.dataset.src;
+  console.log(current)
+  wx.previewImage({
+    current: current,
+    urls: [current]
+  })
+}
 module.exports = {
   formatTime,
   request,
   redirect,
-  showErrorToast
+  showErrorToast,
+  previewImage
 }

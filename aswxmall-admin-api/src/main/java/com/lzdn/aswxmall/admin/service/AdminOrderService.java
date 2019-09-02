@@ -6,6 +6,7 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.lzdn.aswxmall.db.domain.*;
 import com.lzdn.aswxmall.db.service.*;
+import com.lzdn.aswxmall.db.util.PayTypeUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import com.lzdn.aswxmall.core.notify.NotifyService;
@@ -258,7 +259,7 @@ public class AdminOrderService {
         BigDecimal reviseFreightPrice = new BigDecimal(JacksonUtil.parseString(body,"reviseFreightPrice"));
         BigDecimal orderPrice = new BigDecimal(JacksonUtil.parseString(body,"orderPrice"));
         if(!orderPrice.equals(actualPrice)){
-            //TODO 前台禁止重复扣费后台无控制
+            //TODO 订单价格与实际支付价格不一致时，默认禁止修改订单（防止多次修改订单价格）
             return ResponseUtil.fail();
         }
         actualPrice = actualPrice.subtract(revisePrice).subtract(reviseFreightPrice);
@@ -270,6 +271,22 @@ public class AdminOrderService {
         order.setFreightPrice(freightPrice);
         order.setRevisePriceAdminId(adminId);
         int num = orderService.revisePriceById(order);
+        return num>0?ResponseUtil.ok():ResponseUtil.fail();
+    }
+
+    /**
+     * 确认订单支付情况，微信转账支付信息
+     * @param body
+     * @return
+     */
+    public Object confirmPayment(String body) {
+        String orderSn = JacksonUtil.parseString(body,"orderSn");
+        Integer adminId = ((AswxmallAdmin)SecurityUtils.getSubject().getPrincipal()).getId();
+        String picUrl = JacksonUtil.parseString(body,"picUrl");
+        String transferOrderId = JacksonUtil.parseString(body,"transferAccountsOrderId");
+
+        int num = orderService.confirmPayment(orderSn,adminId,picUrl,transferOrderId,PayTypeUtil.WX_TRANSFER);
+        System.out.println(orderSn);
         return num>0?ResponseUtil.ok():ResponseUtil.fail();
     }
 }

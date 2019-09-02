@@ -149,7 +149,7 @@
           <view class="value {{vitem.checked ? 'selected' : ''}}" bindtap="clickSkuValue" wx:for="{{item.valueList}}" wx:for-item="vitem" wx:key="{{vitem.id}}" data-value-id="{{vitem.id}}" data-name="{{vitem.specification}}">{{vitem.value}}</view>
         </view>
       </view>
-
+      <!--
       <view class="spec-con" wx:if="{{groupon.length > 0}}">
         <view class="spec-item">
           <view class="name">团购立减</view>
@@ -158,7 +158,7 @@
           </view>
         </view>
       </view>
-
+      -->  
       <!-- 数量 -->
       <view class="number-item">
         <view class="name">数量</view>
@@ -175,9 +175,9 @@
 </view>
 
 <!-- 联系客服 -->
-<view class="contact">
-  <contact-button style="opacity:0;position:absolute;" type="default-dark" session-from="weapp" size="27">
-  </contact-button>
+<view class="contact" bindtap="popCustomIcon" >
+  <button style="opacity:0;position:absolute;" size="27">
+  </button>
 </view>
 
 <!-- 底部按钮 -->

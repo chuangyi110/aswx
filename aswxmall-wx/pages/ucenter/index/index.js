@@ -196,6 +196,11 @@ Page({
       duration: 2000
     });
   },
+  contactUs: function(){
+    wx.navigateTo({
+      url:'/pages/contactUs/contactUs',
+    })
+  },
   aboutUs: function() {
     wx.navigateTo({
       url: '/pages/about/about'

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50721
 File Encoding         : 65001
 
-Date: 2019-08-26 17:48:09
+Date: 2019-08-23 17:13:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -94,7 +94,7 @@ CREATE TABLE `aswxmall_admin` (
 -- ----------------------------
 -- Records of aswxmall_admin
 -- ----------------------------
-INSERT INTO `aswxmall_admin` VALUES ('1', 'admin123', '$2a$10$.rEfyBb/GURD9P2p0fRg/OAJGloGNDkJS4lY0cQHeqDgsbdTylBpu', '0:0:0:0:0:0:0:1', '2019-08-26 16:17:07', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', '2018-02-01 00:00:00', '2019-08-26 16:17:07', '0', '[1]', null);
+INSERT INTO `aswxmall_admin` VALUES ('1', 'admin123', '$2a$10$.rEfyBb/GURD9P2p0fRg/OAJGloGNDkJS4lY0cQHeqDgsbdTylBpu', '0:0:0:0:0:0:0:1', '2019-08-23 14:05:17', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', '2018-02-01 00:00:00', '2019-08-23 14:05:17', '0', '[1]', null);
 INSERT INTO `aswxmall_admin` VALUES ('4', 'promotion123', '$2a$10$wDZLOLLnzZ1EFZ3ldZ1XFOUWDEX6TnQCUFdJz4g.PoMaLTzS8TjWq', '0:0:0:0:0:0:0:1', '2019-08-08 17:18:28', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', '2019-01-07 15:16:59', '2019-08-08 17:18:28', '0', '[3]', null);
 INSERT INTO `aswxmall_admin` VALUES ('5', 'mall123', '$2a$10$aCtsc4rG6KmxQ59.IkYse.oRyKuwQoU2CPCmxSdB.d5nXq6aw/z4O', '0:0:0:0:0:0:0:1', '2019-08-22 13:57:54', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', '2019-01-07 15:17:25', '2019-08-22 13:57:54', '0', '[2]', null);
 INSERT INTO `aswxmall_admin` VALUES ('6', 'kefu111', '$2a$10$bB8r5XW2/IkXOV.CNoIU..NtZcLFGl.ozEQSBj6WtQ8.K5fOkRiqe', '0:0:0:0:0:0:0:1', '2019-08-22 14:01:17', 'http://172.16.0.200:8080/wx/storage/fetch/ow1r6dwu21h06rfu6l3t.jpg', '2019-08-22 14:00:56', '2019-08-22 14:01:17', '0', '[4]', null);
@@ -408,7 +408,7 @@ CREATE TABLE `aswxmall_comment` (
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   KEY `id_value` (`value_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1013 DEFAULT CHARSET=utf8mb4 COMMENT='评论表';
+) ENGINE=InnoDB AUTO_INCREMENT=1012 DEFAULT CHARSET=utf8mb4 COMMENT='评论表';
 
 -- ----------------------------
 -- Records of aswxmall_comment
@@ -1414,7 +1414,6 @@ INSERT INTO `aswxmall_comment` VALUES ('998', '314', '1', '有点过软。等到
 INSERT INTO `aswxmall_comment` VALUES ('999', '314', '1', '包装完好\n无异味\n厚度适中\n慢回弹\n\n我直接放置在地板上，当做孩子的爬爬垫使用，上面铺床单，便于洗涤。作为直接铺地板的，有一个问题就是是否透气，否则用了1个月，反面肯定是发霉的状态，等实际效果', '1', '0', '[]', '1', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
 INSERT INTO `aswxmall_comment` VALUES ('1000', '314', '1', '东西挺好，为了脊柱而买', '1', '0', '[]', '1', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
 INSERT INTO `aswxmall_comment` VALUES ('1011', '1116011', '1', '烦烦烦', '1', '0', '[]', '1', '2018-11-09 19:24:20', '2018-11-09 19:24:20', '0');
-INSERT INTO `aswxmall_comment` VALUES ('1012', '1109008', '0', 'sss', '6', '0', '[]', '5', '2019-08-26 14:50:00', '2019-08-26 14:50:00', '0');
 
 -- ----------------------------
 -- Table structure for aswxmall_coupon
@@ -1520,7 +1519,7 @@ CREATE TABLE `aswxmall_footprint` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=utf8mb4 COMMENT='用户浏览足迹表';
+) ENGINE=InnoDB AUTO_INCREMENT=143 DEFAULT CHARSET=utf8mb4 COMMENT='用户浏览足迹表';
 
 -- ----------------------------
 -- Records of aswxmall_footprint
@@ -1667,8 +1666,6 @@ INSERT INTO `aswxmall_footprint` VALUES ('139', '6', '1109008', '2019-08-23 11:3
 INSERT INTO `aswxmall_footprint` VALUES ('140', '6', '1109008', '2019-08-23 11:32:36', '2019-08-23 11:32:36', '0');
 INSERT INTO `aswxmall_footprint` VALUES ('141', '6', '1039051', '2019-08-23 11:33:52', '2019-08-23 11:33:52', '0');
 INSERT INTO `aswxmall_footprint` VALUES ('142', '6', '1039051', '2019-08-23 11:59:30', '2019-08-23 11:59:30', '0');
-INSERT INTO `aswxmall_footprint` VALUES ('143', '6', '1109008', '2019-08-26 14:50:41', '2019-08-26 14:50:41', '0');
-INSERT INTO `aswxmall_footprint` VALUES ('144', '6', '1109008', '2019-08-26 16:48:24', '2019-08-26 16:48:24', '0');
 
 -- ----------------------------
 -- Table structure for aswxmall_goods
@@ -3016,7 +3013,7 @@ INSERT INTO `aswxmall_goods_product` VALUES ('50', '1036016', '[\"标准\"]', '1
 INSERT INTO `aswxmall_goods_product` VALUES ('51', '1037011', '[\"标准\"]', '599.00', '100', 'http://yanxuan.nosdn.127.net/a03ea6f4509439acdafcb7ceba1debe0.png', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
 INSERT INTO `aswxmall_goods_product` VALUES ('52', '1037012', '[\"标准\"]', '69.00', '100', 'http://yanxuan.nosdn.127.net/ffd2c91c7cf9c6e0f630595f7679b95d.png', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
 INSERT INTO `aswxmall_goods_product` VALUES ('53', '1038004', '[\"标准\"]', '359.00', '100', 'http://yanxuan.nosdn.127.net/4d3d3eaeb872860539d7faa59f9f84e9.png', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
-INSERT INTO `aswxmall_goods_product` VALUES ('54', '1039051', '[\"标准\"]', '79.00', '106', 'http://yanxuan.nosdn.127.net/c8ca0600fa7ba11ca8be6a3173dd38c9.png', '2018-02-01 00:00:00', '2019-08-26 15:01:43', '0');
+INSERT INTO `aswxmall_goods_product` VALUES ('54', '1039051', '[\"标准\"]', '79.00', '100', 'http://yanxuan.nosdn.127.net/c8ca0600fa7ba11ca8be6a3173dd38c9.png', '2018-02-01 00:00:00', '2019-08-23 12:13:15', '0');
 INSERT INTO `aswxmall_goods_product` VALUES ('55', '1039056', '[\"标准\"]', '79.00', '100', 'http://yanxuan.nosdn.127.net/3e14e82a44c3a250af63df4c29c572d0.png', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
 INSERT INTO `aswxmall_goods_product` VALUES ('56', '1043005', '[\"标准\"]', '59.00', '100', 'http://yanxuan.nosdn.127.net/2a95b16f5b147cab4845641bee738a2e.png', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
 INSERT INTO `aswxmall_goods_product` VALUES ('57', '1044012', '[\"标准\"]', '349.00', '100', 'http://yanxuan.nosdn.127.net/a803c68ea88e3116023b45ac9ea99510.png', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
@@ -3029,7 +3026,7 @@ INSERT INTO `aswxmall_goods_product` VALUES ('63', '1051000', '[\"标准\"]', '1
 INSERT INTO `aswxmall_goods_product` VALUES ('64', '1051001', '[\"标准\"]', '159.00', '100', 'http://yanxuan.nosdn.127.net/f53ed57d9e23fda7e24dfd0e0a50c5d1.png', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
 INSERT INTO `aswxmall_goods_product` VALUES ('65', '1051002', '[\"标准\"]', '228.00', '100', 'http://yanxuan.nosdn.127.net/56f4b4753392d27c0c2ccceeb579ed6f.png', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
 INSERT INTO `aswxmall_goods_product` VALUES ('66', '1051003', '[\"标准\"]', '148.00', '100', 'http://yanxuan.nosdn.127.net/6a54ccc389afb2459b163245bbb2c978.png', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
-INSERT INTO `aswxmall_goods_product` VALUES ('67', '1055012', '[\"标准\"]', '39.00', '109', 'http://yanxuan.nosdn.127.net/3d437c8d68e2ec3f3dd61001bf98f16e.png', '2018-02-01 00:00:00', '2019-08-26 16:08:52', '0');
+INSERT INTO `aswxmall_goods_product` VALUES ('67', '1055012', '[\"标准\"]', '39.00', '106', 'http://yanxuan.nosdn.127.net/3d437c8d68e2ec3f3dd61001bf98f16e.png', '2018-02-01 00:00:00', '2019-08-22 17:04:28', '0');
 INSERT INTO `aswxmall_goods_product` VALUES ('68', '1055016', '[\"标准\"]', '59.00', '100', 'http://yanxuan.nosdn.127.net/23e0203f1512f33e605f61c28fa03d2d.png', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
 INSERT INTO `aswxmall_goods_product` VALUES ('69', '1055022', '[\"标准\"]', '4.90', '100', 'http://yanxuan.nosdn.127.net/c7c74a96eacb29455dbf557b840eaaf5.png', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
 INSERT INTO `aswxmall_goods_product` VALUES ('70', '1056002', '[\"标准\"]', '59.00', '100', 'http://yanxuan.nosdn.127.net/922fdbe007033f7a88f7ebc57c3d1e75.png', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
@@ -3144,7 +3141,7 @@ INSERT INTO `aswxmall_goods_product` VALUES ('178', '1127024', '[\"标准\"]', '
 INSERT INTO `aswxmall_goods_product` VALUES ('179', '1127025', '[\"标准\"]', '39.00', '100', 'http://yanxuan.nosdn.127.net/b2fe79c872a8a7f647264b5e51bcc802.png', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
 INSERT INTO `aswxmall_goods_product` VALUES ('180', '1127038', '[\"标准\"]', '359.00', '100', 'http://yanxuan.nosdn.127.net/addc278cf9c301dd535791df2e03b2ea.png', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
 INSERT INTO `aswxmall_goods_product` VALUES ('181', '1127039', '[\"标准\"]', '399.00', '100', 'http://yanxuan.nosdn.127.net/be64df0a04ade4cfd75bf7d4e8509ecc.png', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
-INSERT INTO `aswxmall_goods_product` VALUES ('182', '1127047', '[\"标准\"]', '29.00', '100', 'http://yanxuan.nosdn.127.net/6c03ca93d8fe404faa266ea86f3f1e43.png', '2018-02-01 00:00:00', '2019-08-26 16:16:53', '0');
+INSERT INTO `aswxmall_goods_product` VALUES ('182', '1127047', '[\"标准\"]', '29.00', '98', 'http://yanxuan.nosdn.127.net/6c03ca93d8fe404faa266ea86f3f1e43.png', '2018-02-01 00:00:00', '2019-08-22 17:04:28', '0');
 INSERT INTO `aswxmall_goods_product` VALUES ('183', '1127052', '[\"标准\"]', '169.00', '100', 'http://yanxuan.nosdn.127.net/4f483526cfe3b953f403ae02049df5b9.png', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
 INSERT INTO `aswxmall_goods_product` VALUES ('184', '1128002', '[\"标准\"]', '599.00', '100', 'http://yanxuan.nosdn.127.net/a1094a808ffb3a52a6cb13565a283d98.png', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
 INSERT INTO `aswxmall_goods_product` VALUES ('185', '1128010', '[\"标准\"]', '29.00', '100', 'http://yanxuan.nosdn.127.net/a84e8e6979f00efd9a728ed36b154753.png', '2018-02-01 00:00:00', '2018-02-01 00:00:00', '0');
@@ -3661,7 +3658,7 @@ CREATE TABLE `aswxmall_log` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='操作日志表';
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='操作日志表';
 
 -- ----------------------------
 -- Records of aswxmall_log
@@ -3765,15 +3762,6 @@ INSERT INTO `aswxmall_log` VALUES ('96', 'admin123', '0:0:0:0:0:0:0:1', '1', '�
 INSERT INTO `aswxmall_log` VALUES ('97', 'admin123', '0:0:0:0:0:0:0:1', '1', '编辑管理员', '1', 'kefu555', '', '2019-08-22 14:41:32', '2019-08-22 14:41:32', '0');
 INSERT INTO `aswxmall_log` VALUES ('98', 'admin123', '0:0:0:0:0:0:0:1', '1', '登录', '1', '', '', '2019-08-22 16:29:51', '2019-08-22 16:29:51', '0');
 INSERT INTO `aswxmall_log` VALUES ('99', 'admin123', '0:0:0:0:0:0:0:1', '1', '登录', '1', '', '', '2019-08-23 14:05:17', '2019-08-23 14:05:17', '0');
-INSERT INTO `aswxmall_log` VALUES ('100', 'admin123', '0:0:0:0:0:0:0:1', '1', '登录', '1', '', '', '2019-08-26 09:24:01', '2019-08-26 09:24:01', '0');
-INSERT INTO `aswxmall_log` VALUES ('101', 'admin123', '0:0:0:0:0:0:0:1', '1', '登录', '1', '', '', '2019-08-26 13:12:57', '2019-08-26 13:12:57', '0');
-INSERT INTO `aswxmall_log` VALUES ('102', 'admin123', '0:0:0:0:0:0:0:1', '2', '发货', '1', '订单编号 33', '', '2019-08-26 13:13:16', '2019-08-26 13:13:16', '0');
-INSERT INTO `aswxmall_log` VALUES ('103', 'admin123', '0:0:0:0:0:0:0:1', '1', '登录', '1', '', '', '2019-08-26 14:29:23', '2019-08-26 14:29:23', '0');
-INSERT INTO `aswxmall_log` VALUES ('104', 'admin123', '0:0:0:0:0:0:0:1', '1', '登录', '1', '', '', '2019-08-26 14:31:54', '2019-08-26 14:31:54', '0');
-INSERT INTO `aswxmall_log` VALUES ('105', 'admin123', '0:0:0:0:0:0:0:1', '1', '登录', '1', '', '', '2019-08-26 16:09:00', '2019-08-26 16:09:00', '0');
-INSERT INTO `aswxmall_log` VALUES ('106', 'admin123', '0:0:0:0:0:0:0:1', '1', '登录', '1', '', '', '2019-08-26 16:14:04', '2019-08-26 16:14:04', '0');
-INSERT INTO `aswxmall_log` VALUES ('107', 'admin123', '0:0:0:0:0:0:0:1', '1', '登录', '1', '', '', '2019-08-26 16:17:07', '2019-08-26 16:17:07', '0');
-INSERT INTO `aswxmall_log` VALUES ('108', 'admin123', '0:0:0:0:0:0:0:1', '2', '发货', '1', '订单编号 29', '', '2019-08-26 16:20:26', '2019-08-26 16:20:26', '0');
 
 -- ----------------------------
 -- Table structure for aswxmall_order
@@ -3809,31 +3797,28 @@ CREATE TABLE `aswxmall_order` (
   `add_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
-  `pay_type` smallint(6) DEFAULT NULL COMMENT '支付方式(预留) 101微信添加好友转账支付/',
-  `confirm_payment_admin_id` int(11) DEFAULT NULL COMMENT '确认支付管理员id',
-  `transfer_pic` varchar(1023) DEFAULT NULL COMMENT '转账图片，采用JSON数组格式',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COMMENT='订单表';
 
 -- ----------------------------
 -- Records of aswxmall_order
 -- ----------------------------
-INSERT INTO `aswxmall_order` VALUES ('17', '6', '20190813178809', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '349.00', '10.00', '4.00', '10.00', '0.00', '0.00', '6.00', '349.00', '339.00', '1', null, null, null, null, null, null, '0', '2019-08-15 09:49:22', '2019-08-13 17:15:56', '2019-08-15 09:49:22', '0', null, null, null);
-INSERT INTO `aswxmall_order` VALUES ('19', '6', '20190814545828', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '39.00', '10.00', '7.00', '0.00', '0.00', '0.00', '4.90', '49.00', '37.10', '1', null, null, null, null, null, null, '0', '2019-08-15 10:31:03', '2019-08-14 17:50:19', '2019-08-15 10:31:03', '0', null, null, null);
-INSERT INTO `aswxmall_order` VALUES ('20', '6', '20190815464490', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '1529.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '1529.00', '1529.00', null, null, null, null, null, null, null, '0', '2019-08-15 18:14:51', '2019-08-15 17:15:41', '2019-08-15 18:14:51', '0', null, null, null);
-INSERT INTO `aswxmall_order` VALUES ('21', '6', '20190815981206', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '0.00', '10.00', '0.00', '0.00', '0.00', '0.00', '0.00', '10.00', '10.00', null, null, null, null, null, null, null, '0', '2019-08-15 18:14:51', '2019-08-15 17:17:52', '2019-08-15 18:14:51', '0', null, null, null);
-INSERT INTO `aswxmall_order` VALUES ('22', '6', '20190815094019', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '0.00', '10.00', '0.00', '0.00', '0.00', '0.00', '0.00', '10.00', '10.00', null, null, null, null, null, null, null, '0', '2019-08-15 18:14:51', '2019-08-15 17:38:26', '2019-08-15 18:14:51', '0', null, null, null);
-INSERT INTO `aswxmall_order` VALUES ('23', '6', '20190816694715', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '158.80', '30.00', '0.00', '0.00', '0.00', '0.00', '0.00', '188.80', '188.80', null, null, null, null, null, null, null, '0', '2019-08-16 12:45:18', '2019-08-16 11:45:32', '2019-08-16 12:45:18', '1', null, null, null);
-INSERT INTO `aswxmall_order` VALUES ('24', '6', '20190821493073', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '149.00', '0.00', '0.00', '10.00', '0.00', '0.00', '0.00', '139.00', '139.00', null, null, null, null, null, null, null, '0', '2019-08-21 17:57:50', '2019-08-21 17:20:46', '2019-08-21 17:57:50', '0', null, null, null);
-INSERT INTO `aswxmall_order` VALUES ('25', '6', '20190822052330', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '3999.00', '0.00', '0.00', '5.00', '0.00', '0.00', '0.00', '3994.00', '3994.00', null, null, null, null, null, null, null, '0', '2019-08-22 12:27:50', '2019-08-22 11:33:54', '2019-08-22 12:27:50', '0', null, null, null);
-INSERT INTO `aswxmall_order` VALUES ('26', '6', '20190822799034', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '3999.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '3999.00', '3999.00', null, null, null, null, null, null, null, '0', '2019-08-22 12:27:50', '2019-08-22 11:37:25', '2019-08-22 12:27:50', '0', null, null, null);
-INSERT INTO `aswxmall_order` VALUES ('27', '6', '20190822811319', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '1500.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '1500.00', '1500.00', null, null, null, null, null, null, null, '0', '2019-08-22 12:27:50', '2019-08-22 11:39:20', '2019-08-22 12:27:50', '0', null, null, null);
-INSERT INTO `aswxmall_order` VALUES ('28', '6', '20190822270932', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '39.00', '10.00', '0.00', '0.00', '0.00', '0.00', '3.00', '49.00', '46.00', '1', null, null, null, null, null, null, '0', '2019-08-26 16:08:53', '2019-08-22 16:26:39', '2019-08-26 16:08:53', '0', null, null, null);
-INSERT INTO `aswxmall_order` VALUES ('29', '6', '20190822210370', '301', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '29.00', '10.00', '0.00', '0.00', '0.00', '0.00', '0.00', '39.00', '39.00', null, '1000039501190824033209806700600703011973', '2019-08-26 16:17:24', '8344081997', 'DBL', '2019-08-26 16:20:26', null, '0', '2019-08-26 16:16:53', '2019-08-22 16:28:06', '2019-08-26 16:20:26', '0', '101', '1', 'http://localhost:8080/wx/storage/fetch/tdab8b5870878nv6mk3i.jpg');
-INSERT INTO `aswxmall_order` VALUES ('30', '6', '20190822830902', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '888.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '888.00', '888.00', null, null, null, null, null, null, null, '0', '2019-08-22 18:34:28', '2019-08-22 18:03:53', '2019-08-22 18:34:28', '0', null, null, null);
-INSERT INTO `aswxmall_order` VALUES ('31', '6', '20190823952850', '102', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '3999.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '3999.00', '3999.00', null, null, null, null, null, null, null, '0', '2019-08-23 11:21:25', '2019-08-23 11:12:48', '2019-08-23 11:21:25', '0', null, null, null);
-INSERT INTO `aswxmall_order` VALUES ('32', '6', '20190823250304', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '59.00', '10.00', '0.00', '0.00', '0.00', '20.00', '2.00', '69.00', '67.00', '1', null, null, null, null, null, null, '0', '2019-08-26 15:01:44', '2019-08-23 11:18:56', '2019-08-26 15:01:44', '0', null, null, null);
-INSERT INTO `aswxmall_order` VALUES ('33', '6', '20190823084173', '401', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '3949.00', '0.00', '0.00', '0.00', '0.00', '50.00', '0.00', '3949.00', '3949.00', null, null, null, '8344081997', 'DBL', '2019-08-26 13:13:16', '2019-08-26 14:18:32', '0', '2019-08-23 12:13:15', '2019-08-23 11:21:14', '2019-08-26 14:50:00', '0', '101', null, null);
+INSERT INTO `aswxmall_order` VALUES ('17', '6', '20190813178809', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '349.00', '10.00', '4.00', '10.00', '0.00', '0.00', '6.00', '349.00', '339.00', '1', null, null, null, null, null, null, '0', '2019-08-15 09:49:22', '2019-08-13 17:15:56', '2019-08-15 09:49:22', '0');
+INSERT INTO `aswxmall_order` VALUES ('19', '6', '20190814545828', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '39.00', '10.00', '7.00', '0.00', '0.00', '0.00', '4.90', '49.00', '37.10', '1', null, null, null, null, null, null, '0', '2019-08-15 10:31:03', '2019-08-14 17:50:19', '2019-08-15 10:31:03', '0');
+INSERT INTO `aswxmall_order` VALUES ('20', '6', '20190815464490', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '1529.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '1529.00', '1529.00', null, null, null, null, null, null, null, '0', '2019-08-15 18:14:51', '2019-08-15 17:15:41', '2019-08-15 18:14:51', '0');
+INSERT INTO `aswxmall_order` VALUES ('21', '6', '20190815981206', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '0.00', '10.00', '0.00', '0.00', '0.00', '0.00', '0.00', '10.00', '10.00', null, null, null, null, null, null, null, '0', '2019-08-15 18:14:51', '2019-08-15 17:17:52', '2019-08-15 18:14:51', '0');
+INSERT INTO `aswxmall_order` VALUES ('22', '6', '20190815094019', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '0.00', '10.00', '0.00', '0.00', '0.00', '0.00', '0.00', '10.00', '10.00', null, null, null, null, null, null, null, '0', '2019-08-15 18:14:51', '2019-08-15 17:38:26', '2019-08-15 18:14:51', '0');
+INSERT INTO `aswxmall_order` VALUES ('23', '6', '20190816694715', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '158.80', '30.00', '0.00', '0.00', '0.00', '0.00', '0.00', '188.80', '188.80', null, null, null, null, null, null, null, '0', '2019-08-16 12:45:18', '2019-08-16 11:45:32', '2019-08-16 12:45:18', '1');
+INSERT INTO `aswxmall_order` VALUES ('24', '6', '20190821493073', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '149.00', '0.00', '0.00', '10.00', '0.00', '0.00', '0.00', '139.00', '139.00', null, null, null, null, null, null, null, '0', '2019-08-21 17:57:50', '2019-08-21 17:20:46', '2019-08-21 17:57:50', '0');
+INSERT INTO `aswxmall_order` VALUES ('25', '6', '20190822052330', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '3999.00', '0.00', '0.00', '5.00', '0.00', '0.00', '0.00', '3994.00', '3994.00', null, null, null, null, null, null, null, '0', '2019-08-22 12:27:50', '2019-08-22 11:33:54', '2019-08-22 12:27:50', '0');
+INSERT INTO `aswxmall_order` VALUES ('26', '6', '20190822799034', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '3999.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '3999.00', '3999.00', null, null, null, null, null, null, null, '0', '2019-08-22 12:27:50', '2019-08-22 11:37:25', '2019-08-22 12:27:50', '0');
+INSERT INTO `aswxmall_order` VALUES ('27', '6', '20190822811319', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '1500.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '1500.00', '1500.00', null, null, null, null, null, null, null, '0', '2019-08-22 12:27:50', '2019-08-22 11:39:20', '2019-08-22 12:27:50', '0');
+INSERT INTO `aswxmall_order` VALUES ('28', '6', '20190822270932', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '39.00', '10.00', '0.00', '0.00', '0.00', '0.00', '0.00', '49.00', '49.00', null, null, null, null, null, null, null, '0', '2019-08-22 17:04:28', '2019-08-22 16:26:39', '2019-08-22 17:04:28', '0');
+INSERT INTO `aswxmall_order` VALUES ('29', '6', '20190822210370', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '29.00', '10.00', '0.00', '0.00', '0.00', '0.00', '0.00', '39.00', '39.00', null, null, null, null, null, null, null, '0', '2019-08-22 17:04:28', '2019-08-22 16:28:06', '2019-08-22 17:04:28', '0');
+INSERT INTO `aswxmall_order` VALUES ('30', '6', '20190822830902', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '888.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '888.00', '888.00', null, null, null, null, null, null, null, '0', '2019-08-22 18:34:28', '2019-08-22 18:03:53', '2019-08-22 18:34:28', '0');
+INSERT INTO `aswxmall_order` VALUES ('31', '6', '20190823952850', '102', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '3999.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '3999.00', '3999.00', null, null, null, null, null, null, null, '0', '2019-08-23 11:21:25', '2019-08-23 11:12:48', '2019-08-23 11:21:25', '0');
+INSERT INTO `aswxmall_order` VALUES ('32', '6', '20190823250304', '103', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '59.00', '10.00', '0.00', '0.00', '0.00', '20.00', '0.00', '69.00', '69.00', null, null, null, null, null, null, null, '0', '2019-08-23 12:13:15', '2019-08-23 11:18:56', '2019-08-23 12:13:15', '0');
+INSERT INTO `aswxmall_order` VALUES ('33', '6', '20190823084173', '201', '利旧', '13079296362', '北京市市辖区东城区 阿瑟东', '', '3949.00', '0.00', '0.00', '0.00', '0.00', '50.00', '0.00', '3949.00', '3949.00', null, null, null, null, null, null, null, '0', '2019-08-23 12:13:15', '2019-08-23 11:21:14', '2019-08-23 12:13:15', '0');
 
 -- ----------------------------
 -- Table structure for aswxmall_order_goods
@@ -3879,7 +3864,7 @@ INSERT INTO `aswxmall_order_goods` VALUES ('34', '29', '1127047', '趣味粉彩�
 INSERT INTO `aswxmall_order_goods` VALUES ('35', '30', '1152101', '魔兽世界 部落 奥格瑞玛 拉杆箱 可登机', '1152101', '238', '1', '888.00', '[\"标准\"]', 'http://yanxuan.nosdn.127.net/c1c62211a17b71a634fa0c705d11fb42.png', '0', '2019-08-22 18:03:53', '2019-08-22 18:03:53', '0');
 INSERT INTO `aswxmall_order_goods` VALUES ('36', '31', '1109008', '云端沙发组合', '1109008', '140', '1', '3999.00', '[\"标准\"]', 'http://yanxuan.nosdn.127.net/c5be2604c0e4186a4e7079feeb742cee.png', '0', '2019-08-23 11:12:48', '2019-08-23 11:12:48', '0');
 INSERT INTO `aswxmall_order_goods` VALUES ('37', '32', '1039051', '多功能午睡枕', '1039051', '54', '1', '79.00', '[\"标准\"]', 'http://yanxuan.nosdn.127.net/c8ca0600fa7ba11ca8be6a3173dd38c9.png', '0', '2019-08-23 11:18:56', '2019-08-23 11:18:56', '0');
-INSERT INTO `aswxmall_order_goods` VALUES ('38', '33', '1109008', '云端沙发组合', '1109008', '140', '1', '3999.00', '[\"标准\"]', 'http://yanxuan.nosdn.127.net/c5be2604c0e4186a4e7079feeb742cee.png', '1012', '2019-08-23 11:21:14', '2019-08-26 14:50:00', '0');
+INSERT INTO `aswxmall_order_goods` VALUES ('38', '33', '1109008', '云端沙发组合', '1109008', '140', '1', '3999.00', '[\"标准\"]', 'http://yanxuan.nosdn.127.net/c5be2604c0e4186a4e7079feeb742cee.png', '0', '2019-08-23 11:21:14', '2019-08-23 11:21:14', '0');
 
 -- ----------------------------
 -- Table structure for aswxmall_permission
@@ -7535,14 +7520,14 @@ CREATE TABLE `aswxmall_storage` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COMMENT='文件存储表';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT='文件存储表';
 
 -- ----------------------------
 -- Records of aswxmall_storage
 -- ----------------------------
-INSERT INTO `aswxmall_storage` VALUES ('1', 'ry9hu0pyb144tzwhkmu8.jpg', '1.jpg', 'image/jpeg', '38792', 'http://localhost:8080/wx/storage/fetch/ry9hu0pyb144tzwhkmu8.jpg', '2019-08-09 10:23:25', '2019-08-09 10:23:25', '1');
-INSERT INTO `aswxmall_storage` VALUES ('2', '3ocl3yzm633jdsvu46m2.jpg', '企业文化厚道.jpg', 'image/jpeg', '20112', 'http://localhost:8080/wx/storage/fetch/3ocl3yzm633jdsvu46m2.jpg', '2019-08-09 10:23:43', '2019-08-09 10:23:43', '1');
-INSERT INTO `aswxmall_storage` VALUES ('3', 'jr8t9ngbygm8quyx0ddo.png', 'switch_off.png', 'image/png', '4558', 'http://localhost:8080/wx/storage/fetch/jr8t9ngbygm8quyx0ddo.png', '2019-08-15 14:53:10', '2019-08-15 14:53:10', '1');
+INSERT INTO `aswxmall_storage` VALUES ('1', 'ry9hu0pyb144tzwhkmu8.jpg', '1.jpg', 'image/jpeg', '38792', 'http://localhost:8080/wx/storage/fetch/ry9hu0pyb144tzwhkmu8.jpg', '2019-08-09 10:23:25', '2019-08-09 10:23:25', '0');
+INSERT INTO `aswxmall_storage` VALUES ('2', '3ocl3yzm633jdsvu46m2.jpg', '企业文化厚道.jpg', 'image/jpeg', '20112', 'http://localhost:8080/wx/storage/fetch/3ocl3yzm633jdsvu46m2.jpg', '2019-08-09 10:23:43', '2019-08-09 10:23:43', '0');
+INSERT INTO `aswxmall_storage` VALUES ('3', 'jr8t9ngbygm8quyx0ddo.png', 'switch_off.png', 'image/png', '4558', 'http://localhost:8080/wx/storage/fetch/jr8t9ngbygm8quyx0ddo.png', '2019-08-15 14:53:10', '2019-08-15 14:53:10', '0');
 INSERT INTO `aswxmall_storage` VALUES ('4', 'ulehzqb9u681ent2k1n8.png', '下载 (1).png', 'image/png', '979233', 'http://localhost:8080/wx/storage/fetch/ulehzqb9u681ent2k1n8.png', '2019-08-15 15:01:52', '2019-08-15 15:01:52', '0');
 INSERT INTO `aswxmall_storage` VALUES ('5', 't32qf4od0pyo8v4221rv.png', '下载 (1).png', 'image/png', '979233', 'http://localhost:8080/wx/storage/fetch/t32qf4od0pyo8v4221rv.png', '2019-08-15 15:13:47', '2019-08-15 15:13:47', '0');
 INSERT INTO `aswxmall_storage` VALUES ('6', 'k5m5tft6iz8kc0jadm1v.png', '下载 (1).png', 'image/png', '979233', 'http://localhost:8080/wx/storage/fetch/k5m5tft6iz8kc0jadm1v.png', '2019-08-15 15:13:52', '2019-08-15 15:13:52', '0');
@@ -7551,15 +7536,6 @@ INSERT INTO `aswxmall_storage` VALUES ('8', 'gaa5gb4xteh674dh1kwv.jpg', 'timg.jp
 INSERT INTO `aswxmall_storage` VALUES ('9', '5nwg7h5p578ep1rw04r1.png', '下载 (1).png', 'image/png', '979233', 'http://localhost:8080/wx/storage/fetch/5nwg7h5p578ep1rw04r1.png', '2019-08-15 15:35:01', '2019-08-15 15:35:01', '0');
 INSERT INTO `aswxmall_storage` VALUES ('10', 'ufpgulacg5sy4xjxs79x.png', '下载 (1).png', 'image/png', '979233', 'http://localhost:8080/wx/storage/fetch/ufpgulacg5sy4xjxs79x.png', '2019-08-15 15:35:50', '2019-08-15 15:35:50', '0');
 INSERT INTO `aswxmall_storage` VALUES ('11', 'ow1r6dwu21h06rfu6l3t.jpg', '微信图片_20190822144105.jpg', 'image/jpeg', '62725', 'http://localhost:8080/wx/storage/fetch/ow1r6dwu21h06rfu6l3t.jpg', '2019-08-22 14:41:22', '2019-08-22 14:41:22', '0');
-INSERT INTO `aswxmall_storage` VALUES ('12', '2wwi3poolwh65r25obb0.jpg', '微信图片_20190703102836.jpg', 'image/jpeg', '175091', 'http://localhost:8080/wx/storage/fetch/2wwi3poolwh65r25obb0.jpg', '2019-08-26 15:17:27', '2019-08-26 15:17:27', '0');
-INSERT INTO `aswxmall_storage` VALUES ('13', '7n5m02xgs4usjirb8lb4.png', 'switch_on.png', 'image/png', '4165', 'http://localhost:8080/wx/storage/fetch/7n5m02xgs4usjirb8lb4.png', '2019-08-26 15:20:49', '2019-08-26 15:20:49', '0');
-INSERT INTO `aswxmall_storage` VALUES ('14', 'sdtwwxyvo46ckk83vr12.png', 'switch_on.png', 'image/png', '4165', 'http://localhost:8080/wx/storage/fetch/sdtwwxyvo46ckk83vr12.png', '2019-08-26 15:23:01', '2019-08-26 15:23:01', '0');
-INSERT INTO `aswxmall_storage` VALUES ('15', 'rubm4wuf1opnm63vj3ya.png', 'switch_on.png', 'image/png', '4165', 'http://localhost:8080/wx/storage/fetch/rubm4wuf1opnm63vj3ya.png', '2019-08-26 15:27:42', '2019-08-26 15:27:42', '0');
-INSERT INTO `aswxmall_storage` VALUES ('16', '8pgqwakrmsa2doe3fryz.png', 'switch_on.png', 'image/png', '4165', 'http://localhost:8080/wx/storage/fetch/8pgqwakrmsa2doe3fryz.png', '2019-08-26 15:30:30', '2019-08-26 15:30:30', '0');
-INSERT INTO `aswxmall_storage` VALUES ('17', '7nrgbnb61o3h8x1vgl41.png', 'switch_on.png', 'image/png', '4165', 'http://localhost:8080/wx/storage/fetch/7nrgbnb61o3h8x1vgl41.png', '2019-08-26 15:33:16', '2019-08-26 15:33:16', '0');
-INSERT INTO `aswxmall_storage` VALUES ('18', 'cz80v6wn9uocx6k2tzzy.jpg', '微信图片_20190826161103.jpg', 'image/jpeg', '85623', 'http://localhost:8080/wx/storage/fetch/cz80v6wn9uocx6k2tzzy.jpg', '2019-08-26 16:11:41', '2019-08-26 16:11:41', '0');
-INSERT INTO `aswxmall_storage` VALUES ('19', 'w8ujgjk5o5qm0nj8wj1z.jpg', '微信图片_20190826161103.jpg', 'image/jpeg', '85623', 'http://localhost:8080/wx/storage/fetch/w8ujgjk5o5qm0nj8wj1z.jpg', '2019-08-26 16:15:06', '2019-08-26 16:15:06', '0');
-INSERT INTO `aswxmall_storage` VALUES ('20', 'tdab8b5870878nv6mk3i.jpg', '微信图片_20190826161103.jpg', 'image/jpeg', '85623', 'http://localhost:8080/wx/storage/fetch/tdab8b5870878nv6mk3i.jpg', '2019-08-26 16:17:23', '2019-08-26 16:17:23', '0');
 
 -- ----------------------------
 -- Table structure for aswxmall_system
@@ -7579,20 +7555,20 @@ CREATE TABLE `aswxmall_system` (
 -- Records of aswxmall_system
 -- ----------------------------
 INSERT INTO `aswxmall_system` VALUES ('1', 'aswxmall_express_freight_value', '10', '2019-08-07 17:55:54', '2019-08-12 14:49:16', '0');
-INSERT INTO `aswxmall_system` VALUES ('2', 'aswxmall_mall_address', '沈阳', '2019-08-07 17:55:54', '2019-08-26 16:54:02', '0');
+INSERT INTO `aswxmall_system` VALUES ('2', 'aswxmall_mall_address', '上海', '2019-08-07 17:55:54', '2019-08-07 17:55:54', '0');
 INSERT INTO `aswxmall_system` VALUES ('3', 'aswxmall_wx_catlog_list', '4', '2019-08-07 17:55:54', '2019-08-08 16:28:28', '0');
 INSERT INTO `aswxmall_system` VALUES ('4', 'aswxmall_order_unpaid', '30', '2019-08-07 17:55:54', '2019-08-07 17:55:54', '0');
 INSERT INTO `aswxmall_system` VALUES ('5', 'aswxmall_wx_index_new', '6', '2019-08-07 17:55:54', '2019-08-08 16:28:28', '0');
 INSERT INTO `aswxmall_system` VALUES ('6', 'aswxmall_order_comment', '7', '2019-08-07 17:55:54', '2019-08-07 17:55:54', '0');
-INSERT INTO `aswxmall_system` VALUES ('7', 'aswxmall_mall_name', 'ASwxmall', '2019-08-07 17:55:55', '2019-08-26 16:54:02', '0');
+INSERT INTO `aswxmall_system` VALUES ('7', 'aswxmall_mall_name', 'ASwxmall', '2019-08-07 17:55:55', '2019-08-07 17:55:55', '0');
 INSERT INTO `aswxmall_system` VALUES ('8', 'aswxmall_wx_index_brand', '4', '2019-08-07 17:55:55', '2019-08-08 16:28:28', '0');
-INSERT INTO `aswxmall_system` VALUES ('9', 'aswxmall_mall_qq', '738696120', '2019-08-07 17:55:55', '2019-08-26 16:54:02', '0');
+INSERT INTO `aswxmall_system` VALUES ('9', 'aswxmall_mall_qq', '738696120', '2019-08-07 17:55:55', '2019-08-07 17:55:55', '0');
 INSERT INTO `aswxmall_system` VALUES ('10', 'aswxmall_wx_catlog_goods', '4', '2019-08-07 17:55:55', '2019-08-08 16:28:28', '0');
 INSERT INTO `aswxmall_system` VALUES ('11', 'aswxmall_order_unconfirm', '7', '2019-08-07 17:55:55', '2019-08-07 17:55:55', '0');
 INSERT INTO `aswxmall_system` VALUES ('12', 'aswxmall_wx_index_hot', '6', '2019-08-07 17:55:55', '2019-08-08 16:28:28', '0');
 INSERT INTO `aswxmall_system` VALUES ('13', 'aswxmall_wx_share', 'true', '2019-08-07 17:55:55', '2019-08-08 16:28:28', '0');
 INSERT INTO `aswxmall_system` VALUES ('14', 'aswxmall_express_freight_min', '88', '2019-08-07 17:55:55', '2019-08-12 14:49:16', '0');
-INSERT INTO `aswxmall_system` VALUES ('15', 'aswxmall_mall_phone', '021-xxxx-xxxx', '2019-08-07 17:55:55', '2019-08-26 16:54:02', '0');
+INSERT INTO `aswxmall_system` VALUES ('15', 'aswxmall_mall_phone', '021-xxxx-xxxx', '2019-08-07 17:55:55', '2019-08-07 17:55:55', '0');
 INSERT INTO `aswxmall_system` VALUES ('16', 'aswxmall_wx_index_topic', '4', '2019-08-07 17:55:55', '2019-08-08 16:28:28', '0');
 
 -- ----------------------------
@@ -7670,7 +7646,7 @@ CREATE TABLE `aswxmall_user` (
 -- Records of aswxmall_user
 -- ----------------------------
 INSERT INTO `aswxmall_user` VALUES ('1', 'user123', '$2a$10$lTu9qi0hr19OC800Db.eludFr0AXuJUSrMHi/iPYhKRlPFeqJxlye', '1', null, '2019-08-13 10:03:29', '0:0:0:0:0:0:0:1', '0', 'user123', '13079296324', '', '', '', '0', '2019-04-20 22:17:43', '2019-08-13 10:03:29', '0');
-INSERT INTO `aswxmall_user` VALUES ('6', 'asdasdasd', '$2a$10$KsQJ021sj4S9hCgInnzoLeBWNlPE7XDwezwnmmEAq4o4O49V2awn.', '0', null, '2019-08-26 16:44:32', '172.16.0.200', '0', '大师兄', '13079296328', 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqURfZYQ4T7sBicXmnKWDZVlSs5hFSyLHnYm07FrDTxGjPoDGCictMFLGjySwStU6emiasWQS2EDHVEQ/132', 'oAgTz5OkP6lskttWGMmd9uyvagVc', 'EOAz9E+ZUpwcLnAMv34Mbw==', '0', '2019-08-13 15:47:24', '2019-08-26 16:44:32', '0');
+INSERT INTO `aswxmall_user` VALUES ('6', 'asdasdasd', '$2a$10$KsQJ021sj4S9hCgInnzoLeBWNlPE7XDwezwnmmEAq4o4O49V2awn.', '0', null, '2019-08-23 14:02:13', '172.16.0.200', '0', '大师兄', '13079296328', 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqURfZYQ4T7sBicXmnKWDZVlSs5hFSyLHnYm07FrDTxGjPoDGCictMFLGjySwStU6emiasWQS2EDHVEQ/132', 'oAgTz5OkP6lskttWGMmd9uyvagVc', 'FF7yGPbscMZhO1JS70XCLQ==', '0', '2019-08-13 15:47:24', '2019-08-23 14:02:13', '0');
 
 -- ----------------------------
 -- Table structure for aswxmall_user_formid

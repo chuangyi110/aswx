@@ -61,13 +61,27 @@ public class AdminOrderController {
         return adminOrderService.detail(id);
     }
 
-
+    /**
+     * 订单改价
+     * @param body
+     * @return
+     */
     @RequiresPermissions("admin:order:read")
     @RequiresPermissionsDesc(menu = {"商场管理", "订单管理"}, button = "改价")
     @PostMapping("/revise")
     public Object revise(@RequestBody String body){
         return adminOrderService.revise(body);
     }
+
+
+    @RequiresPermissions("admin:order:read")
+    @RequiresPermissionsDesc(menu = {"商场管理","确认支付"},button = "确认收款")
+    @PostMapping("confirmPayment")
+    public Object confirmPayment(Integer orderSn,@RequestBody String body){
+        return adminOrderService.confirmPayment(body);
+
+    }
+
 
     /**
      * 订单退款

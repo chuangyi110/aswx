@@ -12,12 +12,12 @@ Page({
   data: {
     load_statue: true,
     shopInfo: {
-      name: 'aswxmall',
-      address: 'https://github.com/linlinjava/aswxmall',
-      latitude: 31.201900,
-      longitude: 121.587839,
-      linkPhone: '021-xxxx-xxxx',
-      qqNumber: '738696120'
+      name: '',
+      address: '',
+      latitude: '',
+      longitude: '',
+      linkPhone: '',
+      qqNumber: ''
     },
   },
 

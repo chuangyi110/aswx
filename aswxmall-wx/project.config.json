@@ -31,13 +31,14 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 22,
+			"current": 0,
 			"list": [
 				{
-					"id": -1,
+					"id": 0,
 					"name": "首页",
 					"pathName": "pages/index/index",
-					"query": ""
+					"query": "",
+					"scene": null
 				},
 				{
 					"id": -1,
@@ -221,6 +222,12 @@
 				},
 				{
 					"id": -1,
+					"name": "联系客服",
+					"pathName": "pages/contactUs/contactUs",
+					"query": ""
+				},
+				{
+					"id": -1,
 					"name": "关于",
 					"pathName": "pages/about/about",
 					"query": ""
@@ -266,6 +273,13 @@
 					"name": "帮助中心",
 					"pathName": "pages/help/help",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": 39,
+					"name": "支付准备",
+					"pathName": "pages/paySetout/paySetout",
+					"query": "status=0&orderId=1",
 					"scene": null
 				}
 			]

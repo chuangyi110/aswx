@@ -24,7 +24,8 @@ public class ExpressTest {
     public void test() {
         ExpressInfo ei = null;
         try {
-            ei = expressService.getExpressInfo("YTO", "800669400640887922");
+            //259798475815
+            ei = expressService.getExpressInfo("DBL", "8344081997");
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
