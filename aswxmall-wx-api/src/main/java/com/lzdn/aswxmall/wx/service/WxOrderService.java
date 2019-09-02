@@ -81,6 +81,8 @@ public class WxOrderService {
     @Autowired
     private AswxmallRegionService regionService;
     @Autowired
+    private AswxmallGoodsService goodsService;
+    @Autowired
     private AswxmallGoodsProductService productService;
     @Autowired
     private WxPayService wxPayService;
@@ -275,6 +277,7 @@ public class WxOrderService {
 
         // 货品价格
         List<AswxmallCart> checkedGoodsList = null;
+        List<String> goodsids =  new ArrayList <>();
         if (cartId.equals(0)) {
             checkedGoodsList = cartService.queryByUidAndChecked(userId);
         } else {
@@ -293,8 +296,9 @@ public class WxOrderService {
             } else {
                 checkedGoodsPrice = checkedGoodsPrice.add(checkGoods.getPrice().multiply(new BigDecimal(checkGoods.getNumber())));
             }
+            goodsids.add(checkGoods.getGoodsId().toString());
         }
-
+        List<AswxmallGoods> goodsList = goodsService.seletctByGoodsIds(goodsids);
         // 获取可用的优惠券信息
         // 使用优惠券减免的金额
         BigDecimal couponPrice = new BigDecimal(0.00);
@@ -307,11 +311,28 @@ public class WxOrderService {
             couponPrice = coupon.getDiscount();
         }
 
+        //这里是自定义运费价格
+        BigDecimal customFreihtPrice = new BigDecimal(0);
+        for(AswxmallGoods goods:goodsList){
+            BigDecimal fp = goods.getFreightPrice();
+            if(fp.compareTo(new BigDecimal(-1))!=0){
+                BigDecimal num = new BigDecimal(1);
+                for(AswxmallCart cart : checkedGoodsList){
+                    if(cart.getGoodsId().equals(goods.getId())){
+                        num = new BigDecimal(cart.getNumber());
+                    }
+                }
+                customFreihtPrice= customFreihtPrice.add(fp.multiply(num));
+            }
+        }
 
         // 根据订单商品总价计算运费，满足条件（例如88元）则免运费，否则需要支付运费（例如8元）；
         BigDecimal freightPrice = new BigDecimal(0.00);
-        if (checkedGoodsPrice.compareTo(SystemConfig.getFreightLimit()) < 0) {
-            freightPrice = SystemConfig.getFreight();
+        boolean pinkage = checkedGoodsPrice.compareTo(SystemConfig.getFreightLimit()) < 0;
+        if (pinkage) {
+            freightPrice = customFreihtPrice.compareTo(new BigDecimal(0))==0?SystemConfig.getFreight():customFreihtPrice;
+        }else {
+            freightPrice = customFreihtPrice;
         }
 
         // 可以使用的其他钱，例如用户积分

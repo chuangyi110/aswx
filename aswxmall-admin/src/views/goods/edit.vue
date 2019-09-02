@@ -20,6 +20,17 @@
             <template slot="append">元</template>
           </el-input>
         </el-form-item>
+        <el-form-item label="默认邮费">
+          <el-radio-group v-model="goods.freightPrice">
+            <el-radio :label="-1">默认</el-radio>
+            <el-radio :label="0">自定义</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="邮费" prop="freightPrice" v-if="goods.freightPrice!=-1">
+          <el-input v-model="goods.freightPrice" placeholder="0.00">
+            <template slot="append">元</template>
+          </el-input>
+        </el-form-item>
         <el-form-item label="是否新品" prop="isNew">
           <el-radio-group v-model="goods.isNew">
             <el-radio :label="true">新品</el-radio>
@@ -45,6 +56,7 @@
             :action="uploadPath"
             :show-file-list="false"
             :on-success="uploadPicUrl"
+            :before-upload="checkFileSize"
             class="avatar-uploader"
             accept=".jpg,.jpeg,.png,.gif">
             <img v-if="goods.picUrl" :src="goods.picUrl" class="avatar">
@@ -60,6 +72,7 @@
             :file-list="galleryFileList"
             :on-exceed="uploadOverrun"
             :on-success="handleGalleryUrl"
+            :before-upload="checkFileSize"
             :on-remove="handleRemove"
             multiple
             accept=".jpg,.jpeg,.png,.gif"
@@ -139,6 +152,7 @@
               :action="uploadPath"
               :show-file-list="false"
               :on-success="uploadSpecPicUrl"
+              :before-upload="checkFileSize"
               class="avatar-uploader"
               accept=".jpg,.jpeg,.png,.gif">
               <img v-if="specForm.picUrl" :src="specForm.picUrl" class="avatar">
@@ -196,6 +210,7 @@
               :action="uploadPath"
               :show-file-list="false"
               :on-success="uploadProductUrl"
+              :before-upload="checkFileSize"
               class="avatar-uploader"
               accept=".jpg,.jpeg,.png,.gif">
               <img v-if="productForm.url" :src="productForm.url" class="avatar">
@@ -392,6 +407,13 @@ export default {
         this.categoryList = response.data.data.categoryList
         this.brandList = response.data.data.brandList
       })
+    },
+    checkFileSize: function(file) {
+      if (file.size > 1048576) {
+        this.$message.error(`${file.name}文件大于1024KB，请选择小于1024KB大小的图片`)
+        return false
+      }
+      return true
     },
     handleCategoryChange(value) {
       this.goods.categoryId = value[value.length - 1]

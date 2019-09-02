@@ -1,27 +1,24 @@
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
---
--- Host: 127.0.0.1    Database: aswxmall
--- ------------------------------------------------------
--- Server version	5.7.21-log
+/*
+Navicat MySQL Data Transfer
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+Source Server         : 127.0.0.1
+Source Server Version : 50721
+Source Host           : localhost:3306
+Source Database       : aswxmall
 
---
--- Table structure for table `aswxmall_ad`
---
+Target Server Type    : MYSQL
+Target Server Version : 50721
+File Encoding         : 65001
 
+Date: 2019-08-15 16:39:08
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for aswxmall_ad
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_ad`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_ad` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(63) NOT NULL DEFAULT '' COMMENT '广告标题',
@@ -38,15 +35,11 @@ CREATE TABLE `aswxmall_ad` (
   PRIMARY KEY (`id`),
   KEY `enabled` (`enabled`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='广告表';
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `aswxmall_address`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_address
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_address`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_address` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(63) NOT NULL DEFAULT '' COMMENT '收货人名称',
@@ -64,16 +57,12 @@ CREATE TABLE `aswxmall_address` (
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='收货地址表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='收货地址表';
 
---
--- Table structure for table `aswxmall_admin`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_admin
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_admin`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_admin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(63) NOT NULL DEFAULT '' COMMENT '管理员名称',
@@ -86,16 +75,12 @@ CREATE TABLE `aswxmall_admin` (
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   `role_ids` varchar(127) DEFAULT '[]' COMMENT '角色列表',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='管理员表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='管理员表';
 
---
--- Table structure for table `aswxmall_brand`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_brand
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_brand`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_brand` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '品牌商名称',
@@ -107,16 +92,12 @@ CREATE TABLE `aswxmall_brand` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1046003 DEFAULT CHARSET=utf8mb4 COMMENT='品牌商表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=1046001 DEFAULT CHARSET=utf8mb4 COMMENT='品牌商表';
 
---
--- Table structure for table `aswxmall_cart`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_cart
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_cart`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_cart` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL COMMENT '用户表的用户ID',
@@ -133,16 +114,12 @@ CREATE TABLE `aswxmall_cart` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='购物车商品表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COMMENT='购物车商品表';
 
---
--- Table structure for table `aswxmall_category`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_category
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_category`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(63) NOT NULL DEFAULT '' COMMENT '类目名称',
@@ -158,16 +135,12 @@ CREATE TABLE `aswxmall_category` (
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   KEY `parent_id` (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1036007 DEFAULT CHARSET=utf8mb4 COMMENT='类目表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=1036005 DEFAULT CHARSET=utf8mb4 COMMENT='类目表';
 
---
--- Table structure for table `aswxmall_collect`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_collect
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_collect`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_collect` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户表的用户ID',
@@ -179,16 +152,12 @@ CREATE TABLE `aswxmall_collect` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `goods_id` (`value_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='收藏表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='收藏表';
 
---
--- Table structure for table `aswxmall_comment`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_comment
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_comment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `value_id` int(11) NOT NULL DEFAULT '0' COMMENT '如果type=0，则是商品评论；如果是type=1，则是专题评论。',
@@ -204,15 +173,11 @@ CREATE TABLE `aswxmall_comment` (
   PRIMARY KEY (`id`),
   KEY `id_value` (`value_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1012 DEFAULT CHARSET=utf8mb4 COMMENT='评论表';
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `aswxmall_coupon`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_coupon
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_coupon`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_coupon` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(63) NOT NULL COMMENT '优惠券名称',
@@ -236,15 +201,11 @@ CREATE TABLE `aswxmall_coupon` (
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='优惠券信息及规则表';
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `aswxmall_coupon_user`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_coupon_user
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_coupon_user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_coupon_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL COMMENT '用户ID',
@@ -258,16 +219,12 @@ CREATE TABLE `aswxmall_coupon_user` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='优惠券用户使用表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='优惠券用户使用表';
 
---
--- Table structure for table `aswxmall_feedback`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_feedback
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_feedback`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_feedback` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户表的用户ID',
@@ -284,15 +241,11 @@ CREATE TABLE `aswxmall_feedback` (
   PRIMARY KEY (`id`),
   KEY `id_value` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='意见反馈表';
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `aswxmall_footprint`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_footprint
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_footprint`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_footprint` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户表的用户ID',
@@ -301,13 +254,11 @@ CREATE TABLE `aswxmall_footprint` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户浏览足迹表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COMMENT='用户浏览足迹表';
 
---
--- Table structure for table `aswxmall_goods`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_goods
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_goods`;
 CREATE TABLE `aswxmall_goods` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -339,13 +290,10 @@ CREATE TABLE `aswxmall_goods` (
   KEY `sort_order` (`sort_order`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1181002 DEFAULT CHARSET=utf8mb4 COMMENT='商品基本信息表';
 
---
--- Table structure for table `aswxmall_goods_attribute`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_goods_attribute
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_goods_attribute`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_goods_attribute` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `goods_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品表的商品ID',
@@ -356,16 +304,12 @@ CREATE TABLE `aswxmall_goods_attribute` (
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=877 DEFAULT CHARSET=utf8mb4 COMMENT='商品参数表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=947 DEFAULT CHARSET=utf8mb4 COMMENT='商品参数表';
 
---
--- Table structure for table `aswxmall_goods_product`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_goods_product
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_goods_product`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_goods_product` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `goods_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品表的商品ID',
@@ -377,16 +321,12 @@ CREATE TABLE `aswxmall_goods_product` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=251 DEFAULT CHARSET=utf8mb4 COMMENT='商品货品表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=276 DEFAULT CHARSET=utf8mb4 COMMENT='商品货品表';
 
---
--- Table structure for table `aswxmall_goods_specification`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_goods_specification
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_goods_specification`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_goods_specification` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `goods_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品表的商品ID',
@@ -398,16 +338,12 @@ CREATE TABLE `aswxmall_goods_specification` (
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=250 DEFAULT CHARSET=utf8mb4 COMMENT='商品规格表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=277 DEFAULT CHARSET=utf8mb4 COMMENT='商品规格表';
 
---
--- Table structure for table `aswxmall_groupon`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_groupon
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_groupon`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_groupon` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL COMMENT '关联的订单ID',
@@ -422,15 +358,11 @@ CREATE TABLE `aswxmall_groupon` (
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `aswxmall_groupon_rules`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_groupon_rules
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_groupon_rules`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_groupon_rules` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `goods_id` int(11) NOT NULL COMMENT '商品表的商品ID',
@@ -444,15 +376,11 @@ CREATE TABLE `aswxmall_groupon_rules` (
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `aswxmall_issue`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_issue
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_issue`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_issue` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `question` varchar(255) DEFAULT NULL COMMENT '问题标题',
@@ -462,15 +390,11 @@ CREATE TABLE `aswxmall_issue` (
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='常见问题表';
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `aswxmall_keyword`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_keyword
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_keyword`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_keyword` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `keyword` varchar(127) NOT NULL DEFAULT '' COMMENT '关键字',
@@ -483,15 +407,11 @@ CREATE TABLE `aswxmall_keyword` (
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='关键字表';
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `aswxmall_log`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_log
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_log`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `admin` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '管理员',
@@ -505,13 +425,11 @@ CREATE TABLE `aswxmall_log` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='操作日志表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='操作日志表';
 
---
--- Table structure for table `aswxmall_order`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_order
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_order`;
 CREATE TABLE `aswxmall_order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -546,13 +464,10 @@ CREATE TABLE `aswxmall_order` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COMMENT='订单表';
 
---
--- Table structure for table `aswxmall_order_goods`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_order_goods
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_order_goods`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_order_goods` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL DEFAULT '0' COMMENT '订单表的订单ID',
@@ -571,16 +486,12 @@ CREATE TABLE `aswxmall_order_goods` (
   PRIMARY KEY (`id`),
   KEY `order_id` (`order_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单商品表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COMMENT='订单商品表';
 
---
--- Table structure for table `aswxmall_permission`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_permission
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_permission`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_permission` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `role_id` int(11) DEFAULT NULL COMMENT '角色ID',
@@ -589,16 +500,12 @@ CREATE TABLE `aswxmall_permission` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COMMENT='权限表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=246 DEFAULT CHARSET=utf8mb4 COMMENT='权限表';
 
---
--- Table structure for table `aswxmall_region`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_region
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_region`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_region` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(11) NOT NULL DEFAULT '0' COMMENT '行政区域父ID，例如区县的pid指向市，市的pid指向省，省的pid则是0',
@@ -610,15 +517,11 @@ CREATE TABLE `aswxmall_region` (
   KEY `region_type` (`type`),
   KEY `agency_id` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3232 DEFAULT CHARSET=utf8mb4 COMMENT='行政区域表';
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `aswxmall_role`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_role
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_role`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(63) NOT NULL COMMENT '角色名称',
@@ -629,16 +532,12 @@ CREATE TABLE `aswxmall_role` (
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
 
---
--- Table structure for table `aswxmall_search_history`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_search_history
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_search_history`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_search_history` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL COMMENT '用户表的用户ID',
@@ -649,15 +548,11 @@ CREATE TABLE `aswxmall_search_history` (
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='搜索历史表';
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `aswxmall_storage`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_storage
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_storage`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_storage` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `key` varchar(63) NOT NULL COMMENT '文件的唯一索引',
@@ -669,16 +564,12 @@ CREATE TABLE `aswxmall_storage` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文件存储表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COMMENT='文件存储表';
 
---
--- Table structure for table `aswxmall_system`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_system
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_system`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_system` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `key_name` varchar(255) NOT NULL COMMENT '系统配置名',
@@ -687,16 +578,12 @@ CREATE TABLE `aswxmall_system` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='系统配置表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='系统配置表';
 
---
--- Table structure for table `aswxmall_topic`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_topic
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_topic`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_topic` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL DEFAULT '''' COMMENT '专题标题',
@@ -712,16 +599,12 @@ CREATE TABLE `aswxmall_topic` (
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   KEY `topic_id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=319 DEFAULT CHARSET=utf8mb4 COMMENT='专题表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=315 DEFAULT CHARSET=utf8mb4 COMMENT='专题表';
 
---
--- Table structure for table `aswxmall_user`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_user
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(63) NOT NULL COMMENT '用户名称',
@@ -742,16 +625,12 @@ CREATE TABLE `aswxmall_user` (
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_name` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
---
--- Table structure for table `aswxmall_user_formid`
---
-
+-- ----------------------------
+-- Table structure for aswxmall_user_formid
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_user_formid`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aswxmall_user_formid` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `formId` varchar(63) NOT NULL COMMENT '缓存的FormId',
@@ -763,25 +642,15 @@ CREATE TABLE `aswxmall_user_formid` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
+-- ----------------------------
+-- Table structure for aswxmall_user_referrer
+-- ----------------------------
 DROP TABLE IF EXISTS `aswxmall_user_referrer`;
 CREATE TABLE `aswxmall_user_referrer` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL COMMENT '注册用户id',
   `referrer_user_id` int(11) DEFAULT NULL COMMENT '推荐人',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2018-12-10 16:59:09
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

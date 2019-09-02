@@ -253,4 +253,10 @@ public class AswxmallGoodsService {
         example.or().andIdIn(Arrays.asList(ids)).andIsOnSaleEqualTo(true).andDeletedEqualTo(false);
         return goodsMapper.selectByExampleSelective(example, columns);
     }
+
+    public List<AswxmallGoods> seletctByGoodsIds(List ids) {
+        AswxmallGoodsExample example = new AswxmallGoodsExample();
+        example.or().andIdIn(ids);
+        return goodsMapper.selectByExample(example);
+    }
 }
