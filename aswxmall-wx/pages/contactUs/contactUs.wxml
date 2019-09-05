@@ -1,0 +1,17 @@
+<view class="container">
+  <view class="pay-setout">
+    <view class="success">
+      <view class="msg">选择客服并扫码添加</view>
+      <view class="cate-item">
+        <view class="b">
+          <block wx:for="{{serviceList}}" wx:for-index="iindex" wx:for-item="iitem" wx:key="id">
+            <view class="item {{iindex % 2 == 0 ? 'item-b' : '' }}">
+              <image class="img" src="{{iitem.avatar}}" background-size="cover"  mode="widthFix"  data-src="{{iitem.avatar}}"
+              bindtap="previewImage"/>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

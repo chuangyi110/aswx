@@ -1,0 +1,87 @@
+page {
+  min-height: 100%;
+  width: 100%;
+  background: #fff;
+}
+
+.container {
+  height: 100%;
+  background: #fff;
+}
+
+.pay-setout {
+  background: #fff;
+}
+
+.pay-setout .msg {
+  text-align: center;
+  margin: 100rpx auto;
+  color: #2bab25;
+  font-size: 36rpx;
+}
+.pay-setout .hint {
+  text-align: center;
+  margin: 20rpx auto;
+  color: #777777;
+  font-size: 25rpx;
+}
+
+.pay-setout .btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pay-setout .btn {
+  text-align: center;
+  height: 80rpx;
+  margin: 0 20rpx;
+  width: 200rpx;
+  line-height: 78rpx;
+  border: 1px solid #868686;
+  color: #000;
+  border-radius: 5rpx;
+}
+
+.pay-setout .error .msg {
+  color: #b4282d;
+  margin-bottom: 60rpx;
+}
+
+.pay-setout .error .tips {
+  color: #7f7f7f;
+  margin-bottom: 70rpx;
+}
+
+.pay-setout .error .tips .p {
+  font-size: 24rpx;
+  line-height: 42rpx;
+  text-align: center;
+}
+
+.pay-setout .error .tips .p {
+  line-height: 42rpx;
+  text-align: center;
+}
+.cate-item .b {
+  width: 750rpx;
+  height: auto;
+  overflow: hidden;
+  border-top: 1rpx solid #f4f4f4;
+  margin-top: 20rpx;
+}
+.cate-item .b .item {
+  float: left;
+  background: #fff;
+  width: 375rpx;
+  padding-bottom: 33.333rpx;
+  border-bottom: 1rpx solid #f4f4f4;
+  height: auto;
+  overflow: hidden;
+  text-align: center;
+}
+.cate-item .item .img {
+  margin-top: 10rpx;
+  width: 302rpx;
+  height: 302rpx;
+}
