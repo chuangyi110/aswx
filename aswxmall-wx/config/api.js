@@ -2,11 +2,11 @@
 // 本机开发时使用
 //var WxApiRoot = 'http://localhost:8080/wx/';
 // 局域网测试使用
- var WxApiRoot = 'http://172.16.0.200:8080/wx/';
+// var WxApiRoot = 'http://172.16.0.200:8080/wx/';
 // 云平台部署时使用
-// var WxApiRoot = 'http://118.24.0.153:8080/wx/';
+// var WxApiRoot = 'http://118.190.38.222:8080/wx/';
 // 云平台上线时使用
-// var WxApiRoot = 'https://www.menethil.com.cn/wx/';
+ var WxApiRoot = 'https://aswx.nasux.cn:443/wx/';
 
 module.exports = {
   IndexUrl: WxApiRoot + 'home/index', //首页数据接口

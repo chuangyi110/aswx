@@ -6,6 +6,11 @@ spring:
 
 server:
   port: 8080
-
+#  port: 443
+#  ssl:
+#    key-store: classpath:aswx.jks
+#    key-store-password: LYV9TelU
+#    key-store-type: JKS
+#    key-alias: alias
 logging:
   config: classpath:logback-spring.xml
