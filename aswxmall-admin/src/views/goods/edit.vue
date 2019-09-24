@@ -139,7 +139,11 @@
       </el-table>
 
       <el-dialog :visible.sync="specVisiable" title="设置规格">
-        <el-form ref="specForm" :rules="rules" :model="specForm" status-icon label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
+        <el-radio-group v-model="specType" style="padding-bottom: 30px">
+          <el-radio :label="0">自定义</el-radio>
+          <el-radio :label="1">快捷</el-radio>
+        </el-radio-group>
+        <el-form ref="specForm" v-show="specType==0" :rules="rules" :model="specForm" status-icon label-position="left" label-width="100px" style="width: 600px; margin-left:50px;">
           <el-form-item label="规格名" prop="specification">
             <el-input v-model="specForm.specification"/>
           </el-form-item>
@@ -160,6 +164,22 @@
             </el-upload>
           </el-form-item>
         </el-form>
+        <el-form ref="specForm" v-show="specType==1" :rules="rules" :model="specForm" status-icon label-position="left" label-width="100px" style="width: 600px; margin-left:50px;">
+          <el-form-item label="规格名" prop="specification">
+            <el-radio-group v-model="specTypeQue" style="padding-bottom: 30px">
+              <el-radio :label="0">颜色</el-radio>
+              <el-radio :label="1">鞋码</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="规格" prop="value">
+            <el-checkbox-group  @change=""  v-model="checkedColor"  v-show="specTypeQue==0">
+              <el-checkbox v-for=" item in colorList" :label="item" ></el-checkbox>
+            </el-checkbox-group>
+            <el-checkbox-group  @change=""  v-model="checkedTopSize"  v-show="specTypeQue==1">
+              <el-checkbox v-for=" item in TopSizeList" :label="item" ></el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
+        </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="specVisiable = false">取消</el-button>
           <el-button type="primary" @click="handleSpecificationAdd">确定</el-button>
@@ -169,6 +189,7 @@
 
     <el-card class="box-card">
       <h3>商品库存</h3>
+      <el-button type="primary" size="mini" @click="handleBatchProductShow">批量添加</el-button>
       <el-table :data="products">
         <el-table-column property="value" label="货品规格" >
           <template slot-scope="scope">
@@ -190,7 +211,22 @@
           </template>
         </el-table-column>
       </el-table>
-
+      <!-- 批量设置货品dialog state-->
+      <el-dialog :visible.sync="batchProductVisiable" title="批量设置货品">
+        <el-form ref="productForm" :model="productForm" status-icon label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
+          <el-form-item label="货品售价" prop="price">
+            <el-input v-model="productForm.price"/>
+          </el-form-item>
+          <el-form-item label="货品数量" prop="number">
+            <el-input v-model="productForm.number"/>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="batchProductVisiable = false">取消</el-button>
+          <el-button type="primary" @click="handleBatchProductEdit">确定</el-button>
+        </div>
+      </el-dialog>
+      <!-- 批量设置货品dialog end-->
       <el-dialog :visible.sync="productVisiable" title="设置货品">
         <el-form ref="productForm" :model="productForm" status-icon label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
           <el-form-item label="货品规格列" prop="specifications">
@@ -318,12 +354,30 @@ export default {
       galleryFileList: [],
       categoryList: [],
       brandList: [],
+      specTypeQue:-1,
+      checkedColor:[],
+      colorList:['红色Red','黑粉Plum','玫红Rose','黑绿/BLACK GREEN','Nude/裸色','深粉色Dark Pink'
+        , '紫色Purple','黑色/BLACK','LIZARD RED','红色/RED','Baby pink','黑红 BLACK/RED','LIZARD BLUE'
+        ,'白色White','浅粉色','Light Pink 浅粉色','GREENERY','蓝色Blue','绿色Green','Peach','深红Maroon'
+        ,'耦荷紫 Shocking','黑黄 BLACK/YELLOW','焦糖 乳白/Camel And Lvory','黑/Nappa Black','黑蓝/BLACK BLUE'
+        ,'红色Nappa Red','Light Grey/浅灰色','黄色 yellow','蓝色Navy Blue','金色Gold','蓝色Blue','IVORY'
+        ,'Light Blue/浅蓝色','白蓝 WHITE/BIUE','LIZARD BLACK','浅粉色Light Pink','沙绿Dusty Green','银色Silver'
+        ,'黑蓝Black/Blue','Lilac/丁香紫','焦糖色/Caramel','灰粉色Taro','蓝粉Blue/Pink','Dusty Blue','银紫Sliver/Purple'
+        ,'白栗/WHITE CHESTUNT','豆沙粉/Turkish Rose','Pink/粉色','Skyblue/天蓝色','黑色Black','沙色Sand','栗色Chestnut'
+        ,'Cream/米白色','西红柿红TOMATO','黑粉Black/Pink','BLUE/LIGHT GREY','豹纹Leopard','锵色/ Metallic Silver'
+        ,'CARAMEL','巧克力Chocolate','灰色Grey','深紫色Raisin','LIZARD GOLDEN'],
+      checkedTopSize:[],
+      TopSizeList:['10M/12L','M5 L6','48','S','6/7','M9 L10','47','M','42','M6 L7','4L4M/6L','XL','41','45','M7 L8','4/5'
+        ,'4L','44','M8 L9','12/13','46','M3 L4','26/27','XS','36/37','38','4M/6L','37','9M/11L','5M/7L','M4 L5','10/11','0000'
+        ,'43','49','M10 L11','8/9','123','7M/9L','6M/8L','XXL','M11 L12','1/2','36','L','3/4','M12 L13','39','3M/5L','35','40','8M/10L'],
       categoryIds: [],
       goods: { gallery: [] },
       specVisiable: false,
+      specType: 0,
       specForm: { specification: '', value: '', picUrl: '' },
       specifications: [{ specification: '规格', value: '标准', picUrl: '' }],
       productVisiable: false,
+      batchProductVisiable:false,
       productForm: {
         id: 0,
         specifications: [],
@@ -522,10 +576,24 @@ export default {
           index = i
         }
       }
+      if(this.specType==0){
+        this.specifications.splice(index + 1, 0, this.specForm)
+      }else if(this.specType==1){
+        console.log(this.checkedTopSize);
+        console.log(this.checkedColor);
+        if(this.specTypeQue==0){
+          for(var i = 0; i < this.checkedColor.length; i++){
+            this.specifications.splice(index + 1, 0, { specification: '颜色', value:this.checkedColor[i], picUrl: '' })
+          }
+        }else if(this.specTypeQue==1){
+          for(var i = 0; i < this.checkedTopSize.length; i++){
+            this.specifications.splice(index + 1, 0, { specification: '尺码', value:this.checkedTopSize[i], picUrl: '' })
+          }
+        }
+      }
 
-      this.specifications.splice(index + 1, 0, this.specForm)
+
       this.specVisiable = false
-
       this.specToProduct()
     },
     handleSpecificationDelete(row) {
@@ -608,6 +676,9 @@ export default {
       this.productForm = Object.assign({}, row)
       this.productVisiable = true
     },
+    handleBatchProductShow(row) {
+      this.batchProductVisiable = true
+    },
     uploadProductUrl: function(response) {
       this.productForm.url = response.data.url
     },
@@ -620,6 +691,24 @@ export default {
         }
       }
       this.productVisiable = false
+    },
+    handleBatchProductEdit(){
+      let length = this.products.length
+      for (var i = 0; i < length; i++) {
+        const v = this.products[i]
+        console.log(v.id)
+        let obj={};
+        //id: 0, specifications: ['标准'], price: 0.0, number: 0, url: ''
+        obj.id = v.id
+        obj.goodsId = v.goodsId
+        obj.specifications = v.specifications
+        obj.price = this.productForm.price
+        obj.number = this.productForm.number
+        this.products.splice(i, 1, obj)
+        console.log(this.products)
+      }
+
+      this.batchProductVisiable = false
     },
     handleAttributeShow() {
       this.attributeForm = {}
