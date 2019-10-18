@@ -2,13 +2,14 @@
 // 本机开发时使用
 //var WxApiRoot = 'http://localhost:8080/wx/';
 // 局域网测试使用
-// var WxApiRoot = 'http://172.16.0.200:8080/wx/';
+ var WxApiRoot = 'http://172.16.0.200:8080/wx/';
 // 云平台部署时使用
 // var WxApiRoot = 'http://118.190.38.222:8080/wx/';
 // 云平台上线时使用
- var WxApiRoot = 'https://aswx.nasux.cn:443/wx/';
+// var WxApiRoot = 'https://aswx.nasux.cn:443/wx/';
 
 module.exports = {
+  UserLevel: 0,
   IndexUrl: WxApiRoot + 'home/index', //首页数据接口
   CatalogList: WxApiRoot + 'catalog/index', //分类目录全部分类数据接口
   CatalogCurrent: WxApiRoot + 'catalog/current', //分类目录当前分类数据接口

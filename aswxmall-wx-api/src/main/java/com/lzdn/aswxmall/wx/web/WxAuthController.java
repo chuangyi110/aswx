@@ -102,9 +102,10 @@ public class WxAuthController {
         UserInfo userInfo = new UserInfo();
         userInfo.setNickName(user.getNickname());
         userInfo.setAvatarUrl(user.getAvatar());
-
+        userInfo.setUserLevel(user.getUserLevel());
         // token
-        String token = UserTokenManager.generateToken(user.getId());
+
+        String token = UserTokenManager.generateToken(user.getId(),user.getUserLevel());
 
         Map<Object, Object> result = new HashMap<Object, Object>();
         result.put("token", token);
@@ -170,9 +171,9 @@ public class WxAuthController {
                 return ResponseUtil.updatedDataFailed();
             }
         }
-
+        userInfo.setUserLevel(user.getUserLevel());
         // token
-        String token = UserTokenManager.generateToken(user.getId());
+        String token = UserTokenManager.generateToken(user.getId(),user.getUserLevel());
 
         Map<Object, Object> result = new HashMap<Object, Object>();
         result.put("token", token);
@@ -353,9 +354,9 @@ public class WxAuthController {
         UserInfo userInfo = new UserInfo();
         userInfo.setNickName(username);
         userInfo.setAvatarUrl(user.getAvatar());
-
+        userInfo.setUserLevel(user.getUserLevel());
         // token
-        String token = UserTokenManager.generateToken(user.getId());
+        String token = UserTokenManager.generateToken(user.getId(),user.getUserLevel());
 
         Map<Object, Object> result = new HashMap<Object, Object>();
         result.put("token", token);

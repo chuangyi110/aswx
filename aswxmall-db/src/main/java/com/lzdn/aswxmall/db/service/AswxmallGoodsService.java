@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 public class AswxmallGoodsService {
-    AswxmallGoods.Column[] columns = new AswxmallGoods.Column[]{AswxmallGoods.Column.id, AswxmallGoods.Column.name, AswxmallGoods.Column.brief, AswxmallGoods.Column.picUrl, AswxmallGoods.Column.isHot, AswxmallGoods.Column.isNew, AswxmallGoods.Column.counterPrice, AswxmallGoods.Column.retailPrice};
+    AswxmallGoods.Column[] columns = new AswxmallGoods.Column[]{AswxmallGoods.Column.id, AswxmallGoods.Column.name, AswxmallGoods.Column.brief, AswxmallGoods.Column.picUrl, AswxmallGoods.Column.isHot, AswxmallGoods.Column.isNew, AswxmallGoods.Column.counterPrice, AswxmallGoods.Column.retailPrice,AswxmallGoods.Column.retailVPrice,AswxmallGoods.Column.retailVVPrice};
     @Resource
     private AswxmallGoodsMapper goodsMapper;
 

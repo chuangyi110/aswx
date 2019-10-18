@@ -17,7 +17,9 @@
         <navigator class="item {{(iindex + 1) % 2 == 0 ? 'item-b' : ''}}" url="/pages/goods/goods?id={{iitem.id}}" wx:for="{{goodsList}}" wx:key="id" wx:for-item="iitem" wx:for-index="iindex">
           <image class="img" src="{{iitem.picUrl}}" background-size="cover"></image>
           <text class="name">{{iitem.name}}</text>
-          <text class="price">￥{{iitem.retailPrice}}</text>
+          <text class="price" wx:if="{{userLevel==0}}">￥{{iitem.retailPrice}}</text>
+          <text class="price" wx:if="{{userLevel==1}}">￥{{iitem.retailVPrice}}</text>
+          <text class="price" wx:if="{{userLevel==2}}">￥{{iitem.retailVVPrice}}</text>
         </navigator>
       </view>
     </view>

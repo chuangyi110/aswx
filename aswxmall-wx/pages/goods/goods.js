@@ -6,6 +6,7 @@ var user = require('../../utils/user.js');
 
 Page({
   data: {
+    userLevel:api.UserLevel,
     canShare: false,
     id: 0,
     goods: {},
@@ -82,7 +83,6 @@ Page({
     wx.downloadFile({
       url: that.data.shareImage,
       success: function(res) {
-        console.log(res)
         wx.saveImageToPhotosAlbum({
           filePath: res.tempFilePath,
           success: function(res) {
@@ -155,7 +155,21 @@ Page({
             });
           }
         }
+        let checkedSpecPrice;
+        switch (that.data.userLevel){
+          case 0:
+            checkedSpecPrice = res.data.info.retailPrice;
+            break;
+          case 1:
+            checkedSpecPrice = res.data.info.retailVPrice;
+            break;
+          case 2:
+            checkedSpecPrice = res.data.info.retailVVPrice;
+            break;
+          default:
+            checkedSpecPrice = res.data.info.retailPrice;
 
+        }
         that.setData({
           goods: res.data.info,
           attribute: res.data.attribute,
@@ -166,7 +180,7 @@ Page({
           productList: res.data.productList,
           userHasCollect: res.data.userHasCollect,
           shareImage: res.data.shareImage,
-          checkedSpecPrice: res.data.info.retailPrice,
+          checkedSpecPrice: checkedSpecPrice,
           groupon: res.data.groupon,
           canShare: res.data.share,
         });
@@ -365,6 +379,7 @@ Page({
 
       // 规格所对应的货品选择以后
       let checkedProductArray = this.getCheckedProductItem(this.getCheckedSpecKey());
+      // console.log("381:" + JSON.stringify(checkedProductArray))
       if (!checkedProductArray || checkedProductArray.length <= 0) {
         this.setData({
           soldout: true
@@ -374,9 +389,23 @@ Page({
       }
 
       let checkedProduct = checkedProductArray[0];
+      let checkedProductPrice;
+      switch (this.data.userLevel){
+        case 0:
+          checkedProductPrice = checkedProduct.price
+          break;
+        case 1:
+          checkedProductPrice = checkedProduct.vPrice
+          break;
+        case 2:
+          checkedProductPrice = checkedProduct.vVPrice
+          break;
+        default:
+          checkedProductPrice = checkedProduct.price
+      }
       if (checkedProduct.number > 0) {
         this.setData({
-          checkedSpecPrice: checkedProduct.price,
+          checkedSpecPrice: checkedProductPrice,
           soldout: false
         });
       } else {
@@ -408,6 +437,11 @@ Page({
   },
 
   onLoad: function(options) {
+    if (wx.getStorageSync("userInfo")) {
+      this.setData({
+        userLevel: wx.getStorageSync("userInfo").userLevel,
+      });
+    }
     // 页面初始化 options为页面跳转所带来的参数
     if (options.id) {
       this.setData({
@@ -422,6 +456,8 @@ Page({
       });
       this.getGrouponInfo(options.grouponId);
     }
+    
+
     let that = this;
     wx.getSetting({
         success: function (res) {
@@ -459,6 +495,13 @@ Page({
         });
       }
     });
+    //判断是否登陆
+    if (wx.getStorageSync("userInfo")) {
+      that.setData({
+        userLevel: wx.getStorageSync("userInfo").userLevel
+      });
+      this.getGoodsInfo();
+    }
   },
 
   //添加或是取消收藏

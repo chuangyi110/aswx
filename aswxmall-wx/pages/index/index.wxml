@@ -117,7 +117,9 @@
         <navigator url="../goods/goods?id={{item.id}}">
           <image class="img" src="{{item.picUrl}}" background-size="cover"></image>
           <text class="name">{{item.name}}</text>
-          <text class="price">￥{{item.retailPrice}}</text>
+          <text wx:if="{{userLevel==0}}" class="price">￥{{item.retailPrice}}</text>
+          <text wx:if="{{userLevel==1}}" class="price">￥{{item.retailVPrice}}</text>
+          <text wx:if="{{userLevel==2}}" class="price">￥{{item.retailVVPrice}}</text>        
         </navigator>
       </view>
     </view>
@@ -139,7 +141,9 @@
             <view class="text">
               <text class="name">{{item.name}}</text>
               <text class="desc">{{item.brief}}</text>
-              <text class="price">￥{{item.retailPrice}}</text>
+              <text wx:if="{{userLevel==0}}" class="price">￥{{item.retailPrice}}</text>
+              <text wx:if="{{userLevel==1}}" class="price">￥{{item.retailVPrice}}</text>
+              <text wx:if="{{userLevel==2}}" class="price">￥{{item.retailVVPrice}}</text>      
             </view>
           </view>
         </navigator>
@@ -180,7 +184,9 @@
           <navigator url="../goods/goods?id={{iitem.id}}" class="a">
             <image class="img" src="{{iitem.picUrl}}" background-size="cover"></image>
             <text class="name">{{iitem.name}}</text>
-            <text class="price">￥{{iitem.retailPrice}}</text>
+            <text wx:if="{{userLevel==0}}" class="price">￥{{iitem.retailPrice}}</text>
+            <text wx:if="{{userLevel==1}}" class="price">￥{{iitem.retailVPrice}}</text>
+            <text wx:if="{{userLevel==2}}" class="price">￥{{iitem.retailVVPrice}}</text>      
           </navigator>
         </view>
       </block>

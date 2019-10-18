@@ -23,6 +23,8 @@
     <result column="unit" jdbcType="VARCHAR" property="unit" />
     <result column="counter_price" jdbcType="DECIMAL" property="counterPrice" />
     <result column="retail_price" jdbcType="DECIMAL" property="retailPrice" />
+    <result column="retail_v_price" jdbcType="DECIMAL" property="retailVPrice" />
+    <result column="retail_v_v_price" jdbcType="DECIMAL" property="retailVVPrice" />
     <result column="freight_price" jdbcType="DECIMAL" property="freightPrice" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -146,7 +148,7 @@
     -->
     id, goods_sn, `name`, category_id, brand_id, gallery, keywords, brief, is_on_sale, 
     sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price, 
-    freight_price, add_time, update_time, deleted
+    retail_v_price, retail_v_v_price, freight_price, add_time, update_time, deleted
   </sql>
   <sql id="Blob_Column_List">
     <!--
@@ -307,17 +309,17 @@
       keywords, brief, is_on_sale, 
       sort_order, pic_url, share_url, 
       is_new, is_hot, unit, counter_price, 
-      retail_price, freight_price, add_time, 
-      update_time, deleted, detail
-      )
+      retail_price, retail_v_price, retail_v_v_price, 
+      freight_price, add_time, update_time, 
+      deleted, detail)
     values (#{goodsSn,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{categoryId,jdbcType=INTEGER}, 
       #{brandId,jdbcType=INTEGER}, #{gallery,jdbcType=VARCHAR,typeHandler=com.lzdn.aswxmall.db.mybatis.JsonStringArrayTypeHandler}, 
       #{keywords,jdbcType=VARCHAR}, #{brief,jdbcType=VARCHAR}, #{isOnSale,jdbcType=BIT}, 
       #{sortOrder,jdbcType=SMALLINT}, #{picUrl,jdbcType=VARCHAR}, #{shareUrl,jdbcType=VARCHAR}, 
       #{isNew,jdbcType=BIT}, #{isHot,jdbcType=BIT}, #{unit,jdbcType=VARCHAR}, #{counterPrice,jdbcType=DECIMAL}, 
-      #{retailPrice,jdbcType=DECIMAL}, #{freightPrice,jdbcType=DECIMAL}, #{addTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{detail,jdbcType=LONGVARCHAR}
-      )
+      #{retailPrice,jdbcType=DECIMAL}, #{retailVPrice,jdbcType=DECIMAL}, #{retailVVPrice,jdbcType=DECIMAL}, 
+      #{freightPrice,jdbcType=DECIMAL}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{deleted,jdbcType=BIT}, #{detail,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.lzdn.aswxmall.db.domain.AswxmallGoods">
     <!--
@@ -376,6 +378,12 @@
       </if>
       <if test="retailPrice != null">
         retail_price,
+      </if>
+      <if test="retailVPrice != null">
+        retail_v_price,
+      </if>
+      <if test="retailVVPrice != null">
+        retail_v_v_price,
       </if>
       <if test="freightPrice != null">
         freight_price,
@@ -441,6 +449,12 @@
       </if>
       <if test="retailPrice != null">
         #{retailPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="retailVPrice != null">
+        #{retailVPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="retailVVPrice != null">
+        #{retailVVPrice,jdbcType=DECIMAL},
       </if>
       <if test="freightPrice != null">
         #{freightPrice,jdbcType=DECIMAL},
@@ -527,6 +541,12 @@
       <if test="record.retailPrice != null">
         retail_price = #{record.retailPrice,jdbcType=DECIMAL},
       </if>
+      <if test="record.retailVPrice != null">
+        retail_v_price = #{record.retailVPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.retailVVPrice != null">
+        retail_v_v_price = #{record.retailVVPrice,jdbcType=DECIMAL},
+      </if>
       <if test="record.freightPrice != null">
         freight_price = #{record.freightPrice,jdbcType=DECIMAL},
       </if>
@@ -570,6 +590,8 @@
       unit = #{record.unit,jdbcType=VARCHAR},
       counter_price = #{record.counterPrice,jdbcType=DECIMAL},
       retail_price = #{record.retailPrice,jdbcType=DECIMAL},
+      retail_v_price = #{record.retailVPrice,jdbcType=DECIMAL},
+      retail_v_v_price = #{record.retailVVPrice,jdbcType=DECIMAL},
       freight_price = #{record.freightPrice,jdbcType=DECIMAL},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
@@ -602,6 +624,8 @@
       unit = #{record.unit,jdbcType=VARCHAR},
       counter_price = #{record.counterPrice,jdbcType=DECIMAL},
       retail_price = #{record.retailPrice,jdbcType=DECIMAL},
+      retail_v_price = #{record.retailVPrice,jdbcType=DECIMAL},
+      retail_v_v_price = #{record.retailVVPrice,jdbcType=DECIMAL},
       freight_price = #{record.freightPrice,jdbcType=DECIMAL},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
@@ -665,6 +689,12 @@
       <if test="retailPrice != null">
         retail_price = #{retailPrice,jdbcType=DECIMAL},
       </if>
+      <if test="retailVPrice != null">
+        retail_v_price = #{retailVPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="retailVVPrice != null">
+        retail_v_v_price = #{retailVVPrice,jdbcType=DECIMAL},
+      </if>
       <if test="freightPrice != null">
         freight_price = #{freightPrice,jdbcType=DECIMAL},
       </if>
@@ -705,6 +735,8 @@
       unit = #{unit,jdbcType=VARCHAR},
       counter_price = #{counterPrice,jdbcType=DECIMAL},
       retail_price = #{retailPrice,jdbcType=DECIMAL},
+      retail_v_price = #{retailVPrice,jdbcType=DECIMAL},
+      retail_v_v_price = #{retailVVPrice,jdbcType=DECIMAL},
       freight_price = #{freightPrice,jdbcType=DECIMAL},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
@@ -734,6 +766,8 @@
       unit = #{unit,jdbcType=VARCHAR},
       counter_price = #{counterPrice,jdbcType=DECIMAL},
       retail_price = #{retailPrice,jdbcType=DECIMAL},
+      retail_v_price = #{retailVPrice,jdbcType=DECIMAL},
+      retail_v_v_price = #{retailVVPrice,jdbcType=DECIMAL},
       freight_price = #{freightPrice,jdbcType=DECIMAL},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},

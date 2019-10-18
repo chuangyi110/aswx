@@ -66,7 +66,8 @@
       <el-table-column align="center" label="专柜价格" prop="counterPrice"/>
 
       <el-table-column align="center" label="当前价格" prop="retailPrice"/>
-
+      <el-table-column align="center" label="VIP价格" prop="retailVPrice"/>
+      <el-table-column align="center" label="VVIP价格" prop="retailVVPrice"/>
       <el-table-column align="center" label="是否新品" prop="isNew">
         <template slot-scope="scope">
           <el-tag :type="scope.row.isNew ? 'success' : 'error' ">{{ scope.row.isNew ? '新品' : '非新品' }}</el-tag>
@@ -173,6 +174,7 @@ export default {
       this.$router.push({ path: '/goods/edit', query: { id: row.id }})
     },
     showDetail(detail) {
+      console.log(detail)
       this.goodsDetail = detail
       this.detailDialogVisible = true
     },
@@ -194,8 +196,8 @@ export default {
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['商品ID', '商品编号', '名称', '专柜价格', '当前价格', '是否新品', '是否热品', '是否在售', '首页主图', '宣传图片列表', '商品介绍', '详细介绍', '商品图片', '商品单位', '关键字', '类目ID', '品牌商ID']
-        const filterVal = ['id', 'goodsSn', 'name', 'counterPrice', 'retailPrice', 'isNew', 'isHot', 'isOnSale', 'listPicUrl', 'gallery', 'brief', 'detail', 'picUrl', 'goodsUnit', 'keywords', 'categoryId', 'brandId']
+        const tHeader = ['商品ID', '商品编号', '名称', '专柜价格', '当前价格','VIP价格','VVIP价格', '是否新品', '是否热品', '是否在售', '首页主图', '宣传图片列表', '商品介绍', '详细介绍', '商品图片', '商品单位', '关键字', '类目ID', '品牌商ID']
+        const filterVal = ['id', 'goodsSn', 'name', 'counterPrice', 'retailPrice','retailVPrice' ,'retailVVPrice', 'isNew', 'isHot', 'isOnSale', 'listPicUrl', 'gallery', 'brief', 'detail', 'picUrl', 'goodsUnit', 'keywords', 'categoryId', 'brandId']
         excel.export_json_to_excel2(tHeader, this.list, filterVal, '商品信息')
         this.downloadLoading = false
       })

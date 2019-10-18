@@ -140,5 +140,8 @@ public class ResponseUtil {
     public static Object unauthz() {
         return fail(506, "无操作权限");
     }
+    public static Object unlist() {
+        return fail(507, "无相关业务数据");
+    }
 }
 

@@ -23,9 +23,10 @@ public class JwtHelper {
 	static final String SUBJECT = "this is aswxmall token";
 	// 签名的观众
 	static final String AUDIENCE = "MINIAPP";
-	
-	
-	public String createToken(Integer userId){
+
+	//2019.10.15 Token内部添加用户等级信息
+	public String createToken(Integer userId,Byte userLevel){
+		System.out.println("【JwtHelper】："+userLevel);
 		try {
 		    Algorithm algorithm = Algorithm.HMAC256(SECRET);
 		    Map<String, Object> map = new HashMap<String, Object>();
@@ -39,6 +40,7 @@ public class JwtHelper {
 		    	.withHeader(map)
 		    	// 设置 载荷 Payload
 		    	.withClaim("userId", userId)
+				.withClaim("userLevel",Byte.toString(userLevel))
 		        .withIssuer(ISSUSER)
 		        .withSubject(SUBJECT)
 		        .withAudience(AUDIENCE)
@@ -71,7 +73,22 @@ public class JwtHelper {
 		
 		return 0;
 	}
-	
+	public Byte verifyTokenAndGetUserLevel(String token) {
+		try {
+			Algorithm algorithm = Algorithm.HMAC256(SECRET);
+			JWTVerifier verifier = JWT.require(algorithm)
+					.withIssuer(ISSUSER)
+					.build();
+			DecodedJWT jwt = verifier.verify(token);
+			Map<String, Claim> claims = jwt.getClaims();
+			Claim claim = claims.get("userLevel");
+			return Byte.parseByte(claim.asString());
+		} catch (JWTVerificationException exception){
+//			exception.printStackTrace();
+		}
+
+		return 0;
+	}
 	public  Date getAfterDate(Date date, int year, int month, int day, int hour, int minute, int second){
 		if(date == null){
 			date = new Date();

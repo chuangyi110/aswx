@@ -20,6 +20,16 @@
             <template slot="append">元</template>
           </el-input>
         </el-form-item>
+        <el-form-item label="VIP价格" prop="retailPrice">
+          <el-input v-model="goods.retailVPrice" placeholder="0.00">
+            <template slot="append">元</template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="VVIP价格" prop="retailPrice">
+          <el-input v-model="goods.retailVVPrice" placeholder="0.00">
+            <template slot="append">元</template>
+          </el-input>
+        </el-form-item>
         <el-form-item label="默认邮费">
           <el-radio-group v-model="goods.freightPrice">
             <el-radio :label="-1">默认</el-radio>
@@ -190,6 +200,7 @@
     <el-card class="box-card">
       <h3>商品库存</h3>
       <el-button type="primary" size="mini" @click="handleBatchProductShow">批量添加</el-button>
+
       <el-table :data="products">
         <el-table-column property="value" label="货品规格" >
           <template slot-scope="scope">
@@ -198,7 +209,10 @@
             </el-tag>
           </template>
         </el-table-column>
+        <!--<el-table-column property="goodsProductSn" width="100" label="商品编号"/>-->
         <el-table-column property="price" width="100" label="货品售价"/>
+        <el-table-column property="vPrice" width="100" label="VIP售价"/>
+        <el-table-column property="vVPrice" width="100" label="VVIP售价"/>
         <el-table-column property="number" width="100" label="货品数量"/>
         <el-table-column property="url" width="100" label="货品图片">
           <template slot-scope="scope">
@@ -216,6 +230,12 @@
         <el-form ref="productForm" :model="productForm" status-icon label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
           <el-form-item label="货品售价" prop="price">
             <el-input v-model="productForm.price"/>
+          </el-form-item>
+          <el-form-item label="VIP售价" prop="vPrice">
+            <el-input v-model="productForm.vPrice"/>
+          </el-form-item>
+          <el-form-item label="VVIP售价" prop="vVPrice">
+            <el-input v-model="productForm.vVPrice"/>
           </el-form-item>
           <el-form-item label="货品数量" prop="number">
             <el-input v-model="productForm.number"/>
@@ -382,11 +402,13 @@ export default {
         id: 0,
         specifications: [],
         price: 0.0,
+        vVPrice:0.0,
+        vPrice:0.0,
         number: 0,
         url: ''
       },
       products: [
-        { id: 0, specifications: ['标准'], price: 0.0, number: 0, url: '' }
+        { id: 0, specifications: ['标准'], price: 0.0,vVPrice:0.0, vPrice:0.0, number: 0, url: '' }
       ],
       attributeVisiable: false,
       attributeForm: { attribute: '', value: '' },
@@ -554,7 +576,7 @@ export default {
           { specification: '规格', value: '标准', picUrl: '' }
         ]
         this.products = [
-          { id: 0, specifications: ['标准'], price: 0.0, number: 0, url: '' }
+          { id: 0, specifications: ['标准'], price: 0.0,vVPrice:0.0, vPrice:0.0, number: 0, url: '' }
         ]
       } else {
         this.specifications = []
@@ -696,16 +718,16 @@ export default {
       let length = this.products.length
       for (var i = 0; i < length; i++) {
         const v = this.products[i]
-        console.log(v.id)
         let obj={};
         //id: 0, specifications: ['标准'], price: 0.0, number: 0, url: ''
         obj.id = v.id
         obj.goodsId = v.goodsId
         obj.specifications = v.specifications
         obj.price = this.productForm.price
+        obj.vPrice = this.productForm.vPrice
+        obj.vVPrice = this.productForm.vVPrice
         obj.number = this.productForm.number
         this.products.splice(i, 1, obj)
-        console.log(this.products)
       }
 
       this.batchProductVisiable = false

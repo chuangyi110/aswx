@@ -2,6 +2,8 @@ package com.lzdn.aswxmall.wx.web;
 
 import com.lzdn.aswxmall.db.domain.*;
 import com.lzdn.aswxmall.db.service.*;
+import com.lzdn.aswxmall.wx.annotation.LoginUserLevel;
+import com.lzdn.aswxmall.wx.service.UserTokenManager;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -95,16 +97,17 @@ public class WxCartController {
      * @param userId 用户ID
      * @param cart   购物车商品信息， { goodsId: xxx, productId: xxx, number: xxx }
      * @return 加入购物车操作结果
+     *
+     * 2019.10.15修正 添加vip价格并根据vip等级修正价格
      */
     @PostMapping("add")
-    public Object add(@LoginUser Integer userId, @RequestBody AswxmallCart cart) {
+    public Object add(@LoginUser Integer userId, @LoginUserLevel Byte userLevel, @RequestBody AswxmallCart cart) {
         if (userId == null) {
             return ResponseUtil.unlogin();
         }
         if (cart == null) {
             return ResponseUtil.badArgument();
         }
-
         Integer productId = cart.getProductId();
         Integer number = cart.getNumber().intValue();
         Integer goodsId = cart.getGoodsId();
@@ -129,12 +132,25 @@ public class WxCartController {
             if (product == null || number > product.getNumber()) {
                 return ResponseUtil.fail(GOODS_NO_STOCK, "库存不足");
             }
-
+            BigDecimal price =null;
+            switch (userLevel){
+                case 0:
+                    price = product.getPrice();
+                    break;
+                case 1:
+                    price = product.getvPrice();
+                    break;
+                case 2:
+                    price = product.getvVPrice();
+                    break;
+                default:
+                    price = product.getPrice();
+            }
             cart.setId(null);
             cart.setGoodsSn(goods.getGoodsSn());
             cart.setGoodsName((goods.getName()));
             cart.setPicUrl(goods.getPicUrl());
-            cart.setPrice(product.getPrice());
+            cart.setPrice(price);
             cart.setSpecifications(product.getSpecifications());
             cart.setUserId(userId);
             cart.setChecked(true);
@@ -166,7 +182,7 @@ public class WxCartController {
      * @return 立即购买操作结果
      */
     @PostMapping("fastadd")
-    public Object fastadd(@LoginUser Integer userId, @RequestBody AswxmallCart cart) {
+    public Object fastadd(@LoginUser Integer userId,@LoginUserLevel Byte userLevel, @RequestBody AswxmallCart cart) {
         if (userId == null) {
             return ResponseUtil.unlogin();
         }
@@ -203,7 +219,21 @@ public class WxCartController {
             cart.setGoodsSn(goods.getGoodsSn());
             cart.setGoodsName((goods.getName()));
             cart.setPicUrl(goods.getPicUrl());
-            cart.setPrice(product.getPrice());
+            BigDecimal price =null;
+            switch (userLevel){
+                case 0:
+                    price = product.getPrice();
+                    break;
+                case 1:
+                    price = product.getvPrice();
+                    break;
+                case 2:
+                    price = product.getvVPrice();
+                    break;
+                default:
+                    price = product.getPrice();
+            }
+            cart.setPrice(price);
             cart.setSpecifications(product.getSpecifications());
             cart.setUserId(userId);
             cart.setChecked(true);

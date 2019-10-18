@@ -11,7 +11,8 @@ Page({
     scrollTop: 0,
     scrollHeight: 0,
     page: 1,
-    limit: 10
+    limit: 10,
+    userLevel:api.UserLevel
   },
   onLoad: function(options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -21,7 +22,11 @@ Page({
         id: parseInt(options.id)
       });
     }
-
+    if (wx.getStorageSync("userInfo")) {
+      that.setData({
+        userLevel: wx.getStorageSync("userInfo").userLevel
+      });
+    }
     wx.getSystemInfo({
       success: function(res) {
         that.setData({
@@ -85,6 +90,7 @@ Page({
   },
   onShow: function() {
     // 页面显示
+    
   },
   onHide: function() {
     // 页面隐藏

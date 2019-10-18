@@ -268,7 +268,7 @@ public class WxGoodsController {
 
 		//查询列表数据
 		List<AswxmallGoods> goodsList = goodsService.querySelective(categoryId, brandId, keyword, isHot, isNew, page, limit, sort, order);
-
+		System.out.println(goodsList);
 		// 查询商品所属类目列表。
 		List<Integer> goodsCatIds = goodsService.getCatIds(brandId, keyword, isHot, isNew);
 		List<AswxmallCategory> categoryList = null;

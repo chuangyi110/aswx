@@ -112,7 +112,7 @@
         <!--<table tableName="aswxmall_footprint">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
-        <!--商品添加自定义邮费-->
+        <!--1）.商品添加自定义邮费,2）.2019.10.12 商品添加 vip价格 vvip价格-->
         <!--<table tableName="aswxmall_goods">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
             <!--<columnOverride column="gallery" javaType="java.lang.String[]"-->
@@ -124,11 +124,12 @@
         <!--<table tableName="aswxmall_goods_specification">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
-        <!--<table tableName="aswxmall_goods_product">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-            <!--<columnOverride column="specifications" javaType="java.lang.String[]"-->
-                            <!--typeHandler="com.lzdn.aswxmall.db.mybatis.JsonStringArrayTypeHandler"/>-->
-        <!--</table>-->
+        <!--2019.10.12添加VIP价格VVIP价格-->
+        <table tableName="aswxmall_goods_product">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="specifications" javaType="java.lang.String[]"
+                            typeHandler="com.lzdn.aswxmall.db.mybatis.JsonStringArrayTypeHandler"/>
+        </table>
         <!--<table tableName="aswxmall_issue">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
@@ -136,9 +137,9 @@
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
         <!--订单添加议价功能 2019 8 14,,,,,,2019.8 .26添加微信好友转账（确认支付信息功能）-->
-        <table tableName="aswxmall_order">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
+        <!--<table tableName="aswxmall_order">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
         <!--<table tableName="aswxmall_order_goods">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
             <!--<columnOverride column="specifications" javaType="java.lang.String[]"-->

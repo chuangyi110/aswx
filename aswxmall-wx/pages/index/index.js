@@ -7,6 +7,7 @@ const app = getApp();
 
 Page({
   data: {
+    userLevel:api.UserLevel,
     newGoods: [],
     hotGoods: [],
     topics: [],
@@ -47,8 +48,13 @@ Page({
           banner: res.data.banner,
           groupons: res.data.grouponList,
           channel: res.data.channel,
-          coupon: res.data.couponList
+          coupon: res.data.couponList,
         });
+        if (wx.getStorageSync("userInfo")){
+          that.setData({
+            userLevel: wx.getStorageSync("userInfo").userLevel
+          });
+        }
       }
     });
     util.request(api.GoodsCount).then(function (res) {
@@ -116,6 +122,9 @@ Page({
   },
   onShow: function() {
     // 页面显示
+    if (this.userLevel != wx.getStorageSync("userInfo").userLevel) {
+      this.getIndexData();
+    }
   },
   onHide: function() {
     // 页面隐藏

@@ -20,6 +20,14 @@ Component({
    type: Number,
    value: 0
   },
+  retailVPrice: {
+      type: Number,
+      value: 0
+  },
+  retailVVPrice: {
+      type: Number,
+      value: 0
+  },
  },
 
  /**

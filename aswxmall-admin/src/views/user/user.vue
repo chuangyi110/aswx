@@ -52,8 +52,17 @@
           <el-tag>{{ statusDic[scope.row.status] }}</el-tag>
         </template>
       </el-table-column>
-
+      <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
+        </template>
+      </el-table-column>
     </el-table>
+    <!--用户修改-->
+    <el-dialog :visible.sync="userDialogVisible" title="用户修改" width="800">
+
+
+    </el-dialog>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
@@ -99,7 +108,8 @@ export default {
         amount:0,
         balance:0,
         widthdraw:0,
-      }
+      },
+      userDialogVisible: false,
     }
   },
   created() {
@@ -163,6 +173,10 @@ export default {
     },
     handleSelectionChange:function (val) {
       console.log(val)
+    },
+    handleUpdate(user){
+      //console.log(user)
+      this.userDialogVisible = true;
     }
   }
 }

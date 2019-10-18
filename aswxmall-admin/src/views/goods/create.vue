@@ -20,6 +20,16 @@
             <template slot="append">元</template>
           </el-input>
         </el-form-item>
+        <el-form-item label="VIP价格" prop="retailPrice">
+          <el-input v-model="goods.retailVPrice" placeholder="0.00">
+            <template slot="append">元</template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="VVIP价格" prop="retailPrice">
+          <el-input v-model="goods.retailVVPrice" placeholder="0.00">
+            <template slot="append">元</template>
+          </el-input>
+        </el-form-item>
         <el-form-item label="默认邮费">
           <el-radio-group v-model="goods.freightPrice">
             <el-radio :label="-1">默认</el-radio>

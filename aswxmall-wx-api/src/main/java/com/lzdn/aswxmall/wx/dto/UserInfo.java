@@ -8,6 +8,7 @@ public class UserInfo {
     private String city;
     private String language;
     private Byte gender;
+    private Byte userLevel;
 
     public String getCountry() {
         return country;
@@ -63,5 +64,13 @@ public class UserInfo {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public Byte getUserLevel() {
+        return userLevel;
+    }
+
+    public void setUserLevel(Byte userLevel) {
+        this.userLevel = userLevel;
     }
 }

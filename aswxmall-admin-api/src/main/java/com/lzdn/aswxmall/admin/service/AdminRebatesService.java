@@ -30,6 +30,9 @@ public class AdminRebatesService {
         if(aswxmallRebatesList.size()>1){
             return ResponseUtil.serious();
         }
+        if(aswxmallRebatesList.size()<=0){
+            return ResponseUtil.unlist();
+        }
         AswxmallRebates rebates = aswxmallRebatesList.get(0);
         List<AswxmallRebatesCreateOrder> rebatesCreateOrderList = aswxmallRebatesCreateService.selectOrderByUid(uid);
         List<AswxmallRebatesWithdrawalOrder> rebatesWithdrawalOrderList = rebatesWithdrawalOrderService.selectOrderByUid(uid);
