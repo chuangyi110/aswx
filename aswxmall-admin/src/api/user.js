@@ -7,11 +7,18 @@ export function fetchList(query) {
     params: query
   })
 }
+export function updateUser(data) {
+  return request({
+    url: 'user/update',
+    method: 'post',
+    params: data
+  })
+}
 export function fetchRebatesList(query) {
   return request({
-    url:'/rebates/list',
-    method:'get',
-    params:query
+    url: '/rebates/list',
+    method: 'get',
+    params: query
   })
 }
 export function listAddress(query) {

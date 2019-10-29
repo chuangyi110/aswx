@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 @RestController
 @RequestMapping("/wx/order")
@@ -89,7 +91,17 @@ public class WxOrderController {
     public Object prepay(@LoginUser Integer userId, @RequestBody String body, HttpServletRequest request) {
         return wxOrderService.prepay(userId, body, request);
     }
-
+    /**
+     * 付款订单的预支付会话标识
+     *
+     * @param userId 用户ID
+     * @param body   订单信息，{ orderId：xxx }
+     * @return 支付订单ID
+     */
+    @PostMapping("prepay2")
+    public Object prepay2(@LoginUser Integer userId, @RequestBody String body, HttpServletRequest request) throws IOException, URISyntaxException {
+        return wxOrderService.prepay2(userId, body, request);
+    }
     /**
      * 微信付款成功或失败回调接口
      * <p>

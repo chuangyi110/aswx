@@ -46,3 +46,11 @@ export function listCatAndBrand() {
     method: 'get'
   })
 }
+
+export function createByExecl(data) {
+  return request({
+    url: '/goods/createExcel',
+    method: 'post',
+    data
+  })
+}

@@ -72,6 +72,16 @@
             <artifactId>weixin-java-pay</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.13</version>
+        </dependency>
+        <dependency>
             <groupId>com.lzdn</groupId>
             <artifactId>aswxmall-db</artifactId>
         </dependency>

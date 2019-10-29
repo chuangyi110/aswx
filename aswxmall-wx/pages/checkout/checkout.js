@@ -191,5 +191,57 @@ Page({
         // });
       }
     });
+  },
+  submitOrder2:function(){
+    if (this.data.addressId <= 0) {
+      util.showErrorToast('请选择收货地址');
+      return false;
+    }
+    util.request(api.OrderSubmit, {
+      cartId: this.data.cartId,
+      addressId: this.data.addressId,
+      couponId: this.data.couponId,
+      message: this.data.message,
+      grouponRulesId: this.data.grouponRulesId,
+      grouponLinkId: this.data.grouponLinkId
+    }, 'POST').then(res => {
+      if (res.errno === 0) {
+
+        // 下单成功，重置couponId
+        try {
+          wx.setStorageSync('couponId', 0);
+        } catch (error) {
+
+        }
+
+        const orderId = res.data.orderId;
+        //2019 8 21 下单后直接跳转到中转页面，不再进行直接支付
+        // wx.redirectTo({
+        //   url: '/pages/paySetout/paySetout?status=0&orderId=' + orderId
+        // });
+        util.request(api.OrderPrepay2, {
+          orderId: orderId
+        }, 'POST').then(function(res) {
+          if (res.errno === 0) {
+            let payUrl = res.data;
+            console.log("支付过程开始" + payUrl);
+            payUrl = encodeURIComponent(payUrl);
+            console.log("转义字符", payUrl);
+            wx.redirectTo({
+              url: '/pages/royal/royal?url=' + payUrl
+            });
+          } else {
+            wx.redirectTo({
+              url: '/pages/payResult/payResult?status=0&orderId=' + orderId
+            });
+          }
+        });
+
+      } else {
+        // wx.redirectTo({
+        //   url: '/pages/payResult/payResult?status=0&orderId=' + orderId
+        // });
+      }
+    });
   }
 });

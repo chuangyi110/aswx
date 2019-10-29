@@ -2,7 +2,7 @@
 // 本机开发时使用
 //var WxApiRoot = 'http://localhost:8080/wx/';
 // 局域网测试使用
- var WxApiRoot = 'http://172.16.0.200:8080/wx/';
+var WxApiRoot = 'http://192.168.10.201:8080/wx/';
 // 云平台部署时使用
 // var WxApiRoot = 'http://118.190.38.222:8080/wx/';
 // 云平台上线时使用
@@ -68,6 +68,8 @@ module.exports = {
 
   OrderSubmit: WxApiRoot + 'order/submit', // 提交订单
   OrderPrepay: WxApiRoot + 'order/prepay', // 订单的预支付会话
+  OrderPrepay2: WxApiRoot + 'order/prepay2', // 订单的预支付会话
+
   OrderList: WxApiRoot + 'order/list', //订单列表
   OrderDetail: WxApiRoot + 'order/detail', //订单详情
   OrderCancel: WxApiRoot + 'order/cancel', //取消订单

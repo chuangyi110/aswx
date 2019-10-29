@@ -1,5 +1,10 @@
 package com.lzdn.aswxmall.admin.service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.lzdn.aswxmall.admin.dto.GoodsExcel;
+import com.lzdn.aswxmall.core.util.excel.ExcelUtils;
 import com.lzdn.aswxmall.db.domain.*;
 import com.lzdn.aswxmall.db.service.*;
 import org.apache.commons.logging.Log;
@@ -12,12 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
 import static com.lzdn.aswxmall.admin.util.AdminResponseCode.GOODS_NAME_EXIST;
 
@@ -246,7 +250,86 @@ public class AdminGoodsService {
         }
         return ResponseUtil.ok();
     }
+    @Transactional
+    public Object createExcel(MultipartFile file) {
+        List<GoodsExcel> list = ExcelUtils.readExcel(GoodsExcel.class,file);
+        String names =null;
+        list.forEach(
+                lt->{
+                    AswxmallGoods goods = new AswxmallGoods();
+                    goods = lt.toDTO(goods,lt);
+                    String name = goods.getName();
+                    if (goodsService.checkExistByName(name)) {
+                        //TODO 重名检查并返回
 
+                        return ;
+                    }
+                    // 商品基本信息表Aswxmall_goods
+                    goodsService.add(goods);
+                    //将生成的分享图片地址写入数据库
+                    String url = qCodeService.createGoodShareImage(goods.getId().toString(), goods.getPicUrl(), goods.getName());
+                    if (!StringUtils.isEmpty(url)) {
+                        goods.setShareUrl(url);
+                        if (goodsService.updateById(goods) == 0) {
+                            throw new RuntimeException("更新数据失败");
+                        }
+                    }
+                    //处理规格
+                    String specificationJson = lt.getSpecification();
+                    JSONObject obj = JSON.parseObject(specificationJson);
+                    int size = obj.size();
+                    Set<Map.Entry<String, Object>> entrySet = obj.entrySet();
+                    List<AswxmallGoodsSpecification> agsList = new ArrayList();
+                    //productList用于分别存储类别规格 e.g.[[黑, 白], [大, 中, 小]]
+                    List<List> productList = new ArrayList();
+                    for (Map.Entry<String, Object> entry : entrySet) {
+                        String value = String.valueOf(entry.getValue());
+                        if(JSONArray.isValid(entry.getValue().toString())){
+                            JSONArray jsonArray = JSONArray.parseArray(value);
+                            List product = new ArrayList();
+                            for(int i=0;i<jsonArray.size();i++){
+                                AswxmallGoodsSpecification ags = new AswxmallGoodsSpecification();
+                                ags.setGoodsId(goods.getId());
+                                ags.setSpecification(entry.getKey());
+                                ags.setValue(jsonArray.get(i).toString());
+                                agsList.add(ags);
+                                product.add(jsonArray.get(i).toString());
+                            }
+                            productList.add(product);
+                        }else{
+                            List product = new ArrayList();
+                            AswxmallGoodsSpecification ags = new AswxmallGoodsSpecification();
+                            ags.setGoodsId(goods.getId());
+                            ags.setSpecification(entry.getKey());
+                            ags.setValue(value);
+                            agsList.add(ags);
+                            product.add(value);
+                            productList.add(product);
+                        }
+                    }
+                    //System.out.println(productList);
+                    for(AswxmallGoodsSpecification ags:agsList){
+                        specificationService.add(ags);
+                    }
+
+                    //处理goodproduct
+                    List<String[]> products = calculateCombination(productList);
+                    for (String[] productArr : products) {
+                        AswxmallGoodsProduct aswxmallGoodsProduct =new AswxmallGoodsProduct();
+                        aswxmallGoodsProduct.setGoodsId(goods.getId());
+                        aswxmallGoodsProduct.setPrice(lt.getRetailPrice());
+                        aswxmallGoodsProduct.setvPrice(lt.getRetailVPrice());
+                        aswxmallGoodsProduct.setvVPrice(lt.getRetailVVPrice());
+                        aswxmallGoodsProduct.setSpecifications(productArr);
+                        productService.add(aswxmallGoodsProduct);
+                    }
+
+
+                }
+
+        );
+        return ResponseUtil.ok();
+    }
     public Object list2() {
         // http://element-cn.eleme.io/#/zh-CN/component/cascader
         // 管理员设置“所属分类”
@@ -310,6 +393,45 @@ public class AdminGoodsService {
         data.put("categoryIds", categoryIds);
 
         return ResponseUtil.ok(data);
+    }
+    public static List<String[]>  calculateCombination(List<List> inputList) {
+        List<String[]> tis = new ArrayList<>();
+        List<Integer> combination = new ArrayList<Integer>();
+        int n=inputList.size();
+        for (int i = 0; i < n; i++) {
+            combination.add(0);
+        }
+        int i=0;
+        boolean isContinue=false;
+        do{
+            //打印一次循环生成的组合
+            String[] strs = new String[n];
+            for (int j = 0; j < n; j++) {
+                //System.out.print(inputList.get(j).get(combination.get(j))+", ");
+                strs[j] =inputList.get(j).get(combination.get(j)).toString();
+            }
+            tis.add(strs);
+            //System.out.println();
+
+            i++;
+            combination.set(n-1, i);
+            for (int j = n-1; j >= 0; j--) {
+                if (combination.get(j)>=inputList.get(j).size()) {
+                    combination.set(j, 0);
+                    i=0;
+                    if (j-1>=0) {
+                        combination.set(j-1, combination.get(j-1)+1);
+                    }
+                }
+            }
+            isContinue=false;
+            for (Integer integer : combination) {
+                if (integer != 0) {
+                    isContinue=true;
+                }
+            }
+        }while (isContinue);
+        return tis;
     }
 
 }

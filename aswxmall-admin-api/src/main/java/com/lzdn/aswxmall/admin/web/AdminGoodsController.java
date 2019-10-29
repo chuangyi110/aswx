@@ -12,6 +12,7 @@ import com.lzdn.aswxmall.core.validator.Sort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 
@@ -88,6 +89,20 @@ public class AdminGoodsController {
     @PostMapping("/create")
     public Object create(@RequestBody GoodsAllinone goodsAllinone) {
         return adminGoodsService.create(goodsAllinone);
+    }
+
+    /**
+     * 添加商品
+     *
+     * @param file
+     * @return
+     */
+    @RequiresPermissions("admin:goods:createExcel")
+    @RequiresPermissionsDesc(menu = {"商品管理", "商品管理Excel"}, button = "上架")
+    @PostMapping("/createExcel")
+    public Object createByExcel(@RequestParam("file") MultipartFile file) {
+
+        return adminGoodsService.createExcel(file);
     }
 
     /**

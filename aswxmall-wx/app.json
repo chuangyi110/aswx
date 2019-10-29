@@ -39,7 +39,8 @@
     "pages/coupon/coupon",
     "pages/help/help",
     "pages/paySetout/paySetout",
-    "pages/contactUs/contactUs"
+    "pages/contactUs/contactUs",
+    "pages/royal/royal"
   ],
   "window": {
     "navigationBarBackgroundColor": "#FFFFFF",

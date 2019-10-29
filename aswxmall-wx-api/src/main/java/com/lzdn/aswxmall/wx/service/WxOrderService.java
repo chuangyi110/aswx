@@ -10,7 +10,13 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.lzdn.aswxmall.db.domain.*;
 import com.lzdn.aswxmall.db.service.*;
+import com.lzdn.aswxmall.wx.http.HttpRequestGenerator;
+import com.lzdn.aswxmall.wx.http.HttpRequestResult;
+import net.sf.json.JSONObject;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import com.lzdn.aswxmall.core.express.ExpressService;
@@ -30,16 +36,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.server.ServerErrorException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URISyntaxException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.lzdn.aswxmall.wx.util.WxResponseCode.*;
 
@@ -586,6 +592,60 @@ public class WxOrderService {
         return ResponseUtil.ok(result);
     }
 
+    private static final String PARTNER_CODE = "TSTS";
+    private static final String CREDENTIAL_CODE = "8Fo6uZm9iTaGpwed6Mujpf9HKhvPk53b";
+    public Object prepay2(Integer userId, String body, HttpServletRequest request) throws URISyntaxException, IOException {
+        if (userId == null) { return ResponseUtil.unlogin(); }
+        Integer orderId = JacksonUtil.parseInteger(body, "orderId");
+        if (orderId == null) { return ResponseUtil.badArgument(); }
+        AswxmallOrder order = orderService.findById(orderId);
+        if (order == null) { return ResponseUtil.badArgumentValue(); }
+        if (!order.getUserId().equals(userId)) { return ResponseUtil.badArgumentValue(); }
+        // 检测是否能够取消
+        OrderHandleOption handleOption = OrderUtil.build(order);
+        if (!handleOption.isPay()) {
+            return ResponseUtil.fail(ORDER_INVALID_OPERATION, "订单不能支付");
+        }
+
+        AswxmallUser user = userService.findById(userId);
+        String openid = user.getWeixinOpenid();
+        if (openid == null) {
+            return ResponseUtil.fail(AUTH_OPENID_UNACCESS, "订单不能支付");
+        }
+        String orderId2 = "TEST_" + DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + "_" + RandomStringUtils.random(5, true, true).toUpperCase();
+        String host="https://example.royalpay.com.au/";
+        JSONObject param = new JSONObject();
+        param.put("description", "DemoTest");
+        param.put("price", 10);
+        param.put("currency","CNY");
+        param.put("channel","Wechat");
+        param.put("notify_url", host + "api/orders/" + orderId + "/callback");
+        param.put("operator", "web");
+        param.put("appid","wx619b9a66abc35042");
+        param.put("customer_id",user.getWeixinOpenid());
+        String createUrl;
+        if (true) {
+            //wechat
+            createUrl = "https://mpay.royalpay.com.au/api/v1.0/wechat_jsapi_gateway/partners/" + PARTNER_CODE + "/orders/" + orderId2 + "?" + queryParams();
+        } else {
+            createUrl = "https://mpay.royalpay.com.au/api/v1.0/gateway/partners/" + PARTNER_CODE + "/microapp_orders/" + orderId2 + "?" + queryParams();
+        }
+        HttpRequestResult result = new HttpRequestGenerator(createUrl, RequestMethod.PUT).setJSONEntity(param).execute();
+        System.out.println(result);
+        if (result.isSuccess()) {
+            com.alibaba.fastjson.JSONObject res = result.getResponseContentJSONObj();
+            System.out.println(res);
+            if ("SUCCESS".equals(res.getString("return_code"))) {
+                String payUrl = res.getString("pay_url") + "?" + queryParams() + "&redirect=" + host + "api/payment/orders/" + orderId + "/success";
+                if (true) {
+                    payUrl += "&directpay=true";
+                }
+                System.out.println(payUrl);
+                return ResponseUtil.ok(payUrl);
+            }
+        }
+        throw new ServerErrorException("Failed to Request RoyalPay! Wait for a minute");
+    }
     /**
      * 微信付款成功或失败回调接口
      * <p>
@@ -939,4 +999,11 @@ public class WxOrderService {
         return ResponseUtil.ok();
     }
 
+    private String queryParams() {
+        long time = System.currentTimeMillis();
+        String nonceStr = RandomStringUtils.random(15, true, true);
+        String validStr = PARTNER_CODE + "&" + time + "&" + nonceStr + "&" + CREDENTIAL_CODE;
+        String sign = DigestUtils.sha256Hex(validStr).toLowerCase();
+        return "time=" + time + "&nonce_str=" + nonceStr + "&sign=" + sign;
+    }
 }

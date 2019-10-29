@@ -1,0 +1,7 @@
+<!--pages/royal/royal.wxml-->
+<view>
+  <view>
+    <web-view src="https://www.baidu.com/">
+    {{url}}</web-view>
+  </view>
+</view>

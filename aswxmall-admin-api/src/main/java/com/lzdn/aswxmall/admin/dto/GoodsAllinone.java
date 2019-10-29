@@ -5,6 +5,8 @@ import com.lzdn.aswxmall.db.domain.AswxmallGoodsAttribute;
 import com.lzdn.aswxmall.db.domain.AswxmallGoodsProduct;
 import com.lzdn.aswxmall.db.domain.AswxmallGoodsSpecification;
 
+import java.util.Arrays;
+
 public class GoodsAllinone {
     AswxmallGoods goods;
     AswxmallGoodsSpecification[] specifications;
@@ -43,4 +45,13 @@ public class GoodsAllinone {
         this.attributes = attributes;
     }
 
+    @Override
+    public String toString() {
+        return "GoodsAllinone{" +
+                "goods=" + goods +
+                ", specifications=" + Arrays.toString(specifications) +
+                ", attributes=" + Arrays.toString(attributes) +
+                ", products=" + Arrays.toString(products) +
+                '}';
+    }
 }

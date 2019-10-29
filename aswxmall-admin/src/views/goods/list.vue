@@ -8,6 +8,7 @@
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button>
       <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
       <el-button :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">导出</el-button>
+      <el-button class="filter-item" type="primary" icon="el-icon-upload" @click="handleUpExcel">导入</el-button>
     </div>
 
     <!-- 查询结果 -->
@@ -93,6 +94,12 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 添加对话框 -->
+    <el-dialog :visible.sync="createDialogVisible" title="上传对象">
+      <el-upload ref="upload" :show-file-list="false" :limit="1" :http-request="handleUpload" action="#" list-type="file">
+        <el-button type="primary">点击上传</el-button>
+      </el-upload>
+    </el-dialog>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
@@ -122,7 +129,7 @@
 </style>
 
 <script>
-import { listGoods, deleteGoods } from '@/api/goods'
+import { listGoods, deleteGoods, createByExecl } from '@/api/goods'
 import BackToTop from '@/components/BackToTop'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
@@ -144,7 +151,8 @@ export default {
       },
       goodsDetail: '',
       detailDialogVisible: false,
-      downloadLoading: false
+      downloadLoading: false,
+      createDialogVisible: false
     }
   },
   created() {
@@ -196,10 +204,29 @@ export default {
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['商品ID', '商品编号', '名称', '专柜价格', '当前价格','VIP价格','VVIP价格', '是否新品', '是否热品', '是否在售', '首页主图', '宣传图片列表', '商品介绍', '详细介绍', '商品图片', '商品单位', '关键字', '类目ID', '品牌商ID']
-        const filterVal = ['id', 'goodsSn', 'name', 'counterPrice', 'retailPrice','retailVPrice' ,'retailVVPrice', 'isNew', 'isHot', 'isOnSale', 'listPicUrl', 'gallery', 'brief', 'detail', 'picUrl', 'goodsUnit', 'keywords', 'categoryId', 'brandId']
+        const tHeader = ['商品ID', '商品编号', '名称', '专柜价格', '当前价格', 'VIP价格', 'VVIP价格', '是否新品', '是否热品', '是否在售', '首页主图', '宣传图片列表', '商品介绍', '详细介绍', '商品图片', '商品单位', '关键字', '类目ID', '品牌商ID']
+        const filterVal = ['id', 'goodsSn', 'name', 'counterPrice', 'retailPrice', 'retailVPrice', 'retailVVPrice', 'isNew', 'isHot', 'isOnSale', 'listPicUrl', 'gallery', 'brief', 'detail', 'picUrl', 'goodsUnit', 'keywords', 'categoryId', 'brandId']
         excel.export_json_to_excel2(tHeader, this.list, filterVal, '商品信息')
         this.downloadLoading = false
+      })
+    },
+    handleUpExcel() {
+      this.createDialogVisible = true
+    },
+    handleUpload(item) {
+      this.$refs.upload.clearFiles()
+
+      const formData = new FormData()
+      formData.append('file', item.file)
+      createByExecl(formData).then(response => {
+        this.list.unshift(response.data.data)
+        this.createDialogVisible = false
+        this.$notify.success({
+          title: '成功',
+          message: '上传成功'
+        })
+      }).catch(() => {
+        this.$message.error('上传失败，请重新上传')
       })
     }
   }

@@ -10,16 +10,21 @@
     </div>
 
     <!-- 查询结果 -->
-    <el-table v-loading="listLoading" :data="list"
-              element-loading-text="正在查询中。。。" border fit highlight-current-row
-              @expand-change="expandSelect"
-              ref="refTable"
-              @selection-change="handleSelectionChange"
-              >
+    <el-table
+      v-loading="listLoading"
+      ref="refTable"
+      :data="list"
+      element-loading-text="正在查询中。。。"
+      border
+      fit
+      highlight-current-row
+      @expand-change="expandSelect"
+      @selection-change="handleSelectionChange"
+    >
       <el-table-column type="expand">
-        返点总额：{{rebates.amount}}&#12288;&#12288;
-        返点余额：{{rebates.balance}}&#12288;&#12288;
-        已提现：{{rebates.widthdraw}}
+        返点总额：{{ rebates.amount }}&#12288;&#12288;
+        返点余额：{{ rebates.balance }}&#12288;&#12288;
+        已提现：{{ rebates.widthdraw }}
         <el-table v-loading="rebatesListLoading" :data="rebatesList" element-loading-text="正在查询中。。。" border fit highlight-current-row>
           <el-table-column align = "center" label="发展客户ID" prop="orderUserId"/>
           <el-table-column align = "center" label="消费单数" prop="orderCount"/>
@@ -60,8 +65,13 @@
     </el-table>
     <!--用户修改-->
     <el-dialog :visible.sync="userDialogVisible" title="用户修改" width="800">
-
-
+      <el-select v-model="userForm.userLevel">
+        <el-option v-for="item in levelDic2" :key="item.value" :label="item.label" :value="item.value"/>
+      </el-select>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="userDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="updateUser">确定</el-button>
+      </div>
     </el-dialog>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
@@ -70,8 +80,9 @@
 </template>
 
 <script>
-import { fetchList,fetchRebatesList } from '@/api/user'
+import { fetchList, fetchRebatesList, updateUser } from '@/api/user'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import { MessageBox } from 'element-ui'
 
 export default {
   name: 'User',
@@ -92,31 +103,37 @@ export default {
       downloadLoading: false,
       genderDic: ['未知', '男', '女'],
       levelDic: ['普通用户', 'VIP用户', '高级VIP用户'],
+      levelDic2: [{ label: '普通用户', value: 0 }, { label: 'VIP用户', value: 1 }, { label: '高级VIP用户', value: 2 }],
       statusDic: ['可用', '禁用', '注销'],
-      expands:[],
+      expands: [],
       rebatesListLoading: true,
-      rebatesList:null,
-      rebatesTotal:0,
-      rebatesListQuery:{
-        page:1,
-        limit:20,
-        uid:undefined,
-        sort:'id',
-        order:'desc'
+      rebatesList: null,
+      rebatesTotal: 0,
+      rebatesListQuery: {
+        page: 1,
+        limit: 20,
+        uid: undefined,
+        sort: 'id',
+        order: 'desc'
       },
-      rebates:{
-        amount:0,
-        balance:0,
-        widthdraw:0,
+      rebates: {
+        amount: 0,
+        balance: 0,
+        widthdraw: 0
       },
       userDialogVisible: false,
+      userForm: {
+        id: 0,
+        // levelDic:null,
+        userLevel: null
+      }
     }
   },
   created() {
     this.getList()
   },
   methods: {
-    getList() {
+    wgetList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
         this.list = response.data.data.list
@@ -141,20 +158,20 @@ export default {
         this.downloadLoading = false
       })
     },
-    expandSelect:function (row, expandedRows) {
+    expandSelect: function(row, expandedRows) {
       var that = this
-      if (expandedRows.length>1) {
+      if (expandedRows.length > 1) {
         that.expands = []
         if (row) {
-          that.expands.push(row);
+          that.expands.push(row)
         }
-        this.$refs.refTable.toggleRowExpansion(expandedRows[0]);
+        this.$refs.refTable.toggleRowExpansion(expandedRows[0])
       } else {
-        that.expands = [];
+        that.expands = []
       }
       this.rebatesListQuery.uid = row.id
-      fetchRebatesList(this.rebatesListQuery).then(response=>{
-        let data = response.data.data;
+      fetchRebatesList(this.rebatesListQuery).then(response => {
+        const data = response.data.data
         console.log(response)
         this.rebatesList = data.rebatesCountList
         this.rebatesTotal = data.rebatesCountList.total
@@ -171,12 +188,29 @@ export default {
         this.rebatesListLoading = false
       })
     },
-    handleSelectionChange:function (val) {
+    handleSelectionChange: function(val) {
       console.log(val)
     },
-    handleUpdate(user){
-      //console.log(user)
-      this.userDialogVisible = true;
+    handleUpdate(user) {
+      this.userDialogVisible = true
+      this.userForm.id = user.id
+      this.userForm.userLevel = user.userLevel
+    },
+    updateUser() {
+      updateUser(this.userForm).then(response => {
+        // console.log(response)
+        this.$notify.success({
+          title: '成功',
+          message: '修改成功'
+        })
+        this.userDialogVisible = false
+        this.getList()
+      }).catch(response => {
+        MessageBox.alert('业务错误：' + response.data.errmsg, '警告', {
+          confirmButtonText: '确定',
+          type: 'error'
+        })
+      })
     }
   }
 }

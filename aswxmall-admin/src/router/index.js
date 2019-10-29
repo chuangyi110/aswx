@@ -352,7 +352,7 @@ export const asyncRouterMap = [
           noCache: true
         },
         hidden: true
-      },
+      }
       // {
       //   path: 'groupon-rule',
       //   component: () => import('@/views/promotion/grouponRule'),

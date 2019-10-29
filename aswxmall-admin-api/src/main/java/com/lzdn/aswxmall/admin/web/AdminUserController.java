@@ -3,6 +3,7 @@ package com.lzdn.aswxmall.admin.web;
 import com.lzdn.aswxmall.admin.annotation.RequiresPermissionsDesc;
 import com.lzdn.aswxmall.admin.vo.RebatesVo;
 import com.lzdn.aswxmall.db.domain.AswxmallUser;
+import com.lzdn.aswxmall.db.domain.AswxmallUserExample;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -12,10 +13,7 @@ import com.lzdn.aswxmall.core.validator.Sort;
 import com.lzdn.aswxmall.db.service.AswxmallUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,6 +36,14 @@ public class AdminUserController {
                        @Order @RequestParam(defaultValue = "desc") String order) {
         List<AswxmallUser> userList = userService.querySelective(username, mobile, page, limit, sort, order);
         return ResponseUtil.okList(userList);
+    }
+    @RequiresPermissions("admin:user:update")
+    @RequiresPermissionsDesc(menu = {"用户管理", "会员更新"}, button = "查询")
+    @PostMapping("/update")
+    public Object update(AswxmallUser aswxmallUser){
+        System.out.println(aswxmallUser);
+        int num = userService.updateById(aswxmallUser);
+        return num ==1?ResponseUtil.ok():ResponseUtil.fail();
     }
 
 }
